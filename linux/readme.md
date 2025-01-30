@@ -4,7 +4,7 @@
 
 ## Table of contents:
 
-Chapter 1: [What is Linux]
+Chapter 1: [What is Linux](https://github.com/Yasir-77/Devops-Learning/edit/main/linux/notes/README.md#what-is-linux)
 
 Chapter 2: [How to setup Ubuntu and terminal]
 
