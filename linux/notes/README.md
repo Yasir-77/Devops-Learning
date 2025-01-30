@@ -72,7 +72,7 @@ Open the Start Menu and search for Ubuntu. Click to open it.
 The first time you launch, Ubuntu will install files and ask you to create a username and password.
 Once done, you can use the Linux terminal inside Windows!
 
-## Commands
+## Basic Linux Commands
 
 ### What are commands?
 
@@ -84,13 +84,24 @@ To print the present working directory. Run **`pwd`** command.
   
 To see the contents of the directory. Run **`ls`** command.
 
-To change the current directory. Run **`Cd`** command.  
-
-To make (or) create a directory. Run **`mkdir`** command.
-
-To remove (or) delete a directory. Run **`rmdir`** command.
-
-To make (or) create a file. Run **`touch`** command.
-
-To remove (or) delete a file. Run **`rm`** command.  
+To change the current directory. Run **`Cd`** command. For example, to change to the home directory type:
+```
+cd /home
+```
+To make (or) create a directory. Run **`mkdir`** command. For example to creacte a new directory called myfolder type:
+```
+mkdir myfolder
+```
+To remove (or) delete a directory. Run **`rmdir`** command. For example to delete a directory called my folder type:
+```
+rmdir myfolder
+```
+To make (or) create a file. Run **`touch`** command. For example to create a file called file.txt type:
+```
+touch file.txt 
+```
+To remove (or) delete a file. Run **`rm`** command. For example to remove a file called file.txt type:
+```
+rm file.txt
+```
 
