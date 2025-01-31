@@ -78,30 +78,153 @@ Once done, you can use the Linux terminal inside Windows!
 
 Commands are textual instructions that tell the operating system what to do, they are usually typed into the terminal and are case sensitive. Commands have various options and arguments that can modify their behaviour and have instructions via a manual.
 
-### Examples of basic Linux commands:
+### What is the structure of a command?
 
-To print the present working directory. Run **`pwd`** command.
-  
-To see the contents of the directory. Run **`ls`** command.
+The command itself, options and an arguemnt e.g. ls -a.
 
-To change the current directory. Run **`Cd`** command. For example, to change to the home directory type:
+In this example command is **`ls`**, option is **`-a`** and argument is **`.`**
+
+In this case the **`-a`** means that you are using the ls command to list the contents in the current directory but in this case all the contents including the hidden files and directories.
+
+In this case the **`.`** means that the argument is in the current working directory.
+
+### Examples of Basic Linux Commands:
+
+- To print the present working directory. Run **`pwd`** command.
+- To see the contents of the directory. Run **`ls`** command.
+- To change the current directory. Run **`Cd`** command. For example, to change to the home directory type:
 ```
 cd /home
 ```
-To make (or) create a directory. Run **`mkdir`** command. For example to creacte a new directory called myfolder type:
+- To make (or) create a directory. Run **`mkdir`** command. For example to creacte a new directory called myfolder type:
 ```
 mkdir myfolder
 ```
-To remove (or) delete a directory. Run **`rmdir`** command. For example to delete a directory called my folder type:
+- To remove (or) delete a directory. Run **`rmdir`** command. For example to delete a directory called my folder type:
 ```
 rmdir myfolder
 ```
-To make (or) create a file. Run **`touch`** command. For example to create a file called file.txt type:
+- To make (or) create a file. Run **`touch`** command. For example to create a file called file.txt type:
 ```
 touch file.txt 
 ```
-To remove (or) delete a file. Run **`rm`** command. For example to remove a file called file.txt type:
+- To remove (or) delete a file. Run **`rm`** command. For example to remove a file called file.txt type:
 ```
 rm file.txt
 ```
+
+### More Examples of Basic Linux Commands:
+### - echo command
+To add text into a file. Run **`echo`** command. An example of how to add "Hello World" into an already made file.txt would be:
+```
+echo "Hello World" > file.txt
+```
+To add another line of text without removing any content already in the file simply use >> instead of >:
+```
+echo "Test" >> file.txt
+```
+If the file doesnt exist, the echo command can also be used to create a file. An example of creating a file2.txt would be:
+```
+echo "This is the second file" >> file2.txt
+```
+
+### - grep command
+To search for specific content of text within a file. Run command **`grep`**. An example of how to search for the word "Hello" in the already made file.txt would be:
+```
+grep "Hello" file.txt
+```
+
+### - cat command
+To search up all the contents in a file. Run the **`cat`** command. 
+```
+cat file.txt
+```
+The cat command could also be used to combine the contents of 2 files together creating a new file also. For Example:
+```
+cat file.txt file2.txt > combined.txt
+```
+To transfer the contents of one file to another file without creating a new file can be done using the cat command. For example transferring everthing in file2.txt to file.txt could be done by:
+```
+cat file2.txt >> file.txt
+```
+
+### - head and tail command
+The **`head`** command displays the first part of files. By default, it shows the first 10 lines of a file. For example lets say filename.txt has 20 lines. Typing the following would show the first 10 lines:
+```
+head filename.txt
+```
+To display the first n lines only, use the head command in the following way. The number after -n stating how many lines to show, so for first 5 lines:
+```
+head -n 5 filename.txt
+```
+The **`tail`** command displays the last part of files. By default, it shows the last 10 lines of a file. 
+```
+tail filename.txt
+```
+To display the last n lines only, use the tail command in the following way. The number after -n stating how many lines to show, so for last 5 lines:
+```
+tails -n 5 filename.txt
+```
+Both head and tail can be used in combination with other commands using pipes (|). For example, you might want to view the last 10 lines of a file and then the first 5 lines of that result:
+```
+tail -n 10 filename.txt | head -n 5
+```
+
+## The SHELL
+
+### What is the SHELL
+
+The SHELL is a user interface that provides access to the operating system services, the layer between the user and the core of the operating system. Translates commands into actions.
+
+### Types of SHELLS
+
+- Bash shell
+
+- Csh/Tcsh Shell
+
+- Ksh Shell
+
+- Zsh Shell
+
+- Fish
+
+Each shell has its own features and capabilities but all serve the same purpose to provide a userface that allows access to the operating system.
+
+The default shell for most operating systems is the bash shell, to check this type:
+```
+echo $SHELL
+```
+To install a shell, type the following command **`sudo apt-get install`** followed by the desired **`<shell_name>`**. For example to install zsh shell type the following:
+```
+sudo apt install zsh
+```
+To then switch to the zsh shell just type the zsh command **`zsh`**.
+
+To set zsh as the default shell type the following:
+
+```
+sudo chsh -s $(which zsh) $(whoami)
+```
+Then refresh the instance and restart the windows powershell.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
