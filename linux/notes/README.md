@@ -207,6 +207,63 @@ sudo chsh -s $(which zsh) $(whoami)
 ```
 Then refresh the instance and restart the windows powershell.
 
+### How to customize ZSH to OhMyZSH
+
+- Run this command to install OhMyZsh:
+```  
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+- To customise OhMyZsh to a specific theme run the command:
+```
+cd ~/ .oh-my-zsh/themes
+```
+- Then paste the command:
+``` 
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k 
+```
+
+### Zshrc Configuration File + Powerlevel10k Theme
+- Return to home directory, type the following:
+```
+cd ~
+```
+- Open the zshrc file by typing:
+```
+vim .zshrc
+```
+- Then to edit the text editor type i to instert. Then find the line **`ZSH_THEME="robbyrussell"`** and replace it with **`ZSH_THEME="powerlevel10k/powerlevel10k"`**. Then exit the text editor by typing **`:wq!`** 
+- Configure the Powerlevel 10k theme to your liking.
+
+### Adding .zshrc plugins
+- Open the zshrc file by typing:
+```
+vim .zshrc
+```
+- Scroll down until you find plugins or type /plugins then go on instert mode and type:
+```
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
+```
+Exit the file by pressing Esc on keyboard and type **`:wq!`**
+
+If the terminal shows plugin not found the plugins need to be installed. Type the following in the terminal:
+```
+git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+```
+```
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+```
+Then run the command:
+```
+source .zshrc
+```
+
+
+
+
+
+
+
+
 
 
 
