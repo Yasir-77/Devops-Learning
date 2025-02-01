@@ -257,6 +257,45 @@ Then run the command:
 source .zshrc
 ```
 
+## File management commands
+
+### - cp command
+
+The **`cp`** command is used to copy files and directories from one location to another. It stands for copy. For example you wanted to copy a file called myfiles1.txt to myfiles2.txt simply write the following:
+```
+$ cp myfile1.txt myfile2.txt
+```
+If file2.txt does not exist, it will be created.
+
+When trying to use a cp command to copy a directory, use **`-r`** before writing which file to copy. -r : Copy directories recursively. This is required when copying directories. For example if you want to make a copy of my_directory type:
+```
+$ cp -r my_directory my_directory_copy
+```
+
+### - mv and rm commands
+
+The **`mv`** command is used to move or rename files and directories. The mv command stands for move, but it functions as both a move and rename command, depending on how it is used.
+
+To rename a file use the mv command and write the name of the old file and then the name of the new file. For example changing the name from oldname.txt to newname.txt type:
+```
+$ mv oldname.txt newname.txt
+```
+
+When moving a file into a directory simply type mv [File_name] [Directory_name]. For example newname.txt needs to be moved into New_directory type:
+```
+$ mv newname.txt new_directory
+```
+The **`rm`** command is used to remove (delete) files and directories. It stands for remove and is a powerful command because it deletes files and directories permanently, without moving them to a trash or recycle bin.
+
+To remove a file simply type rm [File_name]. For example to reemove newname.txt type:
+```
+$ rm newname.txt
+```
+To remove a directory and the contents inside it type -r [directory_name] after the rm command. For example to delete new_directory type:
+```
+$ rm -r new_directory
+```
+
 
 
 
