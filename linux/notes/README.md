@@ -296,6 +296,31 @@ To remove a directory and the contents inside it type -r [directory_name] after 
 $ rm -r new_directory
 ```
 
+### - mkdir, rmdir and rm -r commands
+
+As already mentioned **`mkdir`** is used to make directories. 
+
+To make nested/parent directories simply type mkdir and add -p followed by [Directory1/directory2/directory3] For example you wanted components directory in a src directory in a project directory simply type the following:
+```
+$ mkdir -p project/src/components
+```
+
+To list all files and subdirectories in the current directory type **`ls -R`** [Directory_name]. For example to list the directories created above under the project directopry type:
+```
+$ ls -R project
+```
+
+As already mentioned **`rmdir`** is used to delete empty directories.
+
+In the example above project and src directories cant be removed using rmdir as they have subdirectories. The components direcotory has no subdirectory so to remove the components directory type:
+```
+$ rmdir project/src/components
+```
+
+The **`rm -r`** command is used to remove directories and their contents recursively. This means it will delete the specified directory, all files within it, and all subdirectories and their contents. To delete the project directory and all the subdirectories and the content within type:
+```
+$ rm -r project
+```
 
 
 
