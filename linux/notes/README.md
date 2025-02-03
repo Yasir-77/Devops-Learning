@@ -451,14 +451,14 @@ To create a new user type **`sudo useradd`** then the new username. For example 
 sudo useradd newuser
 ```
 
-To set a password for the user type **`sudo passwd`** then the username. For example to add a password to the username newuser type:
+To set a password for the user type **`sudo passwd`** followed by the [username]. For example to add a password to the username newuser type:
 ```
 sudo passwd newuser
 ```
 
 You would then need to type in a password and confirm the password again
 
-To switch to the new user use the **`su`** command followed by - , followed by the user. For example to switch to the newuser created type:
+To switch to the new user use the **`su`** command followed by [-] , followed by the user. For example to switch to the newuser created type:
 ```
 su - newuser
 ```
@@ -478,6 +478,35 @@ To remove sudo privellages, you would need to leave the new user by typing exit,
 ```
 sudo deluser newuser sudo
 ```
+
+## Groups:
+
+To create a new group run the command **`sudo groupadd`** followed by [group-name]. For example to create a new devops group type:
+```
+$sudo groupadd devops
+```
+To verify that this has been created type the command:
+```
+$cat /etc/groups
+```
+To add users to the group that has been created the command **`sudo usermod`** is used followed by [-aG] followed by the [group-name] followed by the [user-name]. For exxample to add newuser to the devops group type:
+```
+$sudo usermod -aG devops newuser
+```
+To remove a user from the group use the comman **`sudo gpasswd`** followed by [-d] followed by the [user-name] followed by [group-name] for example to remove the newuser from the devops group type:
+```
+$sudo gpasswd -d newuser devops
+```
+To delete a group use the command **`sudo groupdel`** followed by the [group-name], for example to delete the devops group type:
+```
+$sudo groupdel devops
+```
+Users can be in multiple groups, to add users into multiple groups the command **`sudo usermod`** followed by [-aG] followed by [group-name1,group-name2] followed by the [user-name]
+Fore example to add a newuser into groups called group1 and group2 (these havent beeen created) type:
+```
+$sudo usermod -aG group1,group2 newuser
+```
+
 
 
 
