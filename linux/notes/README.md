@@ -263,13 +263,13 @@ source .zshrc
 
 The **`cp`** command is used to copy files and directories from one location to another. It stands for copy. For example you wanted to copy a file called myfiles1.txt to myfiles2.txt simply write the following:
 ```
-$ cp myfile1.txt myfile2.txt
+cp myfile1.txt myfile2.txt
 ```
 If file2.txt does not exist, it will be created.
 
 When trying to use a cp command to copy a directory, use **`-r`** before writing which file to copy. -r : Copy directories recursively. This is required when copying directories. For example if you want to make a copy of my_directory type:
 ```
-$ cp -r my_directory my_directory_copy
+cp -r my_directory my_directory_copy
 ```
 
 ### - mv and rm commands
@@ -278,22 +278,22 @@ The **`mv`** command is used to move or rename files and directories. The mv com
 
 To rename a file use the mv command and write the name of the old file and then the name of the new file. For example changing the name from oldname.txt to newname.txt type:
 ```
-$ mv oldname.txt newname.txt
+mv oldname.txt newname.txt
 ```
 
 When moving a file into a directory simply type mv [File_name] [Directory_name]. For example newname.txt needs to be moved into New_directory type:
 ```
-$ mv newname.txt new_directory
+mv newname.txt new_directory
 ```
 The **`rm`** command is used to remove (delete) files and directories. It stands for remove and is a powerful command because it deletes files and directories permanently, without moving them to a trash or recycle bin.
 
 To remove a file simply type rm [File_name]. For example to reemove newname.txt type:
 ```
-$ rm newname.txt
+rm newname.txt
 ```
 To remove a directory and the contents inside it type -r [directory_name] after the rm command. For example to delete new_directory type:
 ```
-$ rm -r new_directory
+rm -r new_directory
 ```
 
 ### - mkdir, rmdir and rm -r commands
@@ -302,25 +302,112 @@ As already mentioned **`mkdir`** is used to make directories.
 
 To make nested/parent directories simply type mkdir and add -p followed by [Directory1/directory2/directory3] For example you wanted components directory in a src directory in a project directory simply type the following:
 ```
-$ mkdir -p project/src/components
+mkdir -p project/src/components
 ```
 
 To list all files and subdirectories in the current directory type **`ls -R`** [Directory_name]. For example to list the directories created above under the project directopry type:
 ```
-$ ls -R project
+ls -R project
 ```
 
 As already mentioned **`rmdir`** is used to delete empty directories.
 
 In the example above project and src directories cant be removed using rmdir as they have subdirectories. The components direcotory has no subdirectory so to remove the components directory type:
 ```
-$ rmdir project/src/components
+rmdir project/src/components
 ```
 
 The **`rm -r`** command is used to remove directories and their contents recursively. This means it will delete the specified directory, all files within it, and all subdirectories and their contents. To delete the project directory and all the subdirectories and the content within type:
 ```
-$ rm -r project
+rm -r project
 ```
+
+### Dealing with spaces in folder names
+
+When working with folder names that contain spaces, Linux interprets spaces as separators between commands and arguments. For example typing **`My Project`** creastes two folders names My and Project. There are two ways of creating the folder "My Project".
+
+1. Use Quotes (" ") For example: To create the folder name "My Project" type:
+```
+mkdir "My Project"
+```
+
+2. Use Backslash (\) to Escape Spaces
+```
+mkdir My\ Project"
+```
+
+## VIM
+
+To start vim, type **`vim`** followed by a file name in the terminal: For example to start vim in example.txt type:
+```
+$ vim example.txt
+
+```
+If the file filename.txt does not exist, Vim will open a new empty file. If it exists, Vim will open it for editing.
+
+vim has multiple modes but the 3 most important ones are:
+
+- command mode: This mode is used for entering commands, such as saving a file or exiting Vim. You enter Command-Line Mode by pressing : in Normal Mode. This is also the default mode when you enter vim.
+  
+- insert mode: In this mode, Vim behaves like a standard text editor, allowing you to input and edit text. You can enter Insert Mode from Normal Mode by pressing i.
+
+- visual mode: This mode allows for text selection using the keyboard. You can enter Visual Mode by pressing v in Normal Mode.
+
+### Navigating in Vim 
+
+h: Move the cursor left
+
+j: Move the cursor down
+
+k: Move the cursor up
+
+l: Move the cursor right
+
+0: Move to the beginning of the line
+
+$: Move to the end of the line
+
+gg: Move to the beginning of the file
+
+G: Move to the end of the file
+
+w: Move forward to the next word
+
+b: Move backward to the previous word
+
+### Editing in vim
+
+i: Enter Insert Mode before the cursor
+
+a: Enter Insert Mode after the cursor
+
+o: Insert a new line below the current line and enter Insert Mode
+
+O: Insert a new line above the current line and enter Insert Mode
+
+x: Delete the character under the cursor
+
+dd: Delete the current line
+
+yy: Yank (copy) the current line
+
+p: Paste the yanked or deleted text after the cursor
+
+u: Undo the last change
+
+Ctrl + r: Redo the undone change
+
+### Saving and Exiting
+
+To save and exit the file, use the Command-Line Mode:
+
+:w: Save the current file
+
+:q: Quit Vim (only works if no changes have been made)
+
+:wq: Save and quit Vim
+
+:q!: Quit Vim without saving changes
 
 
 
