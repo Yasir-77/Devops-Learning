@@ -355,59 +355,50 @@ vim has multiple modes but the 3 most important ones are:
 
 ### Navigating in Vim 
 
-h: Move the cursor left
-
-j: Move the cursor down
-
-k: Move the cursor up
-
-l: Move the cursor right
-
-0: Move to the beginning of the line
-
-$: Move to the end of the line
-
-gg: Move to the beginning of the file
-
-G: Move to the end of the file
-
-w: Move forward to the next word
-
-b: Move backward to the previous word
+| Command | Action |
+|---------|--------|
+| `h` | Move the cursor left |
+| `j` | Move the cursor down |
+| `k` | Move the cursor up |
+| `l` | Move the cursor right |
+| `0` | Move to the beginning of the line |
+| `$` | Move to the end of the line |
+| `gg` | Move to the beginning of the file |
+| `G` | Move to the end of the file |
+| `w` | Move forward to the next word |
+| `b` | Move backward to the previous word |
+| `:n` | Move to line on n number |
+| `/` | Word that follows the foward slash will be searched for. |
+| `n` | If multiple of the same word is found, moves to next one down |
+| `N` | If multiple of the same word is found, moves to next one up |
 
 ### Editing in vim
 
-i: Enter Insert Mode before the cursor
+| Command   | Action |
+|-----------|--------|
+| `i`       | Enter Insert Mode before the cursor |
+| `a`       | Enter Insert Mode after the cursor |
+| `o`       | Insert a new line below the current line and enter Insert Mode |
+| `O`       | Insert a new line above the current line and enter Insert Mode |
+| `x`       | Delete the character under the cursor |
+| `dd`      | Delete the current line |
+| `yy`      | Yank (copy) the current line |
+| `p`       | Paste the yanked or deleted text after the cursor |
+| `u`       | Undo the last change |
+| `Ctrl + r` | Redo the undone change |
 
-a: Enter Insert Mode after the cursor
-
-o: Insert a new line below the current line and enter Insert Mode
-
-O: Insert a new line above the current line and enter Insert Mode
-
-x: Delete the character under the cursor
-
-dd: Delete the current line
-
-yy: Yank (copy) the current line
-
-p: Paste the yanked or deleted text after the cursor
-
-u: Undo the last change
-
-Ctrl + r: Redo the undone change
 
 ### Saving and Exiting
 
 To save and exit the file, use the Command-Line Mode:
 
-:w: Save the current file
+| Command  | Action |
+|----------|--------|
+| `:w`     | Save the current file |
+| `:q`     | Quit Vim (only works if no changes have been made) |
+| `:wq`    | Save and quit Vim |
+| `:q!`    | Quit Vim without saving changes |
 
-:q: Quit Vim (only works if no changes have been made)
-
-:wq: Save and quit Vim
-
-:q!: Quit Vim without saving changes
 
 
 
