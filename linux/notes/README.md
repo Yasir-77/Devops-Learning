@@ -507,6 +507,36 @@ Fore example to add a newuser into groups called group1 and group2 (these havent
 $sudo usermod -aG group1,group2 newuser
 ```
 
+## File permissions
+
+### Introduction to File permissions
+
+File permissions are represented by a combination of three types of permissions for three categories of users:
+
+Types of Permissions:
+
+- Read (r): Allows viewing the contents of a file or directory listing.
+- Write (w): Allows modifying the contents of a file or creating/deleting files within a directory.
+- Execute (x): Allows running a file as a program/script or accessing a directory's contents.
+
+Categories of Users:
+
+- Owner (u): The user who owns the file.
+- Group (g): Users who are members of the file's group.
+- Others (o): All other users.
+
+A file's permissions can be viewed with the **`ls -l`** command, which shows them in the format:
+
+-rwxr-xr--
+
+Here, the first character represents the file type (e.g., - for a regular file, d for a directory). The next nine characters are grouped in sets of three, representing the permissions for the owner, group, and others respectively:
+
+rwx (owner): Read, write, and execute.
+
+r-x (group): Read and execute, no write.
+
+r-- (others): Read only, no write or execute.
+
 
 
 
