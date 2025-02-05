@@ -537,6 +537,76 @@ r-x (group): Read and execute, no write.
 
 r-- (others): Read only, no write or execute.
 
+### Binary,Octal and String representation:
+
+| Binary  | Octal | String (Symbolic) | Permission |
+|---------|-------|-------------------|---------|
+| 000 | 0(0+0+0)   | --- | No permissions |
+| 001 | 1(0+0+1)   | --x | Execute |
+| 010 | 2(0+2+0)   | -w- | Write |
+| 011 | 3(0+2+1)   | -wx | Write & execute |
+| 100 | 4(0+0+4)   | r-- | Read only |
+| 110 | 6(0+0+6)   | rw- | Read & write |
+| 111 | 7(4+2+1)   | rwx | Read & write & execute |
+
+### Chmod command: symoblic and numeric
+
+Using Symbolic Notation
+
+Symbolic notation uses letters to modify permissions:
+
+- u: User (owner)
+- g: Group
+- o: Others
+
+You can add, remove, or set specific permissions using +, -, or =:
+
+- +: Adds a permission.
+- -: Removes a permission.
+- =: Sets a specific permission, overriding the current setting.
+
+Examples:
+
+To grant the user execute permissions, groups read permissions and remove write permissions from others on file example.txt type the following:
+```
+$chmod u+x,g+r,o-w example.txt
+```
+Set Read and Write Permissions for User, and Read for Group and Others Type:
+```
+$chmod u=rw,go=r example.txt
+```
+
+Using Octal notation 
+
+Set Permissions to rwxr-xr-x (755) for file example.txt:
+```
+$chmod 755 example.txt
+```
+Gives the owner all permissions (read, write, execute), and read and execute permissions to group and others.
+
+### Changing file/direcorty ownership for user/group
+
+To change the owner of a file or directory the command **`sudo chown`** is used followed by the [new-user] followed by [file-name]. For example to change the owner to newuser of the file called example.txt type:
+```
+$sudo chown newuser example.txt
+```
+
+To change the group of a file or directory run the command **`sudo chgrp`** followed by the [new-group] followed by the [file-name]. For example to change the group to group1 of the file called example.txt type:
+```
+$sudo chgrp group1 example.txt
+```
+
+To change both the owner and the group the command **`sudo chown`** command is used followed by [new-user:new-group] followed by the [file-name]. For example to change the user and group to newuser and group1 at the same time for file example.txt type:
+```
+$sudo chown newuser:group1 example.txt
+```
+
+To Change Ownership of a Directory and Its Contents the command **`sudo chown`** is used, followed by [-R] followed by [new-user:new-group] followed by the [directory-name]. For example to change the user and group to newuser and group1 at the same time for a directory called my_directory_copy (hasnt been created) type:
+```
+$sudo chown -R newuser:group1 my_directory_copy  
+```
+
+
 
 
 
