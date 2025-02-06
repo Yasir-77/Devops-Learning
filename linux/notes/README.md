@@ -642,6 +642,50 @@ ls nonexistent my_directory_copy &> /dev/null
 
 This command attempts to list the contents of two directories, nonexistent and my_directory_copy, while redirecting both standard output (stdout) and standard error (stderr) to /dev/null.
 
+## Introduction to Environment Variables
+
+Environment variables play a crucial role in defining the environment in which a process is run. These are variables that are set in the environment and affect the behaviour of processes on your system
+
+### Common Examples and setting variables
+
+| Variable  | Description |
+|-----------|------------|
+| `$HOME`   | Current User’s home directory (e.g., `/home/user`) |
+| `$USER`   | Current user's username |
+| `$PATH`   | Directories where executables are searched for |
+| `$SHELL`  | The shell program in use (e.g., `/bin/bash`) |
+| `$PWD`    | Current working directory |
+
+When setting environment variables theres 2 ways:
+
+1. Temporarily (Session-Only)
+Use export to set a variable for the current session For exmple:
+
+export Name = VALUE
+
+export JAVA_HOME = /usr /bin /java
+
+2. Permanently
+
+When setting them permanently .zshrc and .bashrc files are used
+
+1. Bash
+- configuartion file: .bashrc
+- Location: Typically located in the user's home directory (-/). Its used for configuring the interactive Bash shell.
+- Usage: Customizations such as setting aliases, environment variables, defining functions, and configuring the shell prompt are done in this file.
+
+2. Zsh
+- Configuration file: .zshrc
+- Location: Also typically located in the users home directory (-/). Its the main configuration file for the zsh shell.
+- Usage: Similar to .bashrc. Its used for customizing the zsh interactive shell, including defining aliases setting environment variables, and configuring the prompt.
+
+If you want to add /home/ubuntu to $PATH:
+
+```
+export PATH=$PATH:/opt/my_program/bin
+```
+To make it permanent, add this line to ~/.zshrc
+
 
 
 
