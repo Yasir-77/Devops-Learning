@@ -483,28 +483,28 @@ sudo deluser newuser sudo
 
 To create a new group run the command **`sudo groupadd`** followed by [group-name]. For example to create a new devops group type:
 ```
-$sudo groupadd devops
+sudo groupadd devops
 ```
 To verify that this has been created type the command:
 ```
-$cat /etc/groups
+cat /etc/groups
 ```
 To add users to the group that has been created the command **`sudo usermod`** is used followed by [-aG] followed by the [group-name] followed by the [user-name]. For exxample to add newuser to the devops group type:
 ```
-$sudo usermod -aG devops newuser
+sudo usermod -aG devops newuser
 ```
 To remove a user from the group use the comman **`sudo gpasswd`** followed by [-d] followed by the [user-name] followed by [group-name] for example to remove the newuser from the devops group type:
 ```
-$sudo gpasswd -d newuser devops
+sudo gpasswd -d newuser devops
 ```
 To delete a group use the command **`sudo groupdel`** followed by the [group-name], for example to delete the devops group type:
 ```
-$sudo groupdel devops
+sudo groupdel devops
 ```
 Users can be in multiple groups, to add users into multiple groups the command **`sudo usermod`** followed by [-aG] followed by [group-name1,group-name2] followed by the [user-name]
 Fore example to add a newuser into groups called group1 and group2 (these havent beeen created) type:
 ```
-$sudo usermod -aG group1,group2 newuser
+sudo usermod -aG group1,group2 newuser
 ```
 
 ## File permissions
@@ -569,18 +569,18 @@ Examples:
 
 To grant the user execute permissions, groups read permissions and remove write permissions from others on file example.txt type the following:
 ```
-$chmod u+x,g+r,o-w example.txt
+chmod u+x,g+r,o-w example.txt
 ```
 Set Read and Write Permissions for User, and Read for Group and Others Type:
 ```
-$chmod u=rw,go=r example.txt
+chmod u=rw,go=r example.txt
 ```
 
 Using Octal notation 
 
 Set Permissions to rwxr-xr-x (755) for file example.txt:
 ```
-$chmod 755 example.txt
+chmod 755 example.txt
 ```
 Gives the owner all permissions (read, write, execute), and read and execute permissions to group and others.
 
@@ -588,27 +588,59 @@ Gives the owner all permissions (read, write, execute), and read and execute per
 
 To change the owner of a file or directory the command **`sudo chown`** is used followed by the [new-user] followed by [file-name]. For example to change the owner to newuser of the file called example.txt type:
 ```
-$sudo chown newuser example.txt
+sudo chown newuser example.txt
 ```
 
 To change the group of a file or directory run the command **`sudo chgrp`** followed by the [new-group] followed by the [file-name]. For example to change the group to group1 of the file called example.txt type:
 ```
-$sudo chgrp group1 example.txt
+sudo chgrp group1 example.txt
 ```
 
 To change both the owner and the group the command **`sudo chown`** command is used followed by [new-user:new-group] followed by the [file-name]. For example to change the user and group to newuser and group1 at the same time for file example.txt type:
 ```
-$sudo chown newuser:group1 example.txt
+sudo chown newuser:group1 example.txt
 ```
 
 To Change Ownership of a Directory and Its Contents the command **`sudo chown`** is used, followed by [-R] followed by [new-user:new-group] followed by the [directory-name]. For example to change the user and group to newuser and group1 at the same time for a directory called my_directory_copy (hasnt been created) type:
 ```
-$sudo chown -R newuser:group1 my_directory_copy  
+sudo chown -R newuser:group1 my_directory_copy  
 ```
 
+## Standard Streams (standard input, output and error streams)
+Redirection allows you to control where the output of a command goes or where the input comes from. Here's a some examples:
 
+>: Redirect standard out to a file.
+Example: echo "text" > file.txt writes "text" to file.txt.
 
+<: Redirect a file to standard din.
+Example: cat < file.txt reads input from file.txt instead of the keyboard.
 
+>>: Append standard to a file. Add more text
+Example: echo "more text" >> file.txt appends "more text" to file.txt.
+
+2>: Redirect standard error to a file.
+command 2> error.log redirects errors to error.txt
+
+Example: 
+
+Type **`ls nonexistent`**, The terminal should show ls: cannot access `nonexisitent`: No such file or directory. Then type the following;
+```
+ls nonexistent 2> error.txt
+```
+Then type:
+```
+cat error.txt
+```
+The error that came up is redirected to error.txt.
+
+&>: Redirect both standard error and standard out to a file (bash shorthand).
+Example: command &> combined.log writes both to combined.log.
+
+```
+ls nonexistent my_directory_copy &> /dev/null
+```
+
+This command attempts to list the contents of two directories, nonexistent and my_directory_copy, while redirecting both standard output (stdout) and standard error (stderr) to /dev/null.
 
 
 
