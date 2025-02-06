@@ -584,7 +584,7 @@ chmod 755 example.txt
 ```
 Gives the owner all permissions (read, write, execute), and read and execute permissions to group and others.
 
-### Changing file/direcorty ownership for user/group
+## Changing file/directory ownership for user/group
 
 To change the owner of a file or directory the command **`sudo chown`** is used followed by the [new-user] followed by [file-name]. For example to change the owner to newuser of the file called example.txt type:
 ```
