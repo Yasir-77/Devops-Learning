@@ -7,7 +7,7 @@
 Chapter 1: [What is Linux?](https://github.com/Yasir-77/Devops-Learning/edit/main/linux/notes/README.md#what-is-linux)
 - 1.1 Why use Linux?
 - 1.2 Why are there different distributions
--       
+      
 Chapter 2: [How to setup Ubuntu and terminal](https://github.com/Yasir-77/Devops-Learning/tree/main/linux/notes#how-to-install-linux)
 
 Chapter 3: [Basic Linux commands](https://github.com/Yasir-77/Devops-Learning/tree/main/linux/notes#basic-linux-commands)
