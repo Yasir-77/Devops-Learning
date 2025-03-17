@@ -35,8 +35,8 @@ Chapter 6: [VIM](https://github.com/Yasir-77/Devops-Learning/tree/main/linux/not
 - 6.3 Saving and exiting
 
 Chapter 7: [Sudo command](https://github.com/Yasir-77/Devops-Learning/tree/main/linux/notes#sudo-command)
-7.1 What is the Sudo command
-7.2 rm -rf / Very dangerous command
+- 7.1 What is the Sudo command
+- 7.2 rm -rf / Very dangerous command
 
 Chapter 9: [Users & Groups](https://github.com/Yasir-77/Devops-Learning/tree/main/linux/notes#users)
 
