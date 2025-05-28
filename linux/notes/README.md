@@ -382,6 +382,7 @@ vim has multiple modes but the 3 most important ones are:
 | `O`       | Insert a new line above the current line and enter Insert Mode |
 | `x`       | Delete the character under the cursor |
 | `dd`      | Delete the current line |
+| `D`       | Deletes from the cursor to the end of the line |
 | `yy`      | Yank (copy) the current line |
 | `p`       | Paste the yanked or deleted text after the cursor |
 | `u`       | Undo the last change |
