@@ -400,6 +400,16 @@ To save and exit the file, use the Command-Line Mode:
 | `:wq`    | Save and quit Vim |
 | `:q!`    | Quit Vim without saving changes |
 
+### Extra vim features
+
+In command mode type:
+
+| Command  | Action |
+|----------|--------|
+| `:syntax on`     | Enables syntax highlighting |
+| `:set number`    | Enables line number on the left |
+| `:set nonumber`  | Hides Line number | 
+
 ## Sudo command
 
 ### What is the Sudo command
