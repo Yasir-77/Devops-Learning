@@ -620,10 +620,10 @@ sudo chown -R newuser:group1 my_directory_copy
 ## Standard Streams (standard input, output and error streams)
 Redirection allows you to control where the output of a command goes or where the input comes from. Here's a some examples:
 
->: Redirect standard out to a file.
+**`>`**: Redirect standard out to a file.
 Example: echo "text" > file.txt writes "text" to file.txt.
 
-<: Redirect a file to standard din.
+**`<`**: Redirect a file to standard din.
 Example: cat < file.txt reads input from file.txt instead of the keyboard.
 
 >>: Append standard to a file. Add more text
