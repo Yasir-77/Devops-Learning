@@ -626,10 +626,10 @@ Example: echo "text" > file.txt writes "text" to file.txt.
 **`<`**: Redirect a file to standard din.
 Example: cat < file.txt reads input from file.txt instead of the keyboard.
 
->>: Append standard to a file. Add more text
+**`>>`**: Append standard to a file. Add more text
 Example: echo "more text" >> file.txt appends "more text" to file.txt.
 
-2>: Redirect standard error to a file.
+**`2>`**: Redirect standard error to a file.
 command 2> error.log redirects errors to error.txt
 
 Example: 
