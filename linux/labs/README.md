@@ -219,3 +219,54 @@ The password is dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
 ## Level 11 to 12:
 
 To find the password type:
+```
+ls
+```
+Then:
+```
+cat data.txt
+```
+Then use the **`tr`** command - The tr command in Linux is used to translate, squeeze, or delete characters from standard input short for translate.
+
+To decode ROT13 encoded files you would use tr followed by: **`'A-Za-z' 'N-ZA-Mn-za-m'`**
+
+- 'A-Za-z' — matches all uppercase and lowercase letters
+- 'N-ZA-Mn-za-m' — maps each letter to its counterpart 13 letters ahead, wrapping around at the end of the alphabet
+
+Type:
+```
+tr 'A-Za-z' 'N-ZA-Mn-za-m' < data.txt
+```
+
+The password is 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
+
+## Level 12 to 13:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
