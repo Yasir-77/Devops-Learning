@@ -674,7 +674,7 @@ Use export to set a variable for the current session For exmple:
 
 export Name = VALUE
 
-export JAVA_HOME = /usr /bin /java
+export JAVA_HOME = /usr/bin/java to the checkl type echo $JAVA_HOME result shoulld show /usrbin/java
 
 2. Permanently
 
@@ -696,6 +696,32 @@ If you want to add /home/ubuntu to $PATH:
 export PATH=$PATH:/opt/my_program/bin
 ```
 To make it permanent, add this line to ~/.zshrc
+
+## Aliases
+
+Aliases ara shortcuts that allow you to create custom commands. They are useful for simplifying long commands that are used frequently.
+
+To view current aliases type the command **`alias`** in the terminal. 
+
+To create a temporary alias you would type the command **`alias`** followed by what you want the alias to be called. Then what you want the alias to print. For example to create an alias called hello to print out hello world you would type the following:
+```
+alias hello='echo "Hello World"'
+```
+
+To create a permanent alias. Open up .zshrc by typing:
+```
+vim .zshrc
+```
+Then go righ to the bootom of the script and type:
+
+```
+alias hello='echo "Hello World"'
+```
+Then exit the editor by typing :wq! and type the following into the terminal.
+```
+source .zshrc
+```
+Then close and resstart the whole terminal by exiting amnd then signing back in. This will make the alias permanent.
 
 
 
