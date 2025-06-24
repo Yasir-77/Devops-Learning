@@ -242,25 +242,50 @@ The password is 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
 
 ## Level 12 to 13:
 
+Start by navigating tpo the root user by typing the command **`cd`** /. Then click **`ls`** you should see a /tmp, navigate to the directory by typing cd **`/tmp`**. Then create a temporary directory by typing the following:
+```
+mktemp -d
+```
+
+Then navigate back to the directory where the data.txrt file was stored so type **`cd ~`**. From here copy the file name and move it to the temporary directory that was created. Type the follwoing
+```
+cpo data.txt /tmp/tmp1234
+```
+
+Type: (This will reverse the hex dump back to binaray form)
+```
+xxd -r data.txt > data
+```
+
+Then type: ( This will show you what file type data is)
+```
+file data 
+```
+
+Then rename and decompress accordingly:
+
+Example:
+If it's gzip:
 
 ```
-ls
+mv data data.gz
+gunzip -d data.gz
 ```
-Then:
-```
-cat data.txt
-```
-Then use the **`tr`** command - The tr command in Linux is used to translate, squeeze, or delete characters from standard input short for translate.
 
-To decode ROT13 encoded files you would use tr followed by: **`'A-Za-z' 'N-ZA-Mn-za-m'`**
+If it's tar:
 
-- 'A-Za-z' — matches all uppercase and lowercase letters
-- 'N-ZA-Mn-za-m' — maps each letter to its counterpart 13 letters ahead, wrapping around at the end of the alphabet
+```
+mv data data.tar
+tar -xf data.tar
+```
 
-Type:
+If it's bzip2:
+
 ```
-tr 'A-Za-z' 'N-ZA-Mn-za-m' < data.txt
+mv data data.bz2
+bunzip2 -d data.bz2
 ```
+At one point a new file will come in data6.bin and data8.bin read the files using the file comman and change to the relevant file type accordingly and continue the process.
 
 The password is: FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn
 
