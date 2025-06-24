@@ -330,7 +330,7 @@ The password for level 15 is
 
 kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
 
-##Level 16 to 17:
+## Level 16 to 17:
 
 When in the bandit 16 server type:
 
