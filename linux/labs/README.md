@@ -289,6 +289,73 @@ At one point a new file will come in data6.bin and data8.bin read the files usin
 
 The password is: FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn
 
+## Level 13 to 14:
+
+To find the private SSH key type **`ls`** and the SSH key is sshkey.private.
+
+Then type the following into the terminal:
+```
+sshi -i sshkey.private bandit14@localhost -p 2220
+```
+
+The password is: MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
+
+## Level 14 to 15:
+
+On the same local host without exiting the environment type:
+
+```
+nc localhost 30000
+```
+
+Then enter the previous level password which is: MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
+
+The password to level 14 is: 
+
+8xCjnmgoKbGLhHFAZlGE5Tmu4M2tKJQo
+
+## Level 15 to 16:
+
+Once entering the environment for Level 15.
+
+You would need to use the command ncat --ssl . The ncat command with -ssl is used to create SSL/TLS-encrypted connections using Ncat. This is simply done by typing **`ncat --ssl <hostname> <port>`**
+
+```
+ncat --ssl localhost 300001
+```
+
+Then typed in the password to get into level 15 which is: 8xCjnmgoKbGLhHFAZlGE5Tmu4M2tKJQo
+
+The password for level 15 is 
+
+kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx
+
+##Level 16 to 17:
+
+When in the bandit 16 server type:
+
+```
+nmap -p 31000-32000 localhost
+```
+
+This command scans ports 31000 to 32000 on your local machine to check which ones are open (i.e., have a server listening on them). **`nmap`** (short for network mapper) is a powerful tool used for: scanning networks, auditing security, finding open ports and detecting services and operating systems
+
+Once you get a list of open ports type the following command:
+
+```
+ncat --ssl localhost <port numbers> 
+```
+
+Then type the password obtaines form the previous level kSkvUpMQ7lBYyCM4GBPvCvT1BfWRy0Dx.
+
+The result opbtained should be a key with multiple letters and numbers. copy the text
+
+Then type **`vim key`** into your linux terminal. Paste the key obtained from the level and then type **`chmod +x key`**. To log into the next level type:
+
+```
+ssh -i key bandit17@bandit.labs.overthewire.org -p 2220
+```
+
 
 
 
