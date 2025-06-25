@@ -295,7 +295,7 @@ To find the private SSH key type **`ls`** and the SSH key is sshkey.private.
 
 Then type the following into the terminal:
 ```
-sshi -i sshkey.private bandit14@localhost -p 2220
+ssh -i sshkey.private bandit14@localhost -p 2220
 ```
 
 The password is: MU4VWeTyJk8ROof1qqmcBPaLh7lDCPvS
