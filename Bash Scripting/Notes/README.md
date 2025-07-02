@@ -599,7 +599,23 @@ do
 
 done
 ```
+The output of the script:
 
+The script prints the numbers 1, 2, 4, and 5, but skips printing 3 because of the if and continue logic.
+
+Breakdown of script
+
+while [ $count -le 5 ] - This starts a while loop, It will keep running as long as count is less than or equal to 5.
+
+if [ $count -eq 3 ] - Checks if the current value of count is equal to 3, The -eq operator means "equal" in Bash integer comparisons.
+
+((count++)) - Increments the count variable by 1 using arithmetic syntax. This ensures the loop moves forward even if the continue is used.
+
+continue -  Skips the rest of the loop body for the current iteration and goes back to the while condition. So, if count is 3, the script skips the echo and jumps to the next loop.
+
+echo "count: $count" - Prints the current value of count, prefixed by "count: ". This line is skipped when count == 3 due to the continue.
+
+((count++)) Increments the count variable again to ensure the loop progresses. This happens for all values except when count == 3 (because in that case, the continue skips it).
 
 
 
