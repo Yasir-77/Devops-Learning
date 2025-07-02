@@ -28,7 +28,7 @@ vim first_script.sh
 ```
 The first line of every file starts with a Shebang line type:
 
-press i to inter insert mode and type:
+press i to enter insert mode and type:
 ```
 #!/bin/bash
 
@@ -170,9 +170,10 @@ echo "Rectangle area: $area"
 echo "Rectangle perimeter: $perimeter"
 ```
 When you run your script it will output:
-```
+
 Rectangle area: 40
 Rectangle permiter: 25
+
 
 ### if statements
 
@@ -210,7 +211,7 @@ then
 fi
 
 ```
-This script should printt "You are an adult".
+This script should print "You are an adult".
 
 If statments become more powerful when combined with logical operators for example:
 - && = AND
@@ -250,3 +251,393 @@ fi
 
 ```
 The script in this case will print "Hello, Alice". If any other name is the variable nothing will appear.
+
+### else and elif
+
+The else clause provides an alternative code block to be executed when the if condition evaluates to false. It provides an alternative path in your scripts flow offering flexibility and versatility.
+
+The structure of an else clause:
+```
+#!/bin/bash
+
+if condition
+then
+	# code block if condition is true
+else
+  	# code block if condition is false
+fi
+```
+
+Some examples:
+
+e.g.1
+```
+#!/bin/bash
+
+age=15
+
+if [ $age -gt 18 ]
+then
+	echo "You are an adult!"
+else
+  	echo "You are not an adult!"
+fi
+```
+The script will print "You are not an adult!"
+
+e.g.2
+```
+#!/bin/bash
+
+score=85
+
+if [ $score -ge 90 ]
+then
+	echo "Excellent!"
+elif [ $score -ge 80 ]
+then
+  	echo "Good!"
+else
+  	echo "Better luck nect time"
+fi
+```
+
+The elif clause allows us to add another condition if nthe first condition is false. The else clause only executes when the condition for the if statements arent met
+
+With the score being 85 the script will print "Good!".
+
+### Nested if statements
+
+Nested if statements allow you to check multiple conditions in a more complex manner. When you nest if statements, an inner if block is executed only if the outer if condition is true. This is useful when decisions depend on more than one condition.
+
+For Example:
+```
+#!/bin/bash
+
+age=18
+grade=85
+
+if [ "$age" -gt 18 ]; then
+    echo "You are eligible based on age."
+  if [ "$grade -ge 80" ]; then
+    echo "You are eligible based on grade."
+    echo "Congrats! You are eligible for scholarship"
+  else
+    echo "sorry your grade is not high enough"
+  fi 
+else
+   echo "sorry, you are not eligible"
+  fi
+```
+
+In this case the response will say "sorry you are not eligible" this is due to the age, however if the age=19, the script will read "You are eligible based on age. You are eligible based on grade. Congrats! you are eligible for scholarship".
+
+### While loops
+
+While loops allow you to repeatedly execute a block of code as long as a specified condition is true. These loops are useful when you don't know in advance how many iterations you'll need, and the loop continues until a condition is no longer met.
+
+The general structure of a while loop is:
+```
+#!/bin/bash
+
+while condition
+do
+	# code to be executed
+done
+```
+
+Some examples:
+
+e.g.1
+```
+#!/bin/bash
+
+count=1
+
+while [ $count -le 5 ]
+do
+	echo "count: $count"
+        ((count++))  
+done
+```
+When this is run the count will continue until it reaches 5, once it does the loop ends. ((count++)) adds 1 for each iteration of this while loop.  The script will show:
+```
+count: 1
+count: 2
+count: 3
+count: 4
+count: 5 
+```
+
+e.g.2 
+```
+#!/bin/bash
+
+fruits=("apple" "banana" "orange") 
+index=0 
+
+while [ $index -lt ${#fruits[@]} ]
+do
+	echo "Fruit: ${fruits[$index]}" 
+        ((index++))  
+done
+```
+
+When running the script the output would be:
+```
+Fruit: apple
+Fruit: banana
+Fruit: orange
+```
+
+Explaining the code:
+
+
+fruits=("apple" "banana" "orange") - This line declares an array called fruits with three elements: "apple", "banana", and "orange".
+
+index=0  - A variable called index is initialized with a value of 0. This will be used to keep track of the current position (or index) as we loop through the array.
+
+while [ $ index -lt ${#fruits[@]} ] - This is a while loop that continues as long as the condition is true.
+Condition: [ $ index -lt ${#fruits[@]} ] checks if the value of index is less than the number of elements in the array
+
+echo "Fruit: ${fruits[$index]}" -  This line prints the current fruit in the array.
+${fruits[$index]} accesses the element in the array at the position specified by index. For example, if index is 0, it accesses fruits[0], which is "apple".
+        
+((index++))  #This is a shorthand for incrementing the value of index by 1.
+
+### for loops
+
+The for loop is a versatile construct used to iterate over a series of items or to execute a block of code a specific number of times. 
+
+The structure for a for loop is:
+```
+#!/bin/bash
+
+for variable in sequence
+do
+    ~code block to be executed
+done
+```
+Some examples:
+
+e.g.1
+```
+#!/bin/bash
+
+for (( i=1; i<=5; i++))
+do
+    echo "Number: $i"
+done
+```
+The script will print:
+```
+Number: 1
+Number: 2
+Number: 3
+Number: 4
+Number: 5
+```
+Break down of script:
+
+for (( i=1; i<=5; i++ )): This is a for loop. i=1 initializes the variable i to 1. i<=5 specifies the loop should continue as long as i is less than or equal to 5. i++ increments the value of i by 1 after each iteration.
+
+do:
+Begins the block of code that will be executed in each iteration of the loop.
+
+echo "Number: $i":
+Prints the current value of i with the prefix "Number: ". $i represents the current value of the loop variable.
+
+e.g.2
+```
+#!/bin/bash
+
+fruits=("apple" "banana" "orange")
+
+for fruit in "${fruits[@]}"
+do
+    echo "Fruits: $fruit"
+done
+```
+The script will print:
+```
+Fruit: apple
+Fruit: banana
+Fruit: orange
+```
+Breakdown of script:
+
+fruits=("apple" "banana" "orange"): This line declares an array named fruits containing three elements: "apple", "banana", and "orange".
+
+for fruit in "$ {fruits[@]}": This for loop iterates over each element in the fruits array. $ {fruits[@]} expands to all elements of the fruits array. Fruit is a loop variable that takes each value of the array in turn.
+
+echo "Fruit: $fruit": This command prints the current value of the fruit variable, prefixed by "Fruit: ".
+
+e.g.3 
+```
+#!/bin/bash
+
+for number in $(seq 1 5)
+do 
+    echo "Number: $number"
+done
+```
+The script will print:
+```
+Number: 1
+Number: 2
+Number: 3
+Number: 4
+Number: 5
+```
+Break down of script:
+
+for number in $(seq 1 5):
+
+$ (seq 1 5) generates a sequence of numbers from 1 to 5. seq is a command that outputs a sequence of numbers, and $(...) captures this output as a list.
+The for loop iterates over each number generated by seq, assigning each number to the variable number in turn.
+
+do: Marks the beginning of the loop body.
+
+echo "Number: $number": This command prints the current value of the number variable, prefixed by "Number: ".  
+
+### Break and Continue
+
+In Bash scripting, break and continue are control flow statements used to alter the flow of execution within loops. The break statement is used to exit from a loop prematurely. It terminates the loop and transfers control to the statement immediately following the loop. The continue statement skips the remaining code in the current iteration of the loop and proceeds to the next iteration. It does not exit the loop but rather jumps to the next iteration.
+
+For example 
+
+e.g. 1a
+```
+#!/bin/bash
+
+for (( i=1; i<=5; i++))
+do
+
+    if [ $i -eq 3 ]
+    then
+        break 
+    fi
+    echo "Number: $i"
+
+done
+```
+The output will show:
+```
+Number: 1
+Number: 2
+```
+The loop will execute and print values of i from 1 to 2. When i reaches 3, the break statement will be triggered, and the loop will terminate before printing 3 or any subsequent numbers.
+
+e.g. 1b
+```
+#!/bin/bash
+
+for (( i=1; i<=5; i++))
+do
+
+    if [ $i -eq 3 ]
+    then
+        continue 
+    fi
+    echo "Number: $i"
+
+done
+```
+The output will show:
+```
+Number: 1
+Number: 2
+Number: 4
+Number: 5
+```
+The script iterates from 1 to 5. When i is 3, the continue statement causes the loop to skip the echo command for that iteration. The result is that "Number: 3" is not printed, but all other numbers in the range are printed.
+
+The break and continue statements also work for while loops, the behaviour is the same:
+
+e.g.2
+
+```
+#!/bin/bash
+
+while true
+do
+
+    echo "count: $count"
+    ((count++))
+    if [ $count -eq 4 ]
+    then
+        break
+    fi
+
+done
+```
+The output will show:
+```
+count: 1
+count: 2
+count: 3
+```
+The while true loop runs infinitely until the break condition is triggered. The count variable is incremented on each iteration and is printed, the loop stops when count equals 4 due to the break statement.
+
+e.g.3 
+
+```
+#!/bin/bash
+
+count=1
+
+while [ $count -le 5 ]
+do
+
+    if [ $count -eq 3 ]
+    then	
+    	((count++))
+    	continue
+    fi
+    echo "count: $count"
+    ((count++))	
+
+done
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
