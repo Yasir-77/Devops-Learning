@@ -789,7 +789,7 @@ echo "Hello, $name!"
 
 greet
 ```
-The out putput of the script will be the same as above. The difference is:
+The putput of the script will be the same as above. The difference is:
 
 $# - Checks the number of arguments passed to the function. If no arguments are passed, it prompts the user for their name. If an argument is passed, it uses the argument as the name. This flexibility allows the function to work both interactively (with read) and with pre-supplied arguments.
 
@@ -797,7 +797,7 @@ $# - Checks the number of arguments passed to the function. If no arguments are 
 
 Bad data refers to invalid or unexpected user inputs that may casue errors or undesired behaviour in our scripts. Implementing eror handling techniques can ensure the functions handle bad data with no issues.
 
-Examples
+Example
 ```
 validate_age() {
     local age=$1
@@ -841,6 +841,43 @@ $? holds the exit status of the last executed command (in this case, the validat
 if (( exit_code != 0 )):
 
 If the exit code is not 0 (i.e., validation failed), it prints "Input validation failed".
+
+### Introduction to error handling
+
+Error handling in scripts is forseeing where things could go wrong and taking measures to handle those situations rather than letting the script crash or continue in an error state.
+
+Examples:
+
+```
+#!/bin/bash
+num1=10
+num2=0
+
+if [ $num2 -eq 0]; then
+	echo "error: Division by zero is not allowed"
+	exit 1
+
+result=$((num1 / num2))
+
+echo "The result is: $result"
+```
+
+if [ $num2 -eq 0 ]; then - Condition check: -eq checks if num2 is equal to 0. To prevent a division by zero, which would cause a runtime error. Error Handling Starts Here
+
+echo "Error: Division by zero is not allowed" -  Prints an error message to the terminal if the condition is true.
+
+exit 1 - Exits the script immediately with a status code of 1.
+
+Exit codes:
+- 0 means success.
+- 1 (or any non-zero value) indicates an error.
+
+This is a common error handling pattern in Bash.
+
+
+
+
+
 
 
 
