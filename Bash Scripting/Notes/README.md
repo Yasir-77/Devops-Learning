@@ -600,7 +600,12 @@ do
 done
 ```
 The output of the script:
-
+```
+count: 1
+count: 2
+count: 4
+count: 5
+```
 The script prints the numbers 1, 2, 4, and 5, but skips printing 3 because of the if and continue logic.
 
 Breakdown of script
@@ -616,6 +621,226 @@ continue -  Skips the rest of the loop body for the current iteration and goes b
 echo "count: $count" - Prints the current value of count, prefixed by "count: ". This line is skipped when count == 3 due to the continue.
 
 ((count++)) Increments the count variable again to ensure the loop progresses. This happens for all values except when count == 3 (because in that case, the continue skips it).
+
+### Basics of functions
+
+A function in Bash is a block of reusable code that can be defined once and called multiple times in a script. Functions make scripts easier to manage and reduce code duplication.
+
+The structure of a function in bash:
+The structure for a for loop is:
+```
+#!/bin/bash
+
+function_name() {
+
+    #code block to be executed
+}
+```
+Some examples:
+
+e.g.1
+```
+#!/bin/bash
+
+hello_world() {
+      echo "Hello world!"
+}
+
+hello_world
+```
+The function hello_world is defined and called to display "Hello world!".
+
+e.g.2
+```
+#!/bin/bash
+
+hello_world() {
+      echo "Hello world!"
+}
+
+greet_person() {
+      local name="$1"
+      echo "Hello, $name!"
+}
+
+greet_person "Ahmed"
+greet_person "Sam"
+```
+The output of the script:
+```
+Hello, Ahmed!
+Hello, Sam!
+
+```
+Breakdown of the script:
+
+hello_world(): This function is defined to print "Hello world!", although it’s not called in this version of the script.
+
+greet_person(): This function takes one argument, which is the name of a person, and assigns it to the local variable name using the $1 positional parameter.
+
+local name="$1": Declares name as a local variable, scoped only to this function, and assigns it the value of the first argument passed to the function.
+
+echo "Hello, $name!": Prints a greeting message, replacing $name with the actual value passed.
+
+Function Calls:
+
+greet_person "Ahmed": Calls the greet_person function with "Ahmed" as the argument. The function prints "Hello, Ahmed!".
+
+greet_person "Sam": Calls the greet_person function with "Sam" as the argument. The function prints "Hello, Sam!".
+
+### Function parameters
+
+Function parameters provide a way to pass data to functions enabling them to perform specific tasks based on provided input. There are 2 types:
+
+- Positional parameters - Allows to pass data to functions and access them using numbered variables e.g. $1, $2/ 
+
+```
+#!/bin/bash
+
+print_args(){
+	echo "Number of arguments: $#"
+	echo "Script name: $0"
+	echo "First argument: $1"
+	echo "Second argument: $2"
+	echo "All arguments: $@"
+}
+
+print_args "Alice" "Bob" "Ahmed"
+```
+
+The output for this script will show:
+```
+Number of arguments: 3
+Script name: ./parameters.sh
+First argument: Alice
+Second argument: Bob
+All arguments: Alice Bob Ahmed
+```
+Breakdown:
+
+print_args() Function: The function accepts an arbitrary number of arguments. These arguments are accessed using positional parameters ($1, $2, etc.).
+Inside the Function:
+
+$#: The number of arguments passed to the function.
+
+$0: The name of the script (in this case, the name of the script that is being executed).
+
+$1: The first argument passed to the function (Alice).
+
+$2: The second argument passed to the function (Bob).
+
+$@: All the arguments passed to the function as separate words (Alice Bob Ahmed).
+Function Call:
+
+The print_args function is called with three arguments: "Alice", "Bob", and "Ahmed".
+
+### User inputs:
+
+User input allows the script to interact with the users and make them more dynamic and responsive. By accepting user input within functions interactive scripts can be created. 
+
+e.g.1
+
+```
+#!/bin/bash
+
+greet_user(){
+	echo "What is your name?"
+	read name
+	echo "Hello, $name!"
+}
+
+greet_useer
+```
+the output of this script will be:
+
+When you run this script, it will prompt you to enter your name, and then it will greet you:
+```
+What is your name?
+Ahmed
+Hello, Ahmed!
+```
+Breakdown:
+
+greet_user(): The function prompts the user for their name, reads the input, and then prints a personalized greeting using the input.
+
+read name: The read command stores the user's input in the variable name.
+
+echo "Hello, $name!": Prints a greeting using the value stored in the name variable.
+
+Function Call: The function is called correctly as greet_user, which matches the function's definition.
+
+e.g.2
+
+```
+#!/bin/bash
+
+greet(){
+	local name
+
+	if [ $# -eq 0 ]; then
+	echo "what is your name?"
+	read name
+else
+	name="$1"
+fi
+
+echo "Hello, $name!"
+}
+
+greet
+```
+The out putput of the script will be the same as above. The difference is:
+
+$# - Checks the number of arguments passed to the function. If no arguments are passed, it prompts the user for their name. If an argument is passed, it uses the argument as the name. This flexibility allows the function to work both interactively (with read) and with pre-supplied arguments.
+
+### Handling bad data
+
+Bad data refers to invalid or unexpected user inputs that may casue errors or undesired behaviour in our scripts. Implementing eror handling techniques can ensure the functions handle bad data with no issues.
+
+Examples
+```
+validate_age() {
+    local age=$1
+
+    if [[ ! $age =~ ^[0-9]+$ ]]; then
+        echo "Invalid age. Please provide a numeric value."
+        return 1
+    fi
+
+    if (( age < 18 )); then
+        echo "Sorry, you must be at least 18 years old."
+        return 1
+    fi
+
+    echo "Congratulations! You are eligible."
+    return 0
+}
+echo "please enter your age:"
+read user_age
+
+validate_age "$user_age"
+exit_code=$?
+
+if (( exit_code !=0 )); then
+	echo "Input validation failed"
+fi
+```
+Breakdown:
+
+Numeric Check: [[ ! $age =~ ^[0-9]+$ ]] uses a regular expression to ensure that the input is numeric.
+
+Age Check: (( age < 18 )) checks if the age is below 18.
+
+return 1: If the input is not numeric or the age is less than 18, it returns 1, signaling a failure.
+
+return 0: If the age is valid and at least 18, the function returns 0, signaling success.
+
+exit_code=$?:
+
+$? holds the exit status of the last executed command (in this case, the validate_age function). This is stored in exit_code.
+if (( exit_code != 0 )):
+
+If the exit code is not 0 (i.e., validation failed), it prints "Input validation failed".
 
 
 
