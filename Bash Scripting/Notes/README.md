@@ -1029,10 +1029,176 @@ Each line will be printed to the terminal with a + prefix, showing the command b
 
 To disable debugging, use set +x after the section you want to debug.
 
+### set -eux
 
+The set -eux command in Bash combines three useful options to enhance script debugging:
 
+Combined Effect of set -eux 
 
+Exit on Errors (-e): If any command fails (returns a non-zero exit code), the script will exit immediately.
 
+Exit on Unset Variables (-u): The script will exit if you use an unset variable.
+
+Debugging (-x):Each command and its expanded arguments will be printed to the terminal before execution, which helps with debugging.
+
+```
+#!/bin/bash
+
+set -eux
+
+echo "This is a test."
+X=10
+echo "The value of X is: $X"
+
+nonexistentcommand
+```
+Output:
+```
++ echo 'This is a test.'
+This is a test.
++ X=10
++ echo 'The value of X is: 10'
+The value of X is: 10
++ nonexistentcommand
+./eux.sh: line 8: nonexistentcommand: command not found
+
+```
+Breakdown:
+
+./eux.sh: line 8: nonexistentcommand: command not found: The error message indicates the failure and the line where it occurred.
+
+set -e ensures the script exits as soon as a command fails.
+
+set -u ensures the script exits if you try to use an unset variable didnt happen in this script.
+
+set -x gives detailed debugging output by showing each command as it runs.
+
+### Change PATH permanently:
+
+First create a new directory in the home directory where the custom script is going to be placed:
+```
+mkdir my_scripts
+```
+Then create a simple script you want to run from anywhere:
+```
+vi my_scripts/hello_world.sh
+```
+Type in the script:
+```
+#!/bin/bash
+
+echo "Hello World"
+```
+Then give it the executable permission by:
+```
+chmod +x my_scripts/hello_world.sh
+```
+The next step is to add this directory to the PATH: (Changes to path made in the terminal are temporary and lost when the shell session ends) to make them permantent add to zshrc file
+Do the following: 
+```
+echo "export PATH=$PATH:~/my_scripts >> ~/.zshrc
+```
+Then use the source command to update all the changes:
+```
+source ~/.zshrc
+```
+Then you can type hello_world.sh form anywhere and the script "Hello World" will show up.
+
+### Environment variables
+
+Environment variables are system-wide variables available to all processes, including shell scripts. You can access and read these environment variables directly in your script by using the $ symbol followed by the variable name.
+
+e.g.
+```
+#!/bin/bash
+
+my_home="$HOME"
+my_user="$USER"
+my_os="$OSTYPE"
+
+echo "Home Directory: $my_home"
+echo "Current user: $my_user"
+echo "OS Type: $my_os"
+```
+
+Output:
+Would show the users home directory, current user amd the OS Typer.
+
+my_home="$HOME": Stores the user's home directory in the variable my_home.
+
+my_user="$USER": Stores the current user's name in my_user.
+
+my_os="$OSTYPE": Stores the operating system type in my_os. $OSTYPE is a built-in Bash variable that gives information about the OS (e.g., linux-gnu for Linux, darwin for macOS).
+
+### Reading files
+
+Reading files in Bash is a core skill for automating tasks like processing logs, config files, or user data.
+
+Examples:
+
+e.g.1
+```
+#!/bin/bash
+
+read_file() {
+	local file_path="$1"
+
+	while IFS= read -r line; then
+		echo "$line"
+	done < "$file_path"
+}
+
+read_file "./log.txt"
+
+```
+Breakdown:
+
+read_file() { ... } - This defines a function in Bash called read_file. You can reuse this function to read any file by calling it with a file path.
+
+local file_path="$1" - Inside the function, we declare a local variable named file_path.
+
+$1 is the first argument passed to the function - So if you call read_file ./log.txt, then file_path="./log.txt".
+
+while IFS= read -r line; do - This is a loop that reads the file line by line, IFS= Prevents trimming of leading/trailing whitespace (IFS = Internal Field Separator), read -r prevents interpretation of backslashes (treats them literally). Each line is saved in the variable line
+
+echo "$line" - Prints the current line that was read from the file.
+
+done < "$file_path" - Redirects the file at "$file_path" into the while loop. Ensures the loop reads from the file, not from standard input.
+
+read_file "./log.txt" - This is a function call. It passes "./log.txt" as the argument to the read_file function.
+
+The function reads and prints every line from log.txt.
+
+### Writing files
+
+Writing to files in Bash scripting is an essential part of automating logs, config generation, backups, and more.
+
+Example:
+
+```
+#!/bin/bash
+
+write_to_file() {
+	local file_path="$1"
+	local data="$2"
+
+	echo "$data" > "$file_path"
+}
+
+write_to_file "read.txt" "Hello World"
+
+```
+Breakdown:
+
+write_to_file() -  This defines a function called write_to_file.
+
+local file_path="$1" - is the first argument passed to the function. It is stored in a local variable called file_path.
+
+local data="$2" - $2 is the second argument passed to the function. It is stored in a local variable called data.
+
+echo "$data" > "$file_path" - This writes the content of the data variable into the file specified by file_path. If the file already exists, it will be overwritten. >> will add any additional text to the file
+
+write_to_file "read.txt" "Hello World" This calls the write_to_file function, passing "read.txt" as the file path and "Hello World" as the content to write. The result is that a file named read.txt is created with the text "Hello World".
 
 
 
