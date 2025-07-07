@@ -1,4 +1,4 @@
-##The Game: Bash Battle Arena 🎮
+## The Game: Bash Battle Arena 🎮
 
 The "Bash Battle Arena" is a command-line game I've designed to teach and improve Bash scripting skills in a fun and interactive way. The game presents players with a series of increasingly complex challenges that they must solve by writing Bash scripts. Each challenge is structured like a level in a game, and as players progress, they learn new Bash concepts and best practices.
 
