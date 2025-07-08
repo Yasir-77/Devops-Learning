@@ -62,7 +62,7 @@ Comments can also be used when debugging or when not wanting to run a line of co
 
 Adding comments to your script improves readability, better collaboration with team and help ensures scripts purpose remains evidents
 
-### How to run scripts from anywhere
+## How to run scripts from anywhere
 
 The file my-first-script.sh can only be run in its current directory. To run the file from anywhere without specifying the Path do the following:
 
