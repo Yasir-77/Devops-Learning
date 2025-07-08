@@ -734,7 +734,7 @@ Function Call:
 
 The print_args function is called with three arguments: "Alice", "Bob", and "Ahmed".
 
-### User inputs:
+## User inputs:
 
 User input allows the script to interact with the users and make them more dynamic and responsive. By accepting user input within functions interactive scripts can be created. 
 
@@ -842,7 +842,7 @@ if (( exit_code != 0 )):
 
 If the exit code is not 0 (i.e., validation failed), it prints "Input validation failed".
 
-### Introduction to error handling
+## Introduction to error handling
 
 Error handling in scripts is forseeing where things could go wrong and taking measures to handle those situations rather than letting the script crash or continue in an error state.
 
