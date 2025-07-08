@@ -688,7 +688,7 @@ greet_person "Ahmed": Calls the greet_person function with "Ahmed" as the argume
 
 greet_person "Sam": Calls the greet_person function with "Sam" as the argument. The function prints "Hello, Sam!".
 
-### Function parameters
+## Function parameters
 
 Function parameters provide a way to pass data to functions enabling them to perform specific tasks based on provided input. There are 2 types:
 
