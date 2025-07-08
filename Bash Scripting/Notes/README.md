@@ -138,7 +138,7 @@ parameter 2: hi
 parameter 3:
 All Parameters: hello hi 
 ```
-### Arithmetic expansion
+## Arithmetic expansion
 
 Arithmetic expansion in Bash allows you to perform arithmetic operations directly within your scripts. You can use arithmetic expressions inside $(( ... )), which allows basic and complex mathematical operations.
 
