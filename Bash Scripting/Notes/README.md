@@ -16,7 +16,7 @@
 - Shebang line: The first line of the script should be **`#!/bin/bash
 - This tells your computer to use Bash to run the script.
 
-### How to write first simple script:
+## How to write first simple script:
 
 First create a simple script using the **`touch`** command For example:
 ```
@@ -46,7 +46,7 @@ To run the script type:
 ```
 The Shebang line always starts with a # followed by an !, it specifies the interpreter/shell that handles the script, it enables consistent executional scripts across different environment regardless of whatever shell is used and you can specifiy different interpreters for different types of scripts. It is always the first line of the script.
 
-### How to write comments in a file?
+## How to write comments in a file?
 
 - To write single line comments that you dont want appearing in a file for others simply use the **`#`** at the beginning of the line.
 
@@ -84,7 +84,7 @@ sudo chmod +x /usr/local/bin/greet
 ```
 Now you can type greet anywhere and "Hello World" will appear.
 
-### Variables
+## Variables
 
 In Bash, you can define variables without any special symbols or keywords. Just assign a value to a name, but do not use spaces around the = sign. For example to assign the variable name to Yasir type:
 ```
@@ -96,7 +96,7 @@ echo "Hello,$name"
 ```
 The output would be Hello Yasir
 
-### Parameters
+## Parameters
 
 Parameters are values you pass to a script when you execute it. These parameters allow you to make your script dynamic, flexible, and capable of handling various inputs.
 
@@ -175,7 +175,7 @@ Rectangle area: 40
 Rectangle permiter: 25
 
 
-### if statements
+## if statements
 
 In Bash scripting, if statements are used to execute a block of code based on a condition. The basic structure of an if statement can be extended to handle multiple conditions and complex logic.
 
@@ -252,7 +252,7 @@ fi
 ```
 The script in this case will print "Hello, Alice". If any other name is the variable nothing will appear.
 
-### else and elif
+## else and elif
 
 The else clause provides an alternative code block to be executed when the if condition evaluates to false. It provides an alternative path in your scripts flow offering flexibility and versatility.
 
@@ -306,7 +306,7 @@ The elif clause allows us to add another condition if nthe first condition is fa
 
 With the score being 85 the script will print "Good!".
 
-### Nested if statements
+## Nested if statements
 
 Nested if statements allow you to check multiple conditions in a more complex manner. When you nest if statements, an inner if block is executed only if the outer if condition is true. This is useful when decisions depend on more than one condition.
 
@@ -332,7 +332,7 @@ else
 
 In this case the response will say "sorry you are not eligible" this is due to the age, however if the age=19, the script will read "You are eligible based on age. You are eligible based on grade. Congrats! you are eligible for scholarship".
 
-### While loops
+## While loops
 
 While loops allow you to repeatedly execute a block of code as long as a specified condition is true. These loops are useful when you don't know in advance how many iterations you'll need, and the loop continues until a condition is no longer met.
 
@@ -405,7 +405,7 @@ ${fruits[$index]} accesses the element in the array at the position specified by
         
 ((index++))  #This is a shorthand for incrementing the value of index by 1.
 
-### for loops
+## for loops
 
 The for loop is a versatile construct used to iterate over a series of items or to execute a block of code a specific number of times. 
 
@@ -622,7 +622,7 @@ echo "count: $count" - Prints the current value of count, prefixed by "count: ".
 
 ((count++)) Increments the count variable again to ensure the loop progresses. This happens for all values except when count == 3 (because in that case, the continue skips it).
 
-### Basics of functions
+## Basics of functions
 
 A function in Bash is a block of reusable code that can be defined once and called multiple times in a script. Functions make scripts easier to manage and reduce code duplication.
 
@@ -793,7 +793,7 @@ The putput of the script will be the same as above. The difference is:
 
 $# - Checks the number of arguments passed to the function. If no arguments are passed, it prompts the user for their name. If an argument is passed, it uses the argument as the name. This flexibility allows the function to work both interactively (with read) and with pre-supplied arguments.
 
-### Handling bad data
+## Handling bad data
 
 Bad data refers to invalid or unexpected user inputs that may casue errors or undesired behaviour in our scripts. Implementing eror handling techniques can ensure the functions handle bad data with no issues.
 
@@ -896,7 +896,7 @@ FILE="/nonexistent" - Sets a variable FILE to a path that likely does not exist.
 if [[ -f "$FILE" ]]; then - [[ -f "$FILE" ]] Checks if the path stored in $FILE is a regular file. This is a test condition — -f means “Is this a file that exists?”,
 [[ ... ]] is the preferred syntax in Bash for complex test expressions.
 
-### Exit codes
+## Exit codes
 
 Exit codes are numeric values returned by a script or command after it finishes executing. These codes are used to indicate the success or failure of the command or script.
 
@@ -942,7 +942,7 @@ exit 1: This exits the script with an exit code of 1, indicating failure.
 
 Else Block: If git is found, the script prints that git is installed and continues.
 
-### set -e:
+## set -e:
 
 The set -e command in Bash is used to instruct the shell to exit immediately if any command in the script (except certain commands, like those inside if statements or conditions) returns a non-zero exit code. This helps to catch and handle errors early, ensuring that the script doesn't continue running after a failure, which could lead to unintended behavior. 
 
@@ -973,7 +973,7 @@ nonexistentcommand: This is not a valid command, so it will fail, returning a no
 
 echo "After the script": This line will not be executed because the script exits after nonexistentcommand fails
 
-### set -u:
+## set -u:
 
 set -u causes the script to exit with an error if you try to use a variable that has not been initialized.
 For example:
@@ -1001,7 +1001,7 @@ The script prints an error message indicating that w is an unbound variable.
 
 The echo "z equals: $z" line will not be executed because the script exits before reaching it.
 
-### set -x:
+## set -x:
 
 The set -x option prints each command that will be executed to the terminal before it is actually executed
 ```
@@ -1029,7 +1029,7 @@ Each line will be printed to the terminal with a + prefix, showing the command b
 
 To disable debugging, use set +x after the section you want to debug.
 
-### set -eux
+## set -eux
 
 The set -eux command in Bash combines three useful options to enhance script debugging:
 
@@ -1073,7 +1073,7 @@ set -u ensures the script exits if you try to use an unset variable didnt happen
 
 set -x gives detailed debugging output by showing each command as it runs.
 
-### Change PATH permanently:
+## Change PATH permanently:
 
 First create a new directory in the home directory where the custom script is going to be placed:
 ```
@@ -1104,7 +1104,7 @@ source ~/.zshrc
 ```
 Then you can type hello_world.sh form anywhere and the script "Hello World" will show up.
 
-### Environment variables
+## Environment variables
 
 Environment variables are system-wide variables available to all processes, including shell scripts. You can access and read these environment variables directly in your script by using the $ symbol followed by the variable name.
 
