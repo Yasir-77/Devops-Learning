@@ -46,7 +46,7 @@ To run the script type:
 ```
 The Shebang line always starts with a # followed by an !, it specifies the interpreter/shell that handles the script, it enables consistent executional scripts across different environment regardless of whatever shell is used and you can specifiy different interpreters for different types of scripts. It is always the first line of the script.
 
-## How to write comments in a file?
+## How to write comments in a file
 
 - To write single line comments that you dont want appearing in a file for others simply use the **`#`** at the beginning of the line.
 
