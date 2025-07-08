@@ -4,6 +4,6 @@
 
 ## Table of contents:
 
-Chapter 1: [Bash scripting fundamentals] (https://github.com/Yasir-77/Devops-Learning/tree/main/Bash%20Scripting/Notes#introduction-to-bash-scripting)
+Chapter 1: [Bash scripting fundamentals](https://github.com/Yasir-77/Devops-Learning/tree/main/Bash%20Scripting/Notes#introduction-to-bash-scripting)
 
 
