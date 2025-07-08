@@ -500,7 +500,7 @@ do: Marks the beginning of the loop body.
 
 echo "Number: $number": This command prints the current value of the number variable, prefixed by "Number: ".  
 
-### Break and Continue
+## Break and Continue
 
 In Bash scripting, break and continue are control flow statements used to alter the flow of execution within loops. The break statement is used to exit from a loop prematurely. It terminates the loop and transfers control to the statement immediately following the loop. The continue statement skips the remaining code in the current iteration of the loop and proceeds to the next iteration. It does not exit the loop but rather jumps to the next iteration.
 
