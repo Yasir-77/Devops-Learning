@@ -1130,7 +1130,7 @@ my_user="$USER": Stores the current user's name in my_user.
 
 my_os="$OSTYPE": Stores the operating system type in my_os. $OSTYPE is a built-in Bash variable that gives information about the OS (e.g., linux-gnu for Linux, darwin for macOS).
 
-### Reading files
+## Reading files
 
 Reading files in Bash is a core skill for automating tasks like processing logs, config files, or user data.
 
@@ -1169,7 +1169,7 @@ read_file "./log.txt" - This is a function call. It passes "./log.txt" as the ar
 
 The function reads and prints every line from log.txt.
 
-### Writing files
+## Writing files
 
 Writing to files in Bash scripting is an essential part of automating logs, config generation, backups, and more.
 
