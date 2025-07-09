@@ -58,4 +58,66 @@ Chapter 26; [Reading Files](https://github.com/Yasir-77/Devops-Learning/blob/mai
 
 Chapter 27: [Writing files](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#writing-files)
 
+Chapter 1: Introduction to Bash Scripting 
+
+Bash scripting fundamentals
+
+How to write your first simple script
+
+How to write comments in a file
+
+How to run scripts from anywhere
+
+Chapter 2: Variables and Parameters
+Variables
+
+Parameters
+
+Arithmetic expansion
+
+Chapter 3: Conditional Logic
+IF statement
+
+Else and Elif statements
+
+Nested IF statements
+
+Chapter 4: Looping Constructs
+While loops
+
+For loops
+
+Break and continue
+
+Chapter 5: Functions and User Interaction
+Basics of functions
+
+Function parameters
+
+User inputs
+
+Chapter 6: Error Handling and Debugging
+Handling bad data
+
+Introduction to error handling
+
+Exit codes
+
+set -e
+
+set -u
+
+set -x
+
+set -eux
+
+Chapter 7: Environment and File Operations
+Change PATH permanently
+
+Environment variables
+
+Reading files
+
+Writing files
+
 
