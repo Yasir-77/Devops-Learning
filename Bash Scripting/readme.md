@@ -4,120 +4,50 @@
 
 ## Table of contents:
 
-Chapter 1: [Bash scripting fundamentals](https://github.com/Yasir-77/Devops-Learning/tree/main/Bash%20Scripting/Notes#introduction-to-bash-scripting)
+Chapter 1: [Introduction to Bash Scripting](https://github.com/Yasir-77/Devops-Learning/tree/main/Bash%20Scripting/Notes#introduction-to-bash-scripting)
 
-Chapter 2: [How to write first simple script](https://github.com/Yasir-77/Devops-Learning/tree/main/Bash%20Scripting/Notes#how-to-write-first-simple-script)
+- Bash scripting fundamentals
+- How to write your first simple script
+- How to write comments in a file
+- How to run scripts from anywhere
 
-Chapter 3: [How to write comments in a file](https://github.com/Yasir-77/Devops-Learning/tree/main/Bash%20Scripting/Notes#how-to-write-comments-in-a-file)
+Chapter 2: [Variables and Parameters](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#variables)
 
-Chapter 4: [How to run scripts from anyhwere](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#how-to-run-scripts-from-anywhere)
+- Variables
+- Parameters
+- Arithmetic expansion
 
-Chapter 5: [Variables](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#variables)
+Chapter 3: [Conditional logic](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#if-statements)
 
-Chapter 6: [Parameters](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#parameters)
+- IF statement
+- Else and Elif statements
+- Nested IF statements
 
-Chapter 7: [Arithmatic expansion](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#parameters)
+Chapter 4: [Looping Constructs](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#while-loops)
 
-Chapter 8: [IF statemtent](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#if-statements)
+- While loops
+- For loops
+- Break and continue
 
-Chapter 9: [Else and Elif statements](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#else-and-elif)
+Chapter 5: [Functions and User Interaction](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#basics-of-functions)
 
-Chapter 10: [Neted IF tsatments](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#nested-if-statements)
+- Basics of functions
+- Function parameters
+- User inputs
 
-Chapter 11: [While lops](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#while-loops)
+Chapter 6: [Error Handling and Debugging](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#handling-bad-data)
+- Handling bad data
+- Introduction to error handling
+- Exit codes
+- set -e
+- set -u
+- set -x
+- set -eux
 
-Chapter 12: [For loops](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#for-loops)
-
-Chapter 13: [Break anf continue](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#break-and-continue)
-
-Chapter 14: [Basics of function](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#basics-of-functions)
-
-Chapter 15: [Function Parameters](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#function-parameters)
-
-Chapter 16: [User inputs](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#user-inputs)
-
-Chapter 17: [Handling bad data](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#handling-bad-data)
-
-Chapter 18: [Introduction to error handlind](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#introduction-to-error-handling)
-
-Chapter 19: [Exit codes](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#exit-codes)
-
-Chapter 20: [set -e](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#set--e)
-
-Chapter 21: [Set -u](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#set--u)
-
-Chapter 22: [Set -x](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#set--x)
-
-Chapter 23: [set -eux](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#set--eux)
-
-Chapter 24: [Change PATH permanently](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#change-path-permanently)
-
-Chapter 25: [Environment Variables](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#environment-variables)
-
-Chapter 26; [Reading Files](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#reading-files)
-
-Chapter 27: [Writing files](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#writing-files)
-
-Chapter 1: Introduction to Bash Scripting 
-
-Bash scripting fundamentals
-
-How to write your first simple script
-
-How to write comments in a file
-
-How to run scripts from anywhere
-
-Chapter 2: Variables and Parameters
-Variables
-
-Parameters
-
-Arithmetic expansion
-
-Chapter 3: Conditional Logic
-IF statement
-
-Else and Elif statements
-
-Nested IF statements
-
-Chapter 4: Looping Constructs
-While loops
-
-For loops
-
-Break and continue
-
-Chapter 5: Functions and User Interaction
-Basics of functions
-
-Function parameters
-
-User inputs
-
-Chapter 6: Error Handling and Debugging
-Handling bad data
-
-Introduction to error handling
-
-Exit codes
-
-set -e
-
-set -u
-
-set -x
-
-set -eux
-
-Chapter 7: Environment and File Operations
-Change PATH permanently
-
-Environment variables
-
-Reading files
-
-Writing files
+Chapter 7: [Environment and File Operations](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Notes/README.md#change-path-permanently)
+- Change PATH permanently
+- Environment variables
+- Reading files
+- Writing files
 
 
