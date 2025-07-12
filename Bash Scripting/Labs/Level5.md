@@ -1,9 +1,3 @@
-### Code Breakdown:
-
-- **`mkdir -p Backup`** - Creates a new directory named Backup. The -p flag means: Don't throw an error if Backup already exists, Create any parent directories if needed.
-
-- **`cp Arena/*.txt Backup/`** - Copies all .txt files from the Arena directory into the Backup directory. **`*.txt`** is a wildcard that matches all files ending in .txt.
-
 ## Level 5: The Boss Battle - Combining Basics
 
 ### Mission: Combine what you've learned! Write a script that:
