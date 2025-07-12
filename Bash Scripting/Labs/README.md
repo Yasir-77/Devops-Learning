@@ -18,7 +18,7 @@ Right now, there is no interface for the app - but soon there will be, and playe
 
 The Game
 
-## Level 1: The Basics
+## [Level 1: The Basics](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Labs/Level1.md#level-1-the-basics)
 Mission: Create a directory named Arena and then inside it, create three files: warrior.txt, mage.txt, and archer.txt. List the contents of the Arena directory.
 
 ## Level 2: Variables and Loops
