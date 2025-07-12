@@ -47,7 +47,7 @@ Mission: Combine what you've learned! Write a script that:
 ## [Level 6: Argument Parsing](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Labs/Level6.md#level-6-argument-parsing)
 Mission: Write a script that accepts a filename as an argument and prints the number of lines in that file. If no filename is provided, display a message saying 'No file provided'.
 
-## Level 7: File Sorting Script
+## [Level 7: File Sorting Script](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Labs/Level7.md#level-7-file-sorting-script)
 Mission: Write a script that sorts all .txt files in a directory by their size, from smallest to largest, and displays the sorted list.
 
 ## Level 8: Multi-File Searcher
