@@ -214,7 +214,9 @@ echo "The file '$1' has $LINE_COUNT lines."
 
 - **`LINE_COUNT=$(wc -l < "$1")`** - LINE_COUNT=$(...): Stores the line count in a variable called LINE_COUNT. **`wc -l < "$1"`**: Counts the number of lines in the file. wc -l counts lines. Using **`< "$1"`** redirects the file contents into wc -l without printing the filename in the output.
 
-- **`echo "The file '$1' has $LINE_COUNT lines."`** - Prints the final message showing: The file name ($1) & The number of lines ($LINE_COUNT
+- **`echo "The file '$1' has $LINE_COUNT lines."`** - Prints the final message showing: The file name ($1) & The number of lines ($LINE_COUNT)
+
+
 
 
 
