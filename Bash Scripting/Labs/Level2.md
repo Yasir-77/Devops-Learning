@@ -2,6 +2,8 @@
 
 ### Mission: Create a script that outputs the numbers 1 to 10, one number per line.
 
+---
+
 ### Solution:
 ```
 #!/bin/bash
@@ -14,6 +16,9 @@ do
     ((number++))
 done    
 ```
+
+---
+
 ### Code Breakdown:
 
 - `number=1` - Sets a variable called number to 1.
@@ -23,6 +28,8 @@ done
 - `echo "number: $number"` - Prints the current value of number to the terminal.
 
 - `((number++))` - Increment, Increases the value of number by 1 with each loop iteration.
+
+---
 
 ### Expected Output:
 ```
