@@ -7,6 +7,8 @@
 3. Check if knight.txt exists; if it does, move it to a new directory called Archive.
 4. List the contents of both Battlefield and Archive.
 
+---
+
 ### Solution:
 ```
 #!/bin/bash
@@ -27,6 +29,8 @@ echo "Contents in Archive"
 ls Archive
 ```
 
+---
+
 ### Code Breakdown:
 
 - **`mkdir -p Battlefield`** - mkdir creates a directory named Battlefield. The -p flag ensures the script doesn't throw an error if the directory already exists.
@@ -44,6 +48,8 @@ ls Battlefield`** - Prints the heading "Contents in Battlefield". Lists all file
 
 - **`echo "Contents in Archive"
 ls Archive`** - Prints the heading "Contents in Archive". Lists all files and directories inside Archive.
+
+---
 
 ### Expected Outcome: 
 ```
