@@ -24,7 +24,7 @@ Mission: Create a directory named Arena and then inside it, create three files: 
 ## [Level 2: Variables and Loops](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Labs/Level2.md#level-2-variables-and-loops)
 Mission: Create a script that outputs the numbers 1 to 10, one number per line.
 
-## Level 3: Conditional Statements
+## [Level 3: Conditional Statements](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Labs/Level3.md#level-3-conditional-statements)
 Mission: Write a script that checks if a file named hero.txt exists in the Arena directory. If it does, print Hero found!; otherwise, print Hero missing!.
 
 ## Level 4: File Manipulation
