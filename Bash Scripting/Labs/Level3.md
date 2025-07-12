@@ -28,3 +28,12 @@ fi
 - **`else 
     echo "Hero not found!"`** - If the file does not exist, this block runs instead and prints:
 
+
+### Expected Output:
+```
+Hero not found!
+```
+### Tip:
+
+You don’t have to use variables if you prefer a shorter version. You can write the path directly by using if [ -f Arena/Hero.txt ]; then.
+
