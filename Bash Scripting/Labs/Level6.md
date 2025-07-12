@@ -2,6 +2,8 @@
 
 ### Mission: Write a script that accepts a filename as an argument and prints the number of lines in that file. If no filename is provided, display a message saying 'No file provided'.
 
+---
+
 ### Solution:
 ```
 #!/bin/bash
@@ -19,6 +21,8 @@ fi
 LINE_COUNT=$(wc -l < "$1")
 echo "The file '$1' has $LINE_COUNT lines."
 ```
+
+---
 
 ### Code Breakdown:
 
