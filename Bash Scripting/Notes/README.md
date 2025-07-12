@@ -84,6 +84,8 @@ sudo chmod +x /usr/local/bin/greet
 ```
 Now you can type greet anywhere and "Hello World" will appear.
 
+---
+
 ## Variables
 
 In Bash, you can define variables without any special symbols or keywords. Just assign a value to a name, but do not use spaces around the = sign. For example to assign the variable name to Yasir type:
@@ -174,6 +176,7 @@ When you run your script it will output:
 Rectangle area: 40
 Rectangle permiter: 25
 
+---
 
 ## if statements
 
@@ -331,6 +334,8 @@ else
 ```
 
 In this case the response will say "sorry you are not eligible" this is due to the age, however if the age=19, the script will read "You are eligible based on age. You are eligible based on grade. Congrats! you are eligible for scholarship".
+
+---
 
 ## While loops
 
@@ -622,6 +627,8 @@ echo "count: $count" - Prints the current value of count, prefixed by "count: ".
 
 ((count++)) Increments the count variable again to ensure the loop progresses. This happens for all values except when count == 3 (because in that case, the continue skips it).
 
+---
+
 ## Basics of functions
 
 A function in Bash is a block of reusable code that can be defined once and called multiple times in a script. Functions make scripts easier to manage and reduce code duplication.
@@ -792,6 +799,8 @@ greet
 The putput of the script will be the same as above. The difference is:
 
 $# - Checks the number of arguments passed to the function. If no arguments are passed, it prompts the user for their name. If an argument is passed, it uses the argument as the name. This flexibility allows the function to work both interactively (with read) and with pre-supplied arguments.
+
+---
 
 ## Handling bad data
 
@@ -1103,6 +1112,8 @@ Then use the source command to update all the changes:
 source ~/.zshrc
 ```
 Then you can type hello_world.sh form anywhere and the script "Hello World" will show up.
+
+---
 
 ## Environment variables
 
