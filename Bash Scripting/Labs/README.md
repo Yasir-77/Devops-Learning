@@ -30,7 +30,7 @@ Mission: Write a script that checks if a file named hero.txt exists in the Arena
 ## Level 4: File Manipulation
 Mission: Create a script that copies all .txt files from the Arena directory to a new directory called Backup.
 
-## Level 5: The Boss Battle - Combining Basics
+## [Level 5: The Boss Battle - Combining Basics](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Labs/Level5.md#level-5-the-boss-battle---combining-basics)
 Mission: Combine what you've learned! Write a script that:
 
 1. Creates a directory names 'Battlefield'
