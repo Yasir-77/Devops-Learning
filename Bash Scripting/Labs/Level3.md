@@ -2,6 +2,8 @@
 
 ### Mission: Write a script that checks if a file named hero.txt exists in the Arena directory. If it does, print Hero found!; otherwise, print Hero missing!.
 
+---
+
 ### Solution:
 ```
 #!/bin/bash
@@ -17,6 +19,8 @@ else
 fi
 ```
 
+---
+
 ### Code Breakdown: 
 
 - **` directory="Arena" filename="Hero.txt"`** - These lines define two variables: directory holds the name of the folder you're checking (in this case, Arena). Filename holds the name of the file you're looking for (Hero.txt).
@@ -28,6 +32,7 @@ fi
 - **`else 
     echo "Hero not found!"`** - If the file does not exist, this block runs instead and prints:
 
+---
 
 ### Expected Output:
 ```
