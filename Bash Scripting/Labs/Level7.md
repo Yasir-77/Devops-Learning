@@ -1,10 +1,25 @@
+## Level 6: File Sorting Script
+
+### Mission: Write a script that sorts all .txt files in a directory by their size, from smallest to largest, and displays the sorted list.
+
+---
+
+### Solution:
+```
 #!/bin/bash
 
-DIRECTORY="Arena"
+Directory="Arena"
 
-if [ ! -d "$DIRECTORY" ]; then
+if [ ! -d "$Directory" ]; then
     echo "Directory does not exist."
     exit 1
 fi
 
-find "$DIRECTORY" -type f -name "*.txt" -exec ls -lh {} + | sort -k 5,5 -h | awk '{ print $5, $9 }'
+ls -lS $Directory/*.txt | awk '{ print $5, $9 }'
+```
+
+---
+
+### Code Breakdown:
+
+
