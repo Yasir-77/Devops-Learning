@@ -12,7 +12,7 @@ Now, there is no interactive VM to ssh into, or a website (yet) - so the game is
 
 ---
 
-### Game Structure
+### 🧱 Game Structure
 
 The games are level-based. You begin at level 1, and the difficulty increases as you go up the levels.
 
