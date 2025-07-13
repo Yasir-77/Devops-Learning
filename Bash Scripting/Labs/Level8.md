@@ -8,22 +8,25 @@
 ```
 #!/bin/bash
 
-DIRECTORY="Arena"
-SEARCH_TERM="Error"
+Directory="$1"
+Word="$2"
 
-if [ ! -d "$DIRECTORY" ]; then
-    echo "Directory does not exist."
+if [ -z "$Directory" ] || [ ! -d "$Directory" ]; then
+    echo "Error: Directory does not exist or not provided."
     exit 1
 fi
 
-grep -l "$SEARCH_TERM" "$DIRECTORY"/*.log
+grep -l "$Word" "$Directory"/*.log
 
 ```
 
----
-
 ### Code Breakdown:
 
+- `if [ -z "$Directory" ] || [ ! -d "$Directory" ]; then` - This checks two conditions: `-z "$Directory"`: True if Directory is empty (no argument passed). `! -d "$Directory"`: True if the path is not a valid directory. If either condition is true, it goes into the then block.
+
+- `echo "Error: Directory does not exist or not provided."` - Prints an error message if the directory check failed.
+
+- `grep -l "$Word" "$Directory"/*.log` - Searches for the given Word inside all .log files in the specified directory.`-l`: Makes grep print only the names of the files where matches were found.
 
 
 
