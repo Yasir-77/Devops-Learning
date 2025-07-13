@@ -2,6 +2,8 @@
 
 #### Welcome to the Linux Fundamentals repository! This resource is designed to help you master Linux from the ground up.
 
+---
+
 ## Table of contents:
 
 Chapter 1: [What is Linux?](https://github.com/Yasir-77/Devops-Learning/edit/main/linux/notes/README.md#what-is-linux)
