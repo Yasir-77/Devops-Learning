@@ -50,7 +50,7 @@ Mission: Write a script that accepts a filename as an argument and prints the nu
 ## [Level 7: File Sorting Script](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Labs/Level7.md#level-7-file-sorting-script)
 Mission: Write a script that sorts all .txt files in a directory by their size, from smallest to largest, and displays the sorted list.
 
-## Level 8: Multi-File Searcher
+## [Level 8: Multi-File Searcher](https://github.com/Yasir-77/Devops-Learning/blob/main/Bash%20Scripting/Labs/Level8.md#level-8-multi-file-searcher)
 Mission: Create a script that searches for a specific word or phrase across all .log files in a directory and outputs the names of the files that contain the word or phrase.
 
 ## Level 9: Script to Monitor Directory Changes
