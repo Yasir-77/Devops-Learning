@@ -76,6 +76,82 @@ The .git directory is the heart of every Git repository. It contains all the met
 
 ## Chapter 3: History, Branching & Merging
 
+### Viewing history
+
+Commands Used for viewing history:
+
+- `git log`: See commit history
+- `git log --oneline--graph`:Visual summary
+- `git show <commit>`: view a specific commit
+- `git diff`: Compare unstaged vx last commit
+- `git diff --staged`: comapare staged vs last commmit
+
+Bonus:
+
+- `git blame <file>`: show who last changed each line
+- `git reflog`: View local HEAD history (even deleted branches)
+
+### Git vs GitHub:
+
+| Feature                | **Git**                                      | **GitHub**                                       |
+| ---------------------- | -------------------------------------------- | ------------------------------------------------ |
+| **Type**               | Version control system (VCS)                 | Online hosting service for Git repositories      |
+| **What it does**       | Tracks changes in your local code            | Hosts repositories for collaboration and sharing |
+| **Where it runs**      | On your **local computer** (CLI or GUI)      | On the **web(cloud)** (`github.com`)              |
+| **Use case**           | Save versions, switch branches, undo changes | Collaborate, review code, manage pull requests   |
+| **Requires Internet?** | ❌ No (works offline)                         | ✅ Yes (web-based)                                |
+| **Interface**          | Command line / GUI apps (e.g., GitKraken)    | Web UI, GitHub Desktop, GitHub CLI               |
+| **Created by**         | Linus Torvalds (2005)                        | Microsoft (owns GitHub since 2018)               |
+
+
+### Branching
+
+- `git branch`: List/create branches
+- `git checkout -b<branch>`: Create & switch (older syntax)
+- `git switch -c<branch>`: modern version to do same as above
+- `git switch <branch>`: Sweitch branches safely
+- `git branch -d<branch>`: delete branch
+
+Note:
+
+Git switch is newer and more beginner friendly. Works only with newer git versions.
+
+Git branch only creates or lists, doesnt switch.
+
+checkout still works but is multi-purpose and confusing.
+
+### Merging in Git
+
+When you’ve been working on a separate branch (feature-x) and you want to add your changes to the main project (main), you merge the feature branch into main.
+
+![image](https://github.com/user-attachments/assets/8ba557ef-1c76-4009-ae63-d242c7c6383a)
+
+### Visulaise Branches & Logs:
+
+- `git log --oneline` - Compact commit view
+- `git log --graph` - visual tree structure
+- `git log --oneline --graph -all` - Comapct, visual and full view
+
+These are great for debugging merges and tracking branches. Helps yosee whats really happening under the hood.
+
+### Rebase vs Merge
+
+| **Merge**                                | **Rebase**                                          |
+| ---------------------------------------- | --------------------------------------------------- |
+| Combine changes and preserve all history | Combine changes and rewrite history                 |
+| Creates a new commit                     | No merge commits                                    |
+| Good for team workflows                  | Ideal for cleanup before PR                         |
+| Use wqhen working collaboratively        | Use when cleaning up your local history             |
+
+
+
+
+
+
+
+
+
+
 
 
 
