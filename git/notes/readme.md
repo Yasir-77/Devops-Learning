@@ -48,6 +48,7 @@ The .git directory is the heart of every Git repository. It contains all the met
 - .git/index - The staging area. Tracks what will be included in the next commit.
 
 ### Git common commands
+
 | Commands  | Use 
 |-------|------
 | git init | initialises a new Git repo with git directory|
@@ -62,6 +63,23 @@ The .git directory is the heart of every Git repository. It contains all the met
 | git rm | remove files|
 | git my | rename files|
 | git restore | undo file changes|
+
+### The Areas of Git
+
+![image](https://github.com/user-attachments/assets/b7bfeb0a-6b00-4cef-91ec-aef7a72569ce)
+
+- **1. Working Directory** - Where you actively edit files. It shows the current state of your project. - `git status` 
+- **2. Staging Area (Index)** - Holds changes you intend to include in the next commit. - `git add` to stage, `git status` to view 
+- **3. Git Repository (.git)** | The permanent, versioned history of your project. - `git commit` adds to this
+
+---
+
+## Chapter 3: History, Branching & Merging
+
+
+
+
+
 
 
 
