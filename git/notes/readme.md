@@ -143,13 +143,75 @@ These are great for debugging merges and tracking branches. Helps yosee whats re
 | Good for team workflows                  | Ideal for cleanup before PR                         |
 | Use wqhen working collaboratively        | Use when cleaning up your local history             |
 
+---
+
+## Advanced Git Usage:
+
+### Git stash and pop
+
+git stash is like putting your work into a temporary drawer so you can switch tasks without committing your changes. Later, you can take it out with git stash pop.
+
+Git stash and pop commands:
+
+- `git stash` - temporarily save uncommitted changes
+- `git stash list` - view all stashes
+- `git stash apply` - reapply latest stash (keeps stash)
+- `git stash pop` - reapply and delete the stash
+
+These commands are used when switching branches mid-task. Great for "I'm not ready to commit, but I need to move"
+
+### Git reset, Revert and cherry pick:
+
+#### git revert 
+
+- Creates a new commit that undoes another
+- safe for shared history
+- Used in production
+
+#### git reset 
+
+- move branch pointer backword
+- Soft = keep changes
+- Mixed = unstage
+- Hard = nuke everything.
+
+#### git cherry-pick
+
+- Apply a single commit from another branch
+- Useful for hotfixes or targeted changes
 
 
+### Forks and Pull requests (PRs)
 
+- Fork = your own copy of someone elses repo (on Github)
+- Clone the forked repo to your local machine
+- Make changes -> push to your fork
+- Open a Pull request (PR) to propose to your changes
+- Used in open source and cross-team, workflows
+- original rep owner can review, comment and merge.
 
+![image](https://github.com/user-attachments/assets/a85ce718-c9ff-4712-b135-887cb68a3470)
 
+### Collaborating practises
 
+- Use branches to isolate work
+- Push to remote and open pull requests
+- Assign reviewers, use GitHubs UI for comments
+- Resolve conflicts before merge
+- Use issues, projects, Discussions to track work
+- Keep commits focused and clean
 
+### Typical Git workflow
+
+![image](https://github.com/user-attachments/assets/d48f4284-310d-48f3-ad75-c75cbc27bce6)
+
+### Trunk-Based-Development 
+
+Trunk-Based Development (TBD) is a collaborative Git workflow where all developers work in a single main branch, called the trunk (usually main or master), and keep changes small and frequent.
+
+- All devs commit to main or short-lived branches
+- Heavy CI/testing gates
+- Used in fast-moving orgs (Google/Facebook)
 
 
 
