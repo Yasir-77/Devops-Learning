@@ -214,8 +214,41 @@ Trunk-Based Development (TBD) is a collaborative Git workflow where all develope
 - Used in fast-moving orgs (Google/Facebook)
 
 
+## Git best practises
 
+### Commit Hygiene & Best Practises
 
+Write good commit messages - A clear commit message makes it easy to understand what changed and why — even months later.
+
+Use squashing before merging PRs - Squashing lets you combine multiple small or messy commits into one clean, meaningful commit before merging a pull request.
+
+One logical change per commit - Each commit should do one thing only — not multiple unrelated changes.
+
+Avoid noisy merges or fixfixfinalfinal2 - Commits like fix, finalfinal, reallyfinal2 clutter the history and give no useful context.
+
+### Pre-commit & Automation
+
+1- Run linters/tests before comitting 9pre-commit, Husky, tflint/sec etc.)
+2- Prevent broken code from entering the repo
+3- Hook into CI pipelines for formatting, testing and scanning
+
+### Common Mistakes in the Real World
+
+![image](https://github.com/user-attachments/assets/6171b0fc-9366-4244-b12a-d841efcd8031)
+
+### Git at scale
+
+Absolutely! When using Git at scale, such as in large teams, monorepos, or enterprise environments, additional tools and practices are needed to manage complexity, performance, and automation.
+
+- Monorepo strategies - Single Git repo for multiple projects
+- Sparse checkout - Loads only part of the repository into your working directory — useful in huge monorepos.
+- Large file support (Git LFS) - Git is not good at handling large binaries (e.g. videos, datasets, design files). Use Git LFS (Large File Storage) to manage them.
+- Clean up legacy history (filter-branch, filter-repo) - Used to reduce repo size or remove sensitive files like secrets/passwords.
+- Submodules vs subtrees in microservice repos - Used when splitting projects into microservices with their own Git repos.
+- Selective CI builds (e.g. Turborepo, Nx, Bazel) - Run CI only on changed projects in a monorepo, instead of running everything every time.
+- Commit linting + bots to enforce rules - Ensure commits follow standards using tools/bots
+- GitOps-style deployments (e.g. ArgoCD, Flux) - Manage infrastructure and deployments using Git as the single source of truth.
+- Server-side Git hooks (e.g. pre-commit.ci, Lefthook) - Run checks on the Git server or CI to enforce rules before allowing pushes or merges.
 
 
 
