@@ -250,6 +250,21 @@ Absolutely! When using Git at scale, such as in large teams, monorepos, or enter
 - GitOps-style deployments (e.g. ArgoCD, Flux) - Manage infrastructure and deployments using Git as the single source of truth.
 - Server-side Git hooks (e.g. pre-commit.ci, Lefthook) - Run checks on the Git server or CI to enforce rules before allowing pushes or merges.
 
+### Git Security & Secrets Hygiene
+
+- Preveting secret leaks in commits
+- Using git-secrets, trufflehog
+- Cleaning secrets from history
+- Auditing rep contributors + logs.
+
+## Hands-on Git & Github
+
+### Connecting to Github
+
+- 1. git remore add origin <url>-link local --> GitHub
+- 2. git push -u origin main - send your work to the cloud
+- 3. git pull - bring down changes from Github
+- 4. SSH vs HTTPS: ssh = Secure no password, HTTPS = easy but asks for credentials
 
 
 
