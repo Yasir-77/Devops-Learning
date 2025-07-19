@@ -261,10 +261,10 @@ Absolutely! When using Git at scale, such as in large teams, monorepos, or enter
 
 ### Connecting to Github
 
-- 1. git remore add origin <url>-link local --> GitHub
-- 2. git push -u origin main - send your work to the cloud
-- 3. git pull - bring down changes from Github
-- 4. SSH vs HTTPS: ssh = Secure no password, HTTPS = easy but asks for credentials
+- 1- git remote add origin <url>-link local --> GitHub
+- 2- git push -u origin main - send your work to the cloud
+- 3- git pull - bring down changes from Github
+- 4- SSH vs HTTPS: ssh = Secure no password, HTTPS = easy but asks for credentials
 
 
 
