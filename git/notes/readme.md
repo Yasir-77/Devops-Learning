@@ -746,8 +746,111 @@ git stash clear
 ```
 Since everything went smoothly and nothing is left in stash, this clears all stash entries (if any remain).
 
+### git rebase & squash
 
+`git rebase` lets you move or replay your branch commits onto another base commit. It gives a linear, cleaner history.
 
+Example How to use rebase and squash
+
+Type the following:
+```
+git log --oneline
+```
+
+d7e1f00 Final styling
+e3f2d12 Add footer
+b4a3a9d Initial layout
+a1b2c3d main branch commit
+
+You want to squash the 3 feature commits into one.
+
+Step 1: Interactive rebase
+
+```
+git rebase -i HEAD~3
+```
+
+Step 2: Change from this:
+```
+pick b4a3a9d Initial layout
+pick e3f2d12 Add footer
+pick d7e1f00 Final styling
+```
+To this:
+```
+pick b4a3a9d Initial layout
+squash e3f2d12 Add footer
+squash d7e1f00 Final styling
+```
+Git will then open a new editor for you to combine commit messages. A message like feat: Add all 3 lines to changes.txt. At the top of the editor.
+
+Final result:
+```
+git log --oneline
+```
+```
+f8e3c5a Initial layout with footer and styling
+a1b2c3d main branch commit
+```
+
+Now your history is clean and easier to review.
+
+### git cherry-pick
+
+`git cherry-pick` applies the changes from an existing commit (or commits) onto your current branch, without merging the full branch.
+
+When to Use It:
+
+- You want a specific fix or feature, but not the whole branch
+- Applying a hotfix from a dev branch directly onto main
+- Pulling in individual commits from teammates without merging everything
+
+Example:
+
+1. Create a feature branch
+```
+git checkout -b feature-cherry
+```
+Created a new branch feature-cherry from main.
+
+2. Add a hotfix
+```
+echo "hotfix config for prod" > hotfix.txt
+git add hotfix.txt
+git commit -m "hotfix: add prod config fix"
+```
+Created a new file (hotfix.txt) and committed it with a meaningful message.
+
+3. Push the feature branch
+```
+git push --set-upstream origin feature-cherry
+```
+This pushes the branch to GitHub and sets the upstream so future git push/pull works without extra flags.
+
+4. List commits
+```
+git log --oneline
+```
+Retrieved the commit hash (6b65efa in this case) of the hotfix commit.
+
+5. Switch back to main
+```
+git checkout main
+```
+
+6. Cherry-pick the hotfix
+```
+git cherry-pick 6b65efa
+```
+Applied just that hotfix commit onto the main branch.
+
+It creates a new commit on main with the same changes as the one in feature-cherry.
+
+7. Push to remote
+```
+git push origin main
+```
+Pushed the cherry-picked change to GitHub’s main branch.
 
 
 
