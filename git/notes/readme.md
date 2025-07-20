@@ -266,8 +266,55 @@ Absolutely! When using Git at scale, such as in large teams, monorepos, or enter
 - 3- git pull - bring down changes from Github
 - 4- SSH vs HTTPS: ssh = Secure no password, HTTPS = easy but asks for credentials
 
+### GitHub signup
+
+1- Sign up to Github
+
+2- On your Linux machine type `sudo apt-get install git`.
+
+3- Create a Git Repository & link it locally, to congirgure Git and link it to any terminal type:
+
+```
+git config --global user.name "username"
+```
+```
+git config --global user.email "email"
+```
+4- Create a SSH Key and connect to Github
+
+On the command line type:
+```
+ssh-keygen -t ed25519 -C "user email" -f ~/.ssh/coderco_demo
+```
+This will create:
+
+~/.ssh/coderco_demo → your private key (keep this safe!)
+
+~/.ssh/coderco_demo.pub → your public key (add this to GitHub)
+
+5- Copy SSH key into your GitHub account.
+```
+cat ~/.ssh/coderco_demo.pub
+```
+then copy the content.
+
+Next you will go to your GitHub profile -> Settings -> SSH and GPG keys -> New SSH Key. Name the new SSH Key and paste the content you have copied from the terminal.
 
 
+### Git Verify login
+```
+eval "$(ssh-agent -s)"
+```
+This launches the SSH authentication agent in the background, which helps manage your SSH keys during the session. You should see output like: Agent pid 12345. This means the agent is running.
+
+```
+ssh-add ~/.ssh/coderco_demo
+```
+This command adds your private key (coderco_demo) to the agent. If successful, it will respond: Identity added: /home/yourname/.ssh/coderco (your-email@example.com)
+```
+ssh -T git@github.com
+```
+This checks that: Git can use your SSH key. You're authenticated with GitHub
 
 
 
