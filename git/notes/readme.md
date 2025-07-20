@@ -436,15 +436,54 @@ git branch
 git branch -d feature-1
 ```
 
+Git WorkFlow
 
+1- Create a new feature branch
+```
+git checkout -b feature/ass-about-page
+```
+Never work directly on main. Always make changes in a feature branch.
 
    
+2- Make your changes
+```
+echo "This is your about page." > about.md
+```
+```
+git add about.md
+```
+```
+git commit -m "Add about page"
+```
 
+3- Push your branch to GitHub
+```
+git push --set-updtream origin feature/add-about-page
+```
+Uploads your feature branch so others can see it.
 
+4- Open a Pull Request (PR)
 
+- Go to GitHub → Your repository
+- GitHub will show: “Compare & pull request”
+- Click it, write a clear title and description of your change
+- Assign reviewers (if needed)
 
+This is where code review, discussion, CI tests, and approvals happen.
 
+5 - Merge the Pull Request
 
+- Click “Merge Pull Request”
+- Optionally delete the branch in GitHub
+
+6-  Pull changes into local main
+```
+git checkout main
+```
+```
+git pull origin main
+```
+This syncs your local main branch with the latest merged changes.
 
 
 
