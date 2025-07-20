@@ -635,10 +635,38 @@ This:
 - Launches an editor (e.g., Nano or Vim) to confirm the commit message.
 - After saving, Git creates a new commit that removes Hello, production!.
 
+5- `git log --oneline`
 
+Is a shortened version of git log that shows your commit history in a compact, easy-to-read format.
 
+What it shows:
 
+Each line represents a single commit, like this:
 
+3f3a2b1 Revert "accidental prod commit"
+d9e1234 accidental prod commit
+a1b2c3d Initial commit
+
+Each entry includes:
+- A short hash of the commit (3f3a2b1)
+- The commit message
+
+6- `git reflog`
+
+It displays the history of where HEAD and branch tips have pointed, even if you've moved or deleted commits.
+
+Example: 
+```
+e3a1b23 HEAD@{0}: revert: Revert "accidental prod commit"
+f2b1a8d HEAD@{1}: commit: accidental prod commit
+c4d3f55 HEAD@{2}: commit (initial): initial commit
+```
+
+Each entry shows:
+
+- The commit hash
+- A HEAD@{n} reference (position in the reflog)
+- A short description of the action (e.g., commit, reset, checkout)
 
 
 
