@@ -613,6 +613,60 @@ Example:
 git reset --hard HEAD~1
 ```
 
+4- `git revert HEAD`
+
+What it does:
+
+creates a new commit that undoes the changes introduced by the last commit (HEAD) — without modifying Git history.
+
+When to use:
+
+Use git revert when you want to safely undo a commit, especially on shared branches (like main), without breaking history for others.
+
+Let’s say your last commit added this line: `Hello, production!`
+
+You realize it was a mistake, so you run:
+```
+git revert HEAD
+```
+
+This:
+
+- Launches an editor (e.g., Nano or Vim) to confirm the commit message.
+- After saving, Git creates a new commit that removes Hello, production!.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
