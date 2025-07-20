@@ -852,14 +852,53 @@ git push origin main
 ```
 Pushed the cherry-picked change to GitHub’s main branch.
 
+### The .gitignore
+
+What is .gitignore?
+
+- gitignore is a plain text file in a Git repository that tells Git which files or folders to ignore — meaning they won’t be tracked or committed.
 
 
+Why use it?
 
+- Avoid committing sensitive info (e.g., .env, API keys)
 
+- Skip OS or editor clutter (e.g., .DS_Store, Thumbs.db, *.swp)
 
+- Prevent checking in build artifacts (e.g., dist/, node_modules/, *.class)
 
+- Keep your repository clean and focused on the actual source code
 
+### git amend
 
+`git commit --amend` allows you to edit the most recent commit. You can:
+
+- Change the commit message
+- Add or remove files in the commit
+- Correct mistakes without creating a new commit
+
+Example 1: Fix a Commit Message
+```
+git commit --amend
+```
+You'll be taken to your default editor (like Nano or Vim) to change the message.
+
+Or do it inline:
+```
+git commit --amend -m "Corrected commit message"
+```
+Example 2: Add a Missed File
+```
+echo "Forgotten stuff" > forgot.txt
+git add forgot.txt
+git commit --amend --no-edit
+```
+--no-edit keeps the original commit message.
+
+Important Notes
+Amending rewrites history: it creates a new commit that replaces the old one. Only use --amend for commits not yet pushed to shared branches.
+
+If you already pushed, force-push may be needed: `git push --force`
 
 
 
