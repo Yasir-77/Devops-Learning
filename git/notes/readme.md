@@ -362,11 +362,83 @@ Changes to be committed: new file:   .gitignore
 6 - `git push` - Pushes the commit to your remote repository (on GitHub), assuming you already did: `git push -u origin main`
 If the upstream was already set earlier, git push knows where to send it.
 
+### Branching & Merging
+
+1- Initialise the main branch -  created app.txt and committed it on the main branch.
+```
+echo "Hello from main" > app.txt
+```
+```
+git status
+```
+```
+git add app.txt
+```
+```
+git commit -m "Inintial commit on main"
+```
+2- Create a feature branch and make changes - switched to a new branch feature-1 - overwrote `app.txt` with different conent and committed the change.
+```
+git checkout -b feature-1
+```
+```
+echo "Feature branch change" > app.txt
+```
+```
+git status
+```
+```
+git add app.txt
+```
+```
+git commit -m "update from feature-1"
+```
+3- Go back to main and make a conflicting change -  modified app.txt in main this change conflicts with the one from feature-1
+```
+git checkout main
+```
+```
+echo "Main branch change" > app.txt
+```
+```
+git add app.txt
+```
+```
+git commit -m "conflicting update from main"
+```
+4- Attempt to merge feature-1 into main
+```
+git merge feature-1
+```
+Git detects a merge conflict in app.txt because both branches made incompatible changes to the same line(s). Merge is paused until the conflict is resolved
+
+5. Resolve the conflict
+```
+echo -e "Hello from main\nMain branch change\nFeature branch change" > app.txt
+```
+```
+git add app.txt
+```
+```
+git commit -m "resolve merge conflict between main and feature-1 branch"
+```
+
+Manually edited the file to include both sets of changes. Then staged and committed the resolution.
+
+6. Push the final result - Uploads the resolved and merged code to your remote (e.g., GitHub)
+```
+git push
+```
+
+7. Cleanup: delete the merged feature branch - Lists branches and deletes the now-merged feature-1 branch locally
+```
+git branch
+git branch -d feature-1
+```
 
 
 
-
-
+   
 
 
 
