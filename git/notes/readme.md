@@ -485,15 +485,133 @@ git pull origin main
 ```
 This syncs your local main branch with the latest merged changes.
 
+### Undoing in Git
+
+#### git restore
+
+`git restore` helps undo changes in working directory and unstage files from staging area
+
+Example:
+
+1- Create and commit a file
+```
+echo "Original line" > undo.txt
+git add undo.txt
+git commit -m "test commit"
+```
+Created undo.txt with content "Original line". Staged and committed it to the repo
+
+2. Made a bad change
+```
+echo "bad change" > undo.txt
+```
+overwrites the file with new content: "bad change"
 
 
+3. Reverted the file with `git restore`
+```
+git restore undo.txt
+```
+This command restores the version of undo.txt from the last commit (HEAD), effectively undoing the bad local change
+
+Now:
+```
+cat undo.txt
+```
+Will show: Original line - Because the file is now back to the last committed version.
+
+#### git restore --staged
+
+1- Made a new change
+```
+echo "Another bad line" > undo.txt
+```
+Overwrote undo.txt again with a new line
+
+2. Staged the change
+```
+git add undo.txt
+```
+Now the modified version is in the staging area, ready to be committed
+
+3. Checked status
+```
+git status
+```
+Output: Changes to be committed: modified: undo.txt
+
+Confirms it's staged and ready to commit
+
+4. unstaged it using:
+```
+git restore --staged undo.txt
+```
+This removes the file from the staging area but keeps your changes in the working directory.
+
+5. Status now shows:
+
+Changes not staged for commit: modified: undo.txt. Your change still exists
+
+It's not staged anymore
+
+#### git reset - git reset commands are powerful tools to undo commits, but each has a different level of impact — from gentle to destructive.
+
+1 - `git reset --soft HEAD~11`
+
+What it does:
+
+- Removes the last commit
+- Leaves changes in the staging area
+
+When to use:
+
+When you  want to rewrite my last commit message or squash commits.
+
+Example:
+```
+git reset --soft HEAD~1
+git commit -m "Better commit message"
+```
 
 
+2- `git reset --mixed HEAD~1`
 
+What it does:
 
+- Removes the last commit
+- Moves changes back to the working directory
+- Unstages them
 
+When to use:
 
+When you want to edit files before re-staging them, but don’t want to lose my work.
 
+Example:
+```
+git reset --mixed HEAD~1
+# edit files
+git add .
+git commit -m "Improved changes"
+```
+
+3- `git reset --hard HEAD~1`
+
+What it does:
+
+- Removes the last commit
+- Deletes both staged and unstaged changes
+- Working directory is reset to the state of HEAD~1
+
+WARNING: Destructive! You lose uncommitted work.
+
+When to use:
+
+When made a mess and just want to go back cleanly — no changes, no trace.”
+
+Example:
+```
+git reset --hard HEAD~1
+```
 
 
 
