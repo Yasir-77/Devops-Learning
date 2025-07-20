@@ -613,11 +613,9 @@ Example:
 git reset --hard HEAD~1
 ```
 
-4- `git revert HEAD`
+#### git revert HEAD
 
-What it does:
-
-creates a new commit that undoes the changes introduced by the last commit (HEAD) — without modifying Git history.
+`git revert HEAD` creates a new commit that undoes the changes introduced by the last commit (HEAD) — without modifying Git history.
 
 When to use:
 
@@ -635,7 +633,7 @@ This:
 - Launches an editor (e.g., Nano or Vim) to confirm the commit message.
 - After saving, Git creates a new commit that removes Hello, production!.
 
-5- `git log --oneline`
+#### git log --oneline
 
 Is a shortened version of git log that shows your commit history in a compact, easy-to-read format.
 
@@ -651,7 +649,7 @@ Each entry includes:
 - A short hash of the commit (3f3a2b1)
 - The commit message
 
-6- `git reflog`
+#### git reflog
 
 It displays the history of where HEAD and branch tips have pointed, even if you've moved or deleted commits.
 
@@ -667,6 +665,87 @@ Each entry shows:
 - The commit hash
 - A HEAD@{n} reference (position in the reflog)
 - A short description of the action (e.g., commit, reset, checkout)
+
+### git stash
+
+git stash temporarily saves your uncommitted changes (both staged and unstaged) and reverts your working directory to a clean state, so you can:
+- Switch branches
+- Pull changes
+- Work on something else without losing your current work.
+
+Example: 
+
+ 1. Start a feature
+```
+echo "Incomplete work" > feature.txt
+```
+```
+git add feature.txt
+```
+```
+echo "more changes not staged" > feature.txt
+```
+Whats been done:
+
+- Created feature.txt with some content
+- Staged it
+- Made further changes that are not yet staged
+
+2. Stash the work-in-progress
+```
+git stash push -m "WIP: feature.txt changes"
+```
+This stashes:
+- Staged changes (first version of feature.txt)
+- Unstaged changes (second line added)
+- All with a clear message for future reference
+
+Your working directory is now clean.
+
+Apply a hotfix (Worked on an alternative task)
+```
+echo "hotfix applied" > hotfix.txt
+git add hotfix.txt
+git commit -m "apply hotfix on main"
+git push origin main
+```
+Created and committed a hotfix, then pushed it to the remote. ✅
+
+4. View and restore your stashed changes
+
+```
+git stash list
+```
+```
+git stash apply
+```
+git stash list shows something like:
+
+stash@{0}: On main: WIP: feature.txt changes
+
+git stash apply reapplies the stash but keeps it in the list, in case something goes wrong
+
+5. Finalize and clean up
+```
+git stash pop
+```
+Pops the stash: reapplies it and removes it from the stash list
+
+`git status` - You now see the restored changes in your working directory.
+
+6. Commit and push the feature
+```
+git commit -m "push feature changes"
+git push
+```
+Your feature changes are now committed and pushed.
+
+7. Cleanup
+```
+git stash clear
+```
+Since everything went smoothly and nothing is left in stash, this clears all stash entries (if any remain).
+
 
 
 
