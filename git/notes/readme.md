@@ -317,9 +317,50 @@ ssh -T git@github.com
 This checks that: Git can use your SSH key. You're authenticated with GitHub
 
 
+### New Repository
+
+1- Create a new directory and enter the directory in the terminal :
+```
+mkdir git-lab
+cd git-lab
+```
+2- Create a new Repository on GitHub named git-lab
+
+3- Connect the command Line to the Git Hub repository:
+
+- `echo "# git-labs" >> README.md` - This creates a file named README.md (if it doesn't exist), and adds the line:
+
+- `git init` - Initializes a new Git repository in the current folder. It creates a hidden .git/ directory where Git tracks all changes.
+
+- `git add README.md` - Stages the README.md file so it’s ready to be committed. Think of this as “preparing” the file to be saved to version history.
+
+- `git commit -m "first commit"` - Creates your first commit, saving the staged README.md with the message: `first commit`. Commits are like checkpoints or snapshots of your code at a point in time.
+
+- `git branch -M main` - Renames the current branch to main. -M forces the rename (even if main already exists). main is the standard default branch (instead of older master)
+
+- `git remote add origin git@github.com:username/git-labs.git` - Links your local repo to a remote GitHub repo named origin. origin is the default nickname for your GitHub repo’s address.
+
+- `git push -u origin main` - Pushes your local main branch to GitHub for the first time. -u sets up a tracking relationship, so next time you can just run: `git push`.
 
 
+Now your local Git project is: Set up and committed, Linked to GitHub, Synced (pushed) to the remote repository
 
+### First Repoitory Push
+
+1 - `touch .gitignore` - Creates an empty .gitignore file.
+
+2- `vi .gitignore` - Opens the file in the Vi editor so you can edit it. Inside, you'd typically add lines like: node_modules/, .env, .DS_Store
+
+3- `git add .gitignore` - Stages the .gitignore file so it’s ready to be committed.
+
+4- `git status` - Shows the current Git state — at this point it will show in red:
+
+Changes to be committed: new file:   .gitignore
+  
+5- `git commit -m "add gitignore"` - Commits the staged .gitignore file with a clear message. This becomes a permanent part of your repo’s history.
+
+6 - `git push` - Pushes the commit to your remote repository (on GitHub), assuming you already did: `git push -u origin main`
+If the upstream was already set earlier, git push knows where to send it.
 
 
 
