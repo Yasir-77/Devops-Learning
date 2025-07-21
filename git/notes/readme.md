@@ -759,12 +759,12 @@ Type the following:
 ```
 git log --oneline
 ```
-
+```
 d7e1f00 Final styling
 e3f2d12 Add footer
 b4a3a9d Initial layout
 a1b2c3d main branch commit
-
+```
 You want to squash the 3 feature commits into one.
 
 Step 1: Interactive rebase
