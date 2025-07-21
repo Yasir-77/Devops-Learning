@@ -1,5 +1,7 @@
-# Git Learning
+# 🛠️ Git Learning
 
+Welcome to the Git Essentials Chapter!
+This resource is designed to help you master version control, collaborate seamlessly with teams, and build a strong foundation in Git—one of the most essential tools in modern software development.
 
 ---
 ## Table of contents:
