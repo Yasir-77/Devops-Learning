@@ -4,16 +4,16 @@
 ```
 git init                        # Initialize new repo
 git clone <url>                 # Clone existing repo
-git add <file>                 # Stage file
+git add <file>                  # Stage file
 git add .                       # Stage all changes
-git commit -m "message"        # Commit staged changes
+git commit -m "message"         # Commit staged changes
 git status                      # Show working tree status
 git log                         # Show commit history
 ```
 
 ## 🌿 Branching & Merging
 ```
-git branch                      # List branches
+git branch                     # List branches
 git branch <name>              # Create new branch
 git checkout <branch>          # Switch branch
 git checkout -b <new-branch>   # Create & switch
@@ -24,7 +24,7 @@ git branch -d <branch>         # Delete branch
 
 ## 🔄 Remote Operations
 ```
-git remote -v                   # List remotes
+git remote -v                  # List remotes
 git push origin <branch>       # Push to remote
 git pull origin <branch>       # Pull from remote
 git fetch                      # Download objects/refs
@@ -42,7 +42,7 @@ git stash pop                  # Restore stashed changes
 
 ## 🔍 Inspecting Changes
 ```
-git diff                       # Unstaged changes
+git diff                      # Unstaged changes
 git diff --staged             # Staged changes
 git show <commit>             # Show commit changes
 git blame <file>              # Who changed what
@@ -65,8 +65,8 @@ git reflog                    # Show reference logs
 
 ## 📌 Gitignore Patterns
 ```
-*.log         # Ignore all .log files
-/temp/        # Ignore temp directory
-.DS_Store     # Mac metadata file
-.env          # Environment variables
+*.log                         # Ignore all .log files
+/temp/                        # Ignore temp directory
+.DS_Store                     # Mac metadata file
+.env                          # Environment variables
 ```
