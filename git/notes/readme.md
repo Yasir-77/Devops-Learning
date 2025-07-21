@@ -213,8 +213,9 @@ Trunk-Based Development (TBD) is a collaborative Git workflow where all develope
 - Heavy CI/testing gates
 - Used in fast-moving orgs (Google/Facebook)
 
+---
 
-## Git best practises
+## Chapter 4: Git best practises
 
 ### Commit Hygiene & Best Practises
 
@@ -257,7 +258,9 @@ Absolutely! When using Git at scale, such as in large teams, monorepos, or enter
 - Cleaning secrets from history
 - Auditing rep contributors + logs.
 
-## Hands-on Git & Github
+---  
+
+## Chapter 5: Hands-on Git & Github
 
 ### Connecting to Github
 
