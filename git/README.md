@@ -64,7 +64,7 @@ This resource is designed to help you master version control, collaborate seamle
 
 ---
 
-[Git cheatsheet](https://github.com/Yasir-77/Devops-Learning/blob/main/git/notes/cheatsheet.md#git-cheat-sheet-)
+### [Git cheatsheet](https://github.com/Yasir-77/Devops-Learning/blob/main/git/notes/cheatsheet.md#git-cheat-sheet-)
 
 A practical reference guide to core Git commands organized by topic.
 
