@@ -70,7 +70,7 @@ This guide is designed to help you master Linux from the ground up—from basic 
 ### 📥 [Chapter 11: Standard Streams (standard input, output and error streams)](https://github.com/Yasir-77/Devops-Learning/blob/main/linux/notes/README.md#standard-streams-standard-input-output-and-error-streams)
 
 ### 🌱 [Chapter 12: Introduction to Environment Variables](https://github.com/Yasir-77/Devops-Learning/blob/main/linux/notes/README.md#introduction-to-environment-variables)
-- Commpon variables and setting variables
+- Common variables and setting variables
 
 
 
