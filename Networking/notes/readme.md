@@ -552,7 +552,7 @@ Steps to diagnose:
 - Verify networl configuration
 - Test with ping command
 
-### Netowrk tools to use:
+### Network tools to use:
 
 1. Ping
 
@@ -593,7 +593,7 @@ nslookup www.example.com
 
 ---
 
-Chapter 7: Cloud Netowrking
+## Chapter 7: Cloud Netwprking
 
 What is cloud networking?
 
