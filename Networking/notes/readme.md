@@ -101,6 +101,8 @@ TCP VS UDP
 | Speed | Faster, no connection or handshake setup needed   | Slower due to overheaad of connection |
 | Error Checking | No error checking or flow control   | Error checking and flow control |
 
+---
+
 ## Chapter 2: OSI Model (open system interconnection model)
 
 ### Overview of OSI Model
@@ -189,6 +191,8 @@ Session Layer: The session is managed to keep track of the HTTP request and ongo
 Presentation Layer: If encrypted, the POST data is decrypted and translated to the correct format. Data decompresses
 
 Application Layer: The server processes the POST request and formulates an appropriate response (e.g., sending back a web page).
+
+---
 
 ## Champter 3: Introduction to DNS (Domain Name System)
 
@@ -353,6 +357,8 @@ Format: IP_address domain_name  Example: 127.0.0.1 example.com
 
 ```
 
+---
+
 ## Chapter 4: Routing
 
 ### What is routing and why it matters?
@@ -392,6 +398,8 @@ Importance: They automate route updates and improve network reilience
 OSPF (open shortest path first) - OSPF is a widely used link-state routing protocol designed for use within an autonomous system. It is an interior gateway protocol, meaning it is used for routing traffic within a single organization's network, rather than between organizations
 
 BGP ( Border Gateway protocol) - BGP is the standard protocol used for routing traffic between different autonomous systems  on the internet. It is an Exterior Gateway Protocol and is the backbone of the internet, responsible for ensuring data is routed efficiently across large, complex networks that span multiple organizations and regions.
+
+---
 
 ## Chapter 5: Subnetting
 
@@ -515,6 +523,7 @@ PAT (Port Address Translation)
 - Enhances netowrk security
 - simplifies network design and management
 
+---
 
 ## Chapter 6: Netowrk Troubleshooting
 
@@ -581,6 +590,8 @@ Example:
 ```
 nslookup www.example.com
 ```
+
+---
 
 Chapter 7: Cloud Netowrking
 
