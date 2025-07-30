@@ -525,7 +525,7 @@ PAT (Port Address Translation)
 
 ---
 
-## Chapter 6: Netowrk Troubleshooting
+## Chapter 6: Network Troubleshooting
 
 ### Why do we troublshoot networks?
 
@@ -593,7 +593,7 @@ nslookup www.example.com
 
 ---
 
-## Chapter 7: Cloud Netwprking
+## Chapter 7: Cloud Networking
 
 What is cloud networking?
 
