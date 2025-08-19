@@ -58,8 +58,6 @@ This resource is designed to help you understand containerization, simplify appl
 
 ---
 
----
-
 ## 🚀 Hands-on Project: CoderCo Containers Challenge
 
 To reinforce the concepts in this guide, I completed a **multi-container Docker project** that ties everything together:
