@@ -15,8 +15,6 @@ Amazon Web Services (AWS) is a comprehensive and widely adopted cloud platform, 
 - Applicable to a diverse set of industries.
 - Use cases include: Enterprise IT, Backup and storage, Big sata analytics, Website hosting, mobile and social apps, Gaming
 
-# Global Infrastructure Introduction
-
 ## AWS Regions
 - AWS has regios all around the world
 - Names can be us-east-1, eu-west-2, etc.
@@ -54,8 +52,6 @@ Most AWS services are Region-scoped:
 - Rekognition (Software as a Services
 
 
-# Billing and MFA
-
 ## Billing
 AWS billing is based on a pay-as-you-go pricing model, meaning you only pay for the services and resources you use. AWS offers a variety of pricing models, payment tools, and features to help users manage and optimize costs.
 
@@ -86,5 +82,249 @@ Universal 2nd factor security key - support for multiple root and IAM users usin
 Hardware key fob MFA device - provided by Gernalto (3rd party)
 
 Hardware key fob MFA device for AWS GocCloud (US) - Support for multiple tokens on a single device.
+
+# Chapter 2: IAM
+IAM stands for Identity and Access Management
+
+## Users and Groups:
+- Root account created by default, shouldnt be used or shared.
+- Users are people within your organization, and can be grouped.
+- Groups only contain users, not other groups.
+- Users dont have to belong to a group, and a user can belong to multiple groups.
+
+## IAM Permissions:
+- Users or Groups can be asigfned JSON documents called policies.
+- These policies define the permissions of the users
+- In AWS apply the least privilege principle: dont give more permissions than the user needs.
+
+## IAM Policies structure:
+![image](https://github.com/user-attachments/assets/23bb2860-912b-414b-8ad6-cc66caea3fc0)
+
+## How can Users access AWS:
+
+To access AWS there are three options:
+- AWS management console: protected by password + MFA
+- AWS command Line Interface (CLI): protected by access keys
+- AWS Software Developer Kit (SDK) for code: protected by access keys
+
+Access keys are generated through the AWS Console
+
+Users manage their own access keys, access keys are a secret just like a password.
+- Access Key ID = Username
+- Secret access key = Password
+
+### What's the AWS CLI:
+- A tool that enables you to interact with AWS services using commands in your command-line shell.
+- Direct access to the public APIs of AWS services i.e S3 buckets
+- Can develop scripts to manage your resources.
+- Its open-source
+- Alternative to using AWS Management Console.
+
+### What's the AWS SDK:
+- AWS Software development Kit (AWS SDK)
+- Lanuage specifiC APIs (set pf libraries)
+- Enables you to access and manage AWS services programmatically
+- Embedded within your application]
+- supports: SDKs (i.e Javascript, P[ython, PHP), mobile SDKs (i.e. Android, IOS), IoT Device SDKs (Embedded C, Arduino)
+- Example: AWS CLI is built on AWS SDK for python AWS SDK
+
+## AWS IAM roles for services:
+In AWS Identity and Access Management (IAM), roles are a way to delegate permissions to services and applications running on AWS, allowing them to perform specific tasks without the need for hard-coded credentials. 
+
+IAM roles are especially useful when services like EC2, Lambda, or ECS need to interact with other AWS services (like S3, DynamoDB, or RDS) on behalf of users.
+
+## IAM security tools:
+- IAM Credentials report (account level) - A report that lists all your accounts users and the status of their various credentials.
+- IAM Access advisor (user level) - Access advisor shows the service permissions granted to a user and when those sevices were last accessed. This informartion is use to revise policies.
+
+---
+
+# Chapter 3: EC2 & Compute
+
+## Amazon EC2
+
+EC2 = Elastic Compute Cloud = Infrastructure as a service.
+
+EC2 is one of the most populaar of AWS offerings, It mainly consists in the capability of:
+- Renting virtual machines (EC2)
+- Storing data on virtual drives (EBS)
+- Distributing load across machines (ELB)
+- Scaling the services using an auto-scaling group (ASG)
+
+Knowing EC2 is fundamental to understand how the cloud works.
+
+### EC2 sizing & configuartion options
+
+- Operating System (OS): Linux, Windows or Mac OS
+- How much compute power & cores (CPU)
+- How much random-access memory (RAM)
+- How much storage space: Network-attached (EBS & EFS), hardware (EC2 Instance Store)
+- Network card: speed of the card, Public IP address
+- Firewall rules: security group
+- Bootstrap script (configure at first launch): EC2 User Data
+
+### EC2 User Data
+
+- It is possible to bootstrap our instances using an EC2 User data script. Bootstrapping means launching commands when a machine starts
+- That script is only run once at the instance first start
+- EC2 user data is used to automate boot tasks such as: Installing updates, Installing software, Downloading common files from the internet
+- Any automation task you want to run on your machine when it first loads up.
+- The EC2 User Data Script runs with the root user
+
+### EC2 Instance types 
+
+Different types of EC2 Instances:
+- General Purpose
+- Compute Optimized
+- Memory Optimized
+- Storage Optimized
+- HPC Optimized
+- Accelerated Computing
+
+## Basic Format of EC2 Instance Types
+
+The naming convention for an EC2 instance type typically follows this pattern:
+
+(Family)(Generation) . (Size)
+
+For example: m5.large, t3.micro, c5.2xlarge
+
+Breakdown of the Naming Convention Components:
+
+### 1. Instance Family (e.g., m, t, c, r, p, etc.):
+
+This indicates the primary use case or performance characteristic of the instance. Different families are optimized for specific workloads:
+
+| FAMILY CODE  | PURPOSE  | 
+|-------|------|
+| t  | General purpose |
+| m | General purpose | 
+| c | Compute Optimized   | 
+| r | Memory Optimized   |
+| i | Storage Optimized   |
+| p | Accelerated Computing   |
+
+### 2. Generation (e.g., 5, 6, etc.):
+
+The generation number represents updates to hardware and capabilities within each family.
+
+Each subsequent generation improves on performance, networking, and sometimes pricing (e.g., m5 is the fifth generation of m family instances).
+
+
+### 3. Size (e.g., large, xlarge, 2xlarge, etc.):
+
+This suffix defines the virtual CPU (vCPU) count and memory size. Size often determines the amount of compute power (CPU cores) and memory provided by the instance type.
+
+Sizes generally scale in the following progression (though some families have additional or fewer options):
+nano < micro < small < medium < large < xlarge < 2xlarge < 4xlarge < 8xlarge < 16xlarge < 32xlarge
+
+## Running a webserver on an EC2 instance
+
+#### 1. Launch an EC2 Instance
+
+1. Go to the EC2 Dashboard in the AWS Console and click Launch Instance.
+
+2. Choose an Amazon Machine Image (AMI). For simplicity, you might use: Amazon Linux 2023 AMI 
+
+3. Choose an Instance Type: t2.micro is a good starting choice since it’s part of the Free Tier and provides enough resources for basic web server tasks.
+
+4. Configure instance details: For most setups, default settings work fine.
+
+5. Create a new key pair and save to Desktop.
+
+6. Configure Network settings: Click on the check box group with rules to allow HTTP (port 80) and HTTPS (port 443) traffic.
+
+7. Scroll down on Advanced details until User-data is found. Type the following:
+```
+#!/bin/bash
+
+yum update -y
+yum install -y httpd
+
+systemctl start httpd
+systemctl enable httpd
+
+echo "<h1>Hello CoderCo from $(hostname -f)</h1>">
+/var/www/html/index.html
+```
+If you type or run the script written in an EC2 instance’s user data it will:
+
+- Update the OS Packages: yum update -y updates all installed packages to their latest versions using the yum package manager. The -y flag automatically confirms all prompts.
+- Install Apache Web Server: yum install -y httpd installs the Apache HTTP Server (httpd package). Again, the -y flag auto-confirms the installation.
+- Start and Enable Apache: systemctl start httpd starts the Apache service. systemctl enable httpd enables Apache to start automatically on boot, so it will continue running even after a reboot.
+- Create a Simple HTML Page: `**echo "<h1>Hello CoderCo from $(hostname -f)</h1>" > /var/www/html/index.html**` writes a simple HTML message into the Apache default document root (/var/www/html/index.html). 
+- The $(hostname -f) part is replaced with the fully qualified domain name (FQDN) of the instance, so it will dynamically show the server’s hostname in the HTML content.
+
+After running this script:
+
+An Apache web server will be up and running on your EC2 instance.
+When you navigate to the instance’s public IP in a web browser (e.g., http://<instance-public-ip>), you’ll see the message Hello CoderCo from instance-hostname displayed in an HTML h1 heading.
+
+## Security Groups
+
+### Introduction to Security Groups
+
+- Security Groups are the fundamental of network security in AWS.
+- They control how traffic is allowed into or out of our EC2 Instances.
+- Security groups only contain allow rules.
+- Security group rules can reference by IP or by security group.
+
+Security groups are acting as a 'Firewall' in EC2 instances
+
+They regualte:
+- Access to ports
+- Authorised IP ranges - IPv4 and IPv6
+- Control of inbound network (from ther to the instance)
+- Control of outbound network (from the instance to other)
+
+![image](https://github.com/user-attachments/assets/be3c7f15-ed9a-489d-9abc-abd700bea0a8)
+
+### How security groups work:
+
+![image](https://github.com/user-attachments/assets/78588792-000e-4551-b5b0-8c60897ee985)
+
+### Security groups additional information:
+
+- Can be attached to multiple instances
+- Locked down to a region / VPC combination
+- Does live "outside2 the EC2 - if traffic is blocked the EC2 instance wont see it
+- Good to maintain one seperate security group for SSH access
+- If your application ias not accessible (time out), then its a security group issue
+- If your application gives a "connection refused" error, then its an application error or its not launched
+- All inbound traffic is blocked by default
+- All outbound traffic is authorised by default
+
+### Referencing other security groups:
+
+In AWS, referencing security groups allows you to create rules that control access between instances based on security group membership rather than IP addresses. This makes it easier to manage communication between different parts of an application, especially as resources and instances scale or change.
+
+How Security Group Referencing Works
+
+When you create a rule within a security group, you can set another security group as the source or destination. By referencing security groups this way, you allow traffic between instances in those groups without specifying IP addresses.
+
+![image](https://github.com/user-attachments/assets/1a006531-97cd-45f5-a38b-582f8fc4d483)
+
+### Classic Ports to know:
+
+- 22 = SSH (Secure Shell) - log into a Linux instance
+- 21 = FTP (File Transfer Protocol) - upload files into a file share
+- 22 = SFTP (Secure File Transfer Protocol) - upload files using SSH
+- 80 = HTTP - access unsecured websites
+- 443 = HTTPS - access secured websites
+- 53 - DNS - for DNS queries and resolving
+- 3389 - RDP (Remote Desktop Protocol) - log into a Windows instance
+
+### EC2 Instances Purchasing Options 
+
+- On-Demand Instances - short workload, predictable pricing, pay by second
+- Reserved (1 & 3 years)
+- Reserved Instances - long workloads
+- Convertible Reserved Instances - long workloads with flexible instances
+- Savings Plans (1 & 3 years) -commitment to an amount of usage, long workload
+- Spot Instances - short workloads, cheap, can lose instances (less reliable)
+- Dedicated Hosts - book an entire physical server, control instance placement
+- Dedicated. Instances - no other customers will share your hardware
+- Capacity Reservations - reserve capacity in a specific AZ for any duration
+
 
 
