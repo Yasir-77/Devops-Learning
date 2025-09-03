@@ -260,9 +260,23 @@ After running this script:
 An Apache web server will be up and running on your EC2 instance.
 When you navigate to the instance’s public IP in a web browser (e.g., http://<instance-public-ip>), you’ll see the message Hello CoderCo from instance-hostname displayed in an HTML h1 heading.
 
-## Security Groups
+## EC2 Instances Purchasing Options 
 
-### Introduction to Security Groups
+- On-Demand Instances - short workload, predictable pricing, pay by second
+- Reserved (1 & 3 years)
+  - Reserved Instances - long workloads
+  - Convertible Reserved Instances - long workloads with flexible instances
+- Savings Plans (1 & 3 years) -commitment to an amount of usage, long workload
+- Spot Instances - short workloads, cheap, can lose instances (less reliable)
+- Dedicated Hosts - book an entire physical server, control instance placement
+- Dedicated. Instances - no other customers will share your hardware
+- Capacity Reservations - reserve capacity in a specific AZ for any duration
+
+---
+
+# Chapter 4: Security Groups & Cloud Networking
+
+## Introduction to Security Groups
 
 - Security Groups are the fundamental of network security in AWS.
 - They control how traffic is allowed into or out of our EC2 Instances.
@@ -271,10 +285,10 @@ When you navigate to the instance’s public IP in a web browser (e.g., http://<
 
 Security groups are acting as a 'Firewall' in EC2 instances
 
-They regualte:
+They regulate:
 - Access to ports
 - Authorised IP ranges - IPv4 and IPv6
-- Control of inbound network (from ther to the instance)
+- Control of inbound network (from their to the instance)
 - Control of outbound network (from the instance to other)
 
 ![image](https://github.com/user-attachments/assets/be3c7f15-ed9a-489d-9abc-abd700bea0a8)
@@ -314,17 +328,123 @@ When you create a rule within a security group, you can set another security gro
 - 53 - DNS - for DNS queries and resolving
 - 3389 - RDP (Remote Desktop Protocol) - log into a Windows instance
 
-### EC2 Instances Purchasing Options 
+## IPv4 vs IPv6
 
-- On-Demand Instances - short workload, predictable pricing, pay by second
-- Reserved (1 & 3 years)
-- Reserved Instances - long workloads
-- Convertible Reserved Instances - long workloads with flexible instances
-- Savings Plans (1 & 3 years) -commitment to an amount of usage, long workload
-- Spot Instances - short workloads, cheap, can lose instances (less reliable)
-- Dedicated Hosts - book an entire physical server, control instance placement
-- Dedicated. Instances - no other customers will share your hardware
-- Capacity Reservations - reserve capacity in a specific AZ for any duration
+- Netowking has two sorts of IP adrdress types. IPv4 and IPv6;
+  - IPv4: 10.160.10.240
+  - IPv6: 3ffe:1900:4545:3:200:f8ff:fe21:67cf
+- IPv4 is still the most common format
+- IPv6 is newer and solves problems for the Internet of Things (IOT)
+- IPv4 allows for 3.7 billion different adresses in the public space
+- IPv4 [0-255].[0-255].[0-255].[0-255].  
+    
+
+## Private vs Public IP (IPv4) Example:
+
+<img width="817" height="451" alt="image" src="https://github.com/user-attachments/assets/0a8e9022-c8a6-4469-abb2-f99582066c5a" />
+
+
+Private IPs used inside private networks (e.g., home, office, or company LANs). Cannot be routed directly on the public internet. Can be reused across different organizations (e.g., Company A and Company B both use 192.168.1.0/24 internally).
+
+Public IPs are globally unique and routable on the internet. Assigned to organizations or ISPs so devices can communicate externally.
+
+Internet Gateway / Router acts like your home router at scale. Performs NAT (Network Address Translation):
+
+- Translates private IPs → public IPs when sending traffic out.
+- Translates public IPs → private IPs when receiving responses.
+
+Essential for private networks to access public websites and services.
+
+### Why It Matters:
+
+Without an internet gateway (or home router), a private network would be isolated from the internet. NAT ensures devices in private networks can securely connect to external servers.
+Public IPs remain unique, while private IPs can be reused across organizations.
+
+## Private vs Public (IPv4) differences
+
+### Public IP
+
+- Public IP means the machine can be identified on the internet (WWW)
+- Must be unique across the whole web (not two machines can have the same public IP)
+- Can be geo located easily
+
+### Private IP
+
+- Private IP means the machine can only be identified on a private network only.
+- The IP must be unique across the private network
+- Two different private networs (two companies) can have the3 same ips.
+- Machines connect to WWQ using a NAT + internet gateway (a proxy)
+- Only specified range of ips can be used as a private IP.
+
+  
+## Elastic IPs
+
+- When you stop and then start an EC2 instance, it can change its Public IP
+- If you need to have a fixed oublic IP for your instance, you need an Elastic IP
+- An Elastic IP is a public IPv4 IP you own as long as you dont delete it.
+- You can attach it one instance at a time.
+- AWS charges for Elastic IPs when they are not in use.
+
+### How to asign an Elastic IP address to an EC2 instance:
+
+- Go to the EC2 Dashboard in AWS Management Console. In the left menu, select Elastic IPs.
+- Click Allocate Elastic IP address → choose Amazon’s pool → Allocate.
+- Select the newly created Elastic IP → click Actions → Associate Elastic IP address.
+- Choose your EC2 instance (or its private IP) from the dropdown.
+  - If creating a new instance make sure to select Private IP instead of Public IP
+- Then Click Associate.
+
+Now your EC2 instance has a static public IP that won’t change on reboot.
+
+### When to use Elastic IPs
+
+- With an Elastic IP address, you can mask the faliure of an instance or software by rapidly remapping the address to another instance in your account. Useful in instances when you need to switch traffic from one instance to another without downtime.
+- You can only have **5 Elastic IP** in your acount (you can ask AWS to increase that)
+- Overall try avoiding using Elatic IP
+  - Often reflect poor architectural decisions.
+  - Instead use a random publuc IP address and register a DNS name to it
+  - or, use a load balancwer and dont use a public IP.
+
+---
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
