@@ -407,12 +407,45 @@ Now your EC2 instance has a static public IP that won’t change on reboot.
 
 ---
 
+# Chapter 5: Storage
 
-  
+## What's an EBS Volume?
 
+- An EBS (Elastic Block Store) volume is a network drive you can attach to your instances while they run.
+- It allows your instances to persist data, even after their termination
+- They are bound to a specific availability zone
+- **Analogy**: Think of them as a **Network USB Stick**
+- **Free tier**: 30 GB of free EBS storage of type General Purpose (SSD) or magnetic per month
 
+## AMI Overview
 
+AMI = Amazon Machine Image
 
+- AMI are a customization of an EC2 instance
+  - You add your own software, configuration, operating system, monitoring...
+  - Faster boot / configuration time because all your software is pre-packaged
+-AMI are built for a specific region (and can be copied across regions)
+
+You can launch EC2 instances from:
+- A Public AMI: AWS provided
+- Your own AMI: you make and maintain them yourself
+- An AWS Marketplace AMI: an AMI someone else made (and potentially sells)
+
+## Amazon EFS - Elastic File system
+
+- What it is: AWS-managed network file system (NFS) for shared storage.
+- Multi-AZ design: Data is automatically replicated across Availability Zones → high availability & durability.
+- Scalable: Storage automatically grows/shrinks with usage → no need to provision or resize volumes.
+- Shared access: Can be mounted to multiple EC2 instances at once → ideal for shared workloads.
+
+- Use cases:
+  - Content management systems.
+  - Applications needing shared data across instances.
+  - Distributed workloads.
+
+- Trade-off: More expensive (~3× cost of GP2 EBS volumes). Best used when shared storage is essential.
+
+Works like standard Linux NFS mounts, but fully managed by AWS.
 
 
 
