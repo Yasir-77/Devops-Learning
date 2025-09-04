@@ -447,6 +447,179 @@ You can launch EC2 instances from:
 
 Works like standard Linux NFS mounts, but fully managed by AWS.
 
+---
+
+# Load balancing & scalability
+
+## Scalability & high availability
+Scalability means that an application / system can handle greater loads by adapting to demand
+
+- There are two kinds of scalability:
+  - Vertical scalability
+  - Horizontal scalability (= elasticity)
+ 
+Scalability is linked but different to high availability
+
+### Vertical scalability
+- Vertical scalability means increasing the size of the instance
+- Fpor example, your application run on t2.micro - scaling the application vertically means running it on a t2.large.
+- Vertical scalability is very cpommon for non distributed systems, such as a database 
+- RDS, ElastiCache are services that can scale vertically.
+- Theres usually a limit to how much you can vertically scale (hardware limit)
+
+### Horizontal scalability
+- Horizomntal scalability means increasing the number of instances / systems for your application
+- Horizontal scaling implies distributed systems
+- Very common for web applications / modern applications
+- Its easy to horizontally scale thanks to the cloud offerings such as Amazon EC2
+
+### High avaialability
+- High Availability usually goes hand in hand with horizontal scaling
+- High availability means running your application / system in at least 2 data centers (== Availability Zones)
+- The goal of high availability is to survive a data center loss
+- The high availability can be passive (for RDS Multi AZ for example)
+- The high availability can be active (for horizontal scaling)
+
+
+### High availability & scalability for EC2
+- Vertical Scaling: Increase instance size (- scale up / down)
+  - From: t2.nano - 0.5G of RAM, 1 vCPU
+  - To: u-12tb1 metal - 12.3 TB of RAM, 448 vCPUs
+- Horizontal Scaling: Increase number of instances (- scale out / in)
+  - Auto Scaling Group
+  - Load Balancer
+- High Availability: Run instances for the same application across multi-AZ
+  - Auto Scaling Group multi-AZ
+  - Load Balancer multi-AZ
+
+## Load balancing
+
+- Definition: Distributes incoming traffic across multiple servers/EC2 instances to prevent overload and improve performance.
+
+- Analogy: Like a restaurant with multiple chefs:
+  - One chef (single instance) = overwhelmed.
+  - Multiple chefs + manager (Load Balancer) = smooth operations.
+
+### How it works (AWS ELB):
+- Sits between users and EC2 instances.
+- Routes requests only to healthy instances.
+- Automatically redirects traffic if an instance fails.
+- Keeps applications available and responsive.
+
+### Why use a load balancer?
+- Traffic Distribution: Spreads incoming requests across multiple downstream instances to avoid overload.
+- Single Point of Access: Users connect via the load balancer’s DNS endpoint, not individual instance IPs.
+- Failure Handling: Stops sending traffic to unhealthy instances and reroutes to healthy ones automatically.
+- Health Checks: Continuously monitors instance health and redirects traffic when failures occur.
+- SSL Termination (HTTPS): Handles SSL certificates and encryption/decryption, offloading work from instances.
+- Sticky Sessions (Session Persistence): Ensures users remain connected to the same instance when needed.
+- High Availability Across AZs: Distributes traffic across multiple Availability Zones for resilience.
+- Traffic Separation: Can route public traffic (user-facing) separately from private traffic (internal).
+
+### Why use an Elastic load balancer
+- An Elastic Load Balancer is a managed load balancer
+  - AWS guarantees that it will be working
+  - AWS takes care of upgrades, maintenance, high availability
+  - AWS provides only a few configuration knobs
+- It costs less to setup your own load balancer but it will be a lot more effort on your end
+- It is integrated with many AWS offerings / services
+  - EC2, EC2 Auto Scaling Groups, Amazon ECS
+  - AWS Certificate Manager (ACM), CloudWatch
+  - Route 53, AWS WAF, AWS Global Accelerator
+
+### Health checks
+
+- Health checks are crucial for mload balancers
+- They enable the load balancer to know if instances it forwards traffic to are available to reply to requests
+- The health check is done on a port and a route (/health is comnmon)
+- If the response is not 200 (OK), then the instance is unhealthy and the load balancer will stop sending traffic to it
+
+
+## Types of load balancers on AWS
+
+AWS has 4 kinds of managed Load Balancers
+-Classic Load Balancer (v1 - old generation) - 2009 - CLB
+  - HTTP, HTTPS, TCP, SSL (secure TCP)
+- Application Load Balancer (v2 - new generation) - 2016 - ALB
+  - HTTP, HTTPS, WebSocket
+- Network Load Balancer (v2 - new generation) - 2017 - NLB
+  - TCP, TLS (secure TCP), UDP
+- Gateway Load Balancer - 2020 - GWLB
+  - Operates at layer 3 (Network layer) - IP Protocol
+
+Overall, it is recommended to use the newer generation load balancers as they provide more features
+
+Some load balancers can be setup as internal (private) or external (public) ELBs
+
+### Load Balancer security groups
+<img width="816" height="457" alt="image" src="https://github.com/user-attachments/assets/ee5bdc60-09f8-4a80-97fc-104506258253" />
+
+- **Security Groups (SGs)** = Virtual firewalls controlling inbound/outbound traffic in AWS.  
+- **Load Balancer SG**:  
+  - Allows **HTTP (80)** and **HTTPS (443)** traffic from the internet (`0.0.0.0/0`).  
+  - Ensures users can connect publicly to your application.  
+- **Application/EC2 Instance SG**:  
+  - Restricts access so only the **Load Balancer SG** can send traffic.  
+  - Prevents direct internet access to instances → adds protection.  
+- **Two-Tier Setup**:  
+  - Users → Load Balancer (public access).  
+  - Load Balancer → EC2 instances (controlled private access).  
+- **Benefits**:  
+  - Shields backend instances from direct exposure.  
+  - Ensures secure, controlled, and scalable traffic flow.  
+  - Common cloud architecture best practice.
+ 
+### Application Load Balancer
+
+- Application load balancers is Layer 7 (HTTP)
+- Load balancing to multiple HTTP applications across machines (target groups)
+- Load balancing to multiple applications on the same machine (ex: containers)
+- Support for HTTP/2 AND Websocket
+- Support redirects (from HTTP to HTTPS)
+- Routing tables to different target groups:
+  - Routing based on path in URL (coderco.io/users & coderco.io/posts)
+  - Routing based on hostname in URL (blog.coderco.io & news.coderco.io)
+  - Routing based on Query String, Headers(coderco.io/users?id=456&order=false)
+- ALB are a great fit for micro services & container-based application(example: Docker & Amazon ECS)
+  - Has a port mapping feature to redirect to a dynamic port in ECS
+- In comparison, we'd need multiple Classic Load Balancer per application
+
+
+### Application Load balancer (HTTP Based Traffic)
+
+<img width="814" height="460" alt="image" src="https://github.com/user-attachments/assets/975b7316-72d7-474c-836e-2810367861d7" />
+
+Routes HTTP/HTTPS requests to backend resources.
+
+- Target Groups:
+  - Consist of EC2, ECS, or Lambda functions.
+  - Each group handles a specific service (e.g., user profiles, product search).
+
+- Routing Rules:
+  - Direct traffic based on path, host, or headers.
+  - Ideal for microservices or apps with multiple features.
+
+Health Checks: Continuously monitor instances in each target group. Unhealthy instances are removed from routing automatically.
+
+Key Benefits:
+- Supports multiple services behind a single load balancer.
+- Isolates services so one does not impact another.
+- Improves scalability, performance, and reliability for web applications.
+
+### Application Load Balancer (Target Groups)
+- EC2 instances (can be managed by an Auto Scaling Group) - HTTP
+- ECS tasks (managed by ECS itself) - HTTP
+- Lambda functions - HTTP request is translated into a JSON event
+- IP Addresses - must be private IPs
+- ALB can route to multiple target groups
+- Health checks are at the target group level
+
+
+### Application Load Balancer - Good to know
+
+<img width="815" height="458" alt="image" src="https://github.com/user-attachments/assets/e4911feb-f6db-486b-9b6d-0b9bcce21fca" />
+
+
 
 
 
