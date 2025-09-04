@@ -620,34 +620,133 @@ Key Benefits:
 <img width="815" height="458" alt="image" src="https://github.com/user-attachments/assets/e4911feb-f6db-486b-9b6d-0b9bcce21fca" />
 
 
+### Network Load Balancer
+
+- Network load balancers (Layer 4) allow to:
+  - Forward TCP & UDP traffic to your instance
+  - Handle millions of requests per seconds
+  - Less latency - 100 ms (vs 400 ms for ALB)
+- NLB has one static IP per AZ and supports assigning Elastic IP (Helpful for whitelisting specific IP)
+- NLB are used for extreme performance, TCP or UDP traffic
+- Not included in AWS free tier. 
+
+### Network Load Balancer - TCP (Layer 4)
+
+<img width="817" height="459" alt="image" src="https://github.com/user-attachments/assets/e2d61147-740d-4134-9d69-0c1347042481" />
+
+- Users → Network Load Balancer (NLB)
+  - Users send TCP/UDP requests.
+  - NLB receives traffic at Layer 4 (transport layer).
+
+- NLB Function
+  - Forwards traffic based on ports/protocols (not application-level details).
+  - Does not inspect HTTP headers or handle SSL termination.
+  - Focuses on fast, efficient packet forwarding.
+
+- Target Groups
+  - NLB routes traffic to different target groups (EC2, services, etc.).
+  - Each target group can handle a specific application.
+    - Example: User Application → traffic routed via TCP rules.
+    - Example: Search Application → routed through TCP, though HTTP rides on TCP.
+
+### Sticky sessions (Session Affinity)
+
+- It is possible to implement stickiness so that the same client is always redirected to the same instance behind a load balancer.
+- This works for Classic Load Balancer, Application Load Balancer, and Network Load Balancer.
+- or both CLB & ALB, the "cookie" used for stickiness has an expiration date you control.
+- Use Case: Make sure the user doesn't lose his session data.
+- Enabling Stickiness may bring imbalance to the load over the backend EC2 instances.
 
 
+## SSL/TLS - Basics
+
+- An SSL Certificate allows traffic between your clients and your load balancer to be encrypted in transit (in-flight encryption)
+- SSL refers to Secure Socket Layer, used to encrypt connections
+- TLS refers to Transport L;ayer Security, which is a newer version
+- TLS Certifications are mainly used, but people still refer to SSL
+- Public SSL certificates are used by certificate authorities (CA) e.g. Comodo, symantec, GoDaddy, GlobalSign, Digicert, Letsencrypt
+- SSL certificates have an expiration date (You set) and must be renewed
+
+### Load Balancer - SSL Certificates
+
+- The load Balancer uses an X.509 certificate ( SSL/TLS server certificate)
+- You can manage certificates using ACM (AWS Certificate Manager)
+- You can create upload your own certificates alternatively
+- HTTPS listener:
+  - You must specify a default certificate
+  - You can add an optional list of certs to support multiple domains.
+  - Clients can use SNI (Server Name Indication) to specify the hostname they reach
+  - Ability to specify a security policy to support older versions of SSL/TLS (legacy clients)
 
 
+### SSL - Server Nasme Indication (SNI)
+
+- SNI solves the problem of loading multiple SSL Cerificates onto one web server (to serve multiple websites)
+- Its a newer protocol, and requires the client to indicate the hostname of the target server in the inital SSL handshake.
+- The server will then find the correct certificate, or return the default one.
+- Note:
+  - Only works for ALB & NLB(newer genration), CloudFront
+  - Does not work for CLB (Older gen)
 
 
+### Elastic Load Balancers - SSL Certificates
+
+- Classic Load Balancer (v1)
+  - vSupport only one SSL certificate
+  - Must use multiple CLB for multiple hostname with multiple SSL certificates.
+- Application Load Balancer (v2)
+  - Supports multiple listener with multiple SSL certificates
+  - Uses server name indication (SNI) to make it work
+- Network Load Balancer (v2)
+  - Supports multiple listeners with multiple SSL certificates.
+  - Uses server name indication (SNI) to make it work.
 
 
+### Connection Draining
+
+- Purpose: Ensures smooth user experience when removing an instance from a load balancer.
+
+- How it works:
+  - Load balancer stops sending new requests to the instance.
+  - Existing in-flight requests are allowed to finish.
+- Feature naming:
+  - Classic Load Balancer (CLB) → Connection Draining.
+  - ALB & NLB → Deregistration Delay.
+- Configurable timeout range: 1 – 3,600 seconds. Default is 300 seconds (5 minutes). Can be set lower for short requests, or 0 for instant cutoff.
+- Use case:
+  - Helpful during scaling or when removing unhealthy instances.
+  - Prevents abrupt disconnections and maintains seamless user experience.
+
+## Auto Scaling Group
+
+In real life, the load on your websites and application can change. In the cloud you can create or get rid of servers very quickly.
+
+- The goal of an auto scaling group (ASG) is to:
+  - Scale out (add EC2 instances) to amtch an increased load
+  - Scale in (remove EC2 instances) to match a decreased load
+  - Ensure we have a minimum and a maximum number of EC2 instances running
+  - Automatically register new instances to a load balancer
+  - Re-Create an EC2 instance in case a previos one is terminated ( example: if unhealthy)
 
 
+### Auto scaling in AWS
 
+<img width="819" height="449" alt="image" src="https://github.com/user-attachments/assets/de31e8f9-b946-4ffa-aab5-2810437d1a9d" />
 
+### Auto Scaling Groups (ASG) in AWS  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Purpose: Automatically adjusts the number of EC2 instances based on demand.  
+- Core settings:  
+  - **Minimum Capacity** → lowest number of instances always running.  
+  - **Desired Capacity** → target/normal number of instances.  
+  - **Maximum Capacity** → upper limit of instances allowed.  
+- Scaling actions:  
+  - **Scale Out** → add instances when traffic increases (up to max).  
+  - **Scale In** → remove instances when traffic decreases (down to min).  
+- Benefits:  
+  - Keeps applications responsive during high load.  
+  - Saves costs by reducing instances when demand is low.  
+  - Ensures capacity always stays within configured limits.  
 
 
 
