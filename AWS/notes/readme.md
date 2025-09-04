@@ -748,6 +748,112 @@ In real life, the load on your websites and application can change. In the cloud
   - Saves costs by reducing instances when demand is low.  
   - Ensures capacity always stays within configured limits.  
 
+### Auto scaling group in AWS with load balancer
+
+<img width="815" height="460" alt="image" src="https://github.com/user-attachments/assets/379d8884-6929-4c30-bb65-791605c21694" />
+
+### Auto Scaling Group in AWS with Load Balancer  
+
+- Users: Send traffic to your application (website, mobile app, or service).  
+- Load Balancer (ALB):  
+  - Distributes incoming traffic across EC2 instances.  
+  - Prevents any single instance from being overloaded.  
+  - Performs continuous **health checks** on instances.  
+  - Stops routing traffic to unhealthy instances.  
+- Auto Scaling Group (ASG):  
+  - Dynamically adjusts the number of EC2 instances based on demand.  
+  - **Scale Out** → adds more instances during high traffic.  
+  - **Scale In** → removes instances during low traffic to save costs.  
+- **Custom AMIs**:  
+  - ASG can launch new instances from **preconfigured Amazon Machine Images (AMIs)**.  
+  - Ensures each new instance is ready with the required software/configuration.  
+
+### Auto Scaling Group Activities – Key Attributes  
+
+- Launch Templates (replacing older launch configurations): Define consistent setup for all new EC2 instances.  
+
+- Core attributes:  
+  - AMI (Amazon Machine Image) → ensures all instances have the same pre-configured setup.  
+  - Instance Type → defines compute, memory, or storage optimization (e.g., T2, C, M, R families).  
+  - EC2 User Data (optional) → startup scripts for installing packages or configuring software.  
+  - EBS Volumes→ persistent storage for instances.  
+  - Security Groups → virtual firewalls controlling inbound/outbound traffic.  
+  - SSH Key Pair → secure remote access to instances.  
+  - IAM Roles → grant instances permissions to access other AWS services without storing keys.
+  - Network & Subnets → specify VPC and subnets where instances launch.  
+  - Load Balancer Info → automatically register new instances with a load balancer.  
+
+- ASG-specific attributes:  
+  - Minimum Size → lowest number of instances always running.  
+  - Maximum Size → upper limit of instances.  
+  - Desired/Initial Capacity → starting/target number of instances.  
+  - Scaling Policies → rules for scaling in/out based on metrics like traffic or performance.  
+
+- Benefit: Ensures every instance launched by the ASG follows the same configuration, maintaining consistency, scalability, and reliability.  
+
+### Auto Scaling - Cloud Watch Alarms & Scaling
+
+- It is possible to scale an ASG based on CloudWatch alarms
+-  An alarm monitors a metric (such as Average CPU, or a custom metric)
+- Metrics such as Average CPU are computed for the overall ASG instances
+- Based on the alarm:
+  - We can create scale-out policies (increase the number of instances)
+  - We can create scale-in policies (decrease the number of instances)
+
+
+### Auto Scaling Groups - Scaling Policies
+
+There are 3 main types of dynamic scaling policies:
+
+- 1. Target Tracking Scaling:
+  - Simple to set up
+  - Example: I want the average ASG CPU to stay at around 40%
+
+- 2. Simple / Step Scaling:
+   - When a CloudWatch alarm is triggered (example CPU > 70%), THEN ADD 2 UNITS
+   - When a CloudWatch alarm is triggered (example CPU < 30%), THEN REMOVE 1
+
+- 3. Scheduled Scaling:
+  - Anticipate a scaling based on known usage patterns
+  - Example: increase the min capacity to 10 at 5pm on Fridays
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
