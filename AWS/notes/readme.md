@@ -1048,18 +1048,18 @@ The diagram above shows the key components of an Amazon EKS (Elastic Kubernetes 
   - Provides a private, isolated network for EKS resources.  
   - Ensures secure communication between components.  
 
-- Availability Zones (AZs  
+- Availability Zones (AZs)  
   - Setup spans multiple AZs for high availability.  
   - If one AZ fails, workloads continue in others.  
 
 - Private Subnets  
   - Worker nodes run inside private subnets → not exposed directly to the internet.  
 
-- Elastic Load Balancer (ELB  
+- Elastic Load Balancer (ELB)  
   - Distributes incoming user traffic across EKS nodes.  
   - Routes requests only to healthy nodes for reliability.  
 
-- NAT Gateway (NGW  
+- NAT Gateway (NGW)  
   - Allows nodes in private subnets to access the internet securely.  
   - Used for pulling Docker images, updates, and patches.  
   - Prevents direct public exposure of nodes.  
@@ -1075,7 +1075,7 @@ Amazon EKS provides a scalable, secure, and fault-tolerant Kubernetes environmen
 ### Amazon EKS - Node Types
 
 -Managed Node Groups
-  - Creates and manages nodes 9EC2 instances) for you
+  - Creates and manages nodes EC2 instances) for you
   - Nodes are part of an ASG Managed by EKS
   - Supports On-Demand or Spot instances
 - Self-Managed Nodes
@@ -1087,7 +1087,144 @@ Amazon EKS provides a scalable, secure, and fault-tolerant Kubernetes environmen
 
 ---
 
-Chapter 8: Serverless
+# Chapter 8: Serverless
+
+## Serverless overview
+
+- Serverless is a new paradigm in which th edevelopers dont have to manage servers anymore, they just depoly ccode and functions!
+- Initially serverless = Faas (Function as a service)
+- Serverless was pioneered by AWS lambda but now includes anything thats managed: "databases, messaging, storage, etc.."
+- Serverless doent mean there are no servers - it means you just dont manage/provision/see them
+
+### Serverless in AWS
+
+### Serverless in AWS – Overview  
+
+Serverless means you don’t manage servers — AWS provisions, scales, and manages the infrastructure for you.  
+Here are the key AWS serverless services:  
+
+- AWS Lambda: Core serverless compute service. Run code in functions without managing servers.  
+
+- Amazon DynamoDB: Fully-managed, serverless NoSQL database. Scales automatically with demand.  
+
+- Amazon Cognito: Handles **user authentication** (signups, logins). Simplifies scaling apps with secure user management.  
+
+- Amazon API Gateway: Acts as a bridge between users and backend services. Routes requests to **Lambda** or other AWS services.  
+
+- Amazon S3: Serverless object storage for files and static content. Automatically scales with data.  
+
+- Amazon SNS (Simple Notification Service): Pub/sub messaging system for sending notifications.  
+
+- Amazon SQS (Simple Queue Service): Message queuing between distributed system components.  
+
+- Amazon Kinesis Data Firehose: Ingests and loads **real-time streaming data** into AWS. Useful for analytics pipelines.  
+
+- Amazon Aurora Serverless: Managed **relational database** that auto-scales.  
+
+- AWS Step Functions: Orchestrates workflows across multiple Lambdas/services. Useful for complex, multi-step applications.  
+
+- AWS Fargate: Serverless compute for containers. No need to manage EC2 instances running your containers.  
+
+**Summary**:  
+AWS Serverless services cover compute, databases, storage, messaging, and orchestration — all designed to scale automatically while removing the need to manage servers.
+
+
+## AWS Lambda vs. EC2  
+
+**Amazon EC2 (Elastic Compute Cloud):**  
+- Virtual servers (VMs) in the cloud.  
+- You choose CPU, memory, and storage for each instance.  
+- Billed for uptime → even when instances sit idle.  
+- Scaling requires manual configuration or Auto Scaling setup.  
+- Full control over OS, runtime, and infrastructure.  
+
+**AWS Lambda:**  
+- **Serverless** → no servers to manage.  
+- Executes short-lived tasks (max runtime: **15 minutes**).  
+- **Event-driven** → runs in response to triggers (e.g., file upload, API call).  
+- **On-demand billing** → only pay for actual execution time.  
+- **Automatic scaling** → from 1 user to 1 million users with no manual setup.  
+
+**Summary:**  
+- With **EC2**, you manage virtual machines and infrastructure.  
+- With **Lambda**, you focus only on your code → AWS handles infrastructure, scaling, and billing efficiency.  
+
+
+### Benefits of AWS Lambda
+
+- Easy Pricing:
+  - Pay per request and compute time
+  - Free tier of 1,000,000 AWS Lambda requests and 400,000 GBs of compute time
+- Integrated with the whole AWS suite of services
+- Integrated with many programming languages
+- Easy monitoring through AWS Cloud Watch
+- Easy to get more resources per functions (up to 10GB of RAM!), increasing RAM will also improve CPU and network!
+
+### AWS Lambda Language Support
+
+- Node.js (JavaScript)
+- Python
+- Java
+- C#(.NET Core)/Powershell
+- Ruby
+- Custom Runtime API
+
+**Lambda with Container Images**  
+- Package your application (including dependencies) into a **Docker container image**.  
+- Lambda can run the container if it implements the **Lambda Runtime API**.  
+- Useful for complex setups where standard runtimes aren’t enough.  
+
+**Note**: For more general-purpose or custom Docker containers, **Amazon ECS with Fargate** may be a better fit since it offers more flexibility.  
+
+### Examples: Serverless Thumbnail creation
+
+<img width="813" height="448" alt="image" src="https://github.com/user-attachments/assets/95f3d9fb-0d46-4a58-b1e6-d1a460b39bd7" />
+
+The diagram shows a real-world serverless workflow using **S3, Lambda, and DynamoDB**:  
+
+1. Upload to S3 (Trigger Event): A user uploads a new image (e.g., beach photo) to an S3 bucket. This upload automatically triggers an event notification.  
+
+2. AWS Lambda Function: The event invokes a Lambda function. The function’s job: create a smaller thumbnail version of the uploaded image.  
+
+3. Output – Thumbnail in S3: Lambda pushes the generated thumbnail back into S3. Both the original image and the thumbnail are now stored.  
+
+4. Output – Metadata in DynamoDB: Lambda also pushes image metadata (e.g., name, size, timestamp) into DynamoDB. This provides a record of the uploaded and processed image.  
+
+**Why this is powerful**  
+- Entire process is fully automated — no manual steps.  
+- Serverless → no servers to manage, AWS handles everything.  
+- Scales automatically → works whether you upload one image or thousands.  
+- Cost-efficient → you only pay for: Lambda execution time, Storage in S3, Metadata storage in DynamoDB.  
+
+---
+
+# Chapter 9: AWS Networking
+
+## Amazon Networking
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
