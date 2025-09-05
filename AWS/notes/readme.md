@@ -449,7 +449,7 @@ Works like standard Linux NFS mounts, but fully managed by AWS.
 
 ---
 
-# Load balancing & scalability
+# Chapter 6: Load balancing & scalability
 
 ## Scalability & high availability
 Scalability means that an application / system can handle greater loads by adapting to demand
@@ -816,6 +816,364 @@ There are 3 main types of dynamic scaling policies:
 - 3. Scheduled Scaling:
   - Anticipate a scaling based on known usage patterns
   - Example: increase the min capacity to 10 at 5pm on Fridays
+
+---
+
+# Chapter 7: Containers
+
+## Containers on AWS – Introduction to Docker and Containers  
+
+- What is Docker?  
+  - A platform to build, ship, and run applications anywhere.  
+  - Packages app code, libraries, dependencies, and runtime into a portable container.  
+  - Ensures applications run consistently across environments.  
+
+- What is a Container?  
+  - A lightweight, portable unit that holds everything an app needs to run.  
+  - Provides the same runtime environment across local machines, servers, and cloud.  
+  - Solves the classic “works on my machine” problem.  
+
+- Why use Docker? 
+  - **Portability** → run containers on any system with Docker installed.  
+  - **Consistency** → same behavior across dev, staging, and production.  
+  - **Speed** → lightweight, start quickly, and use fewer resources than VMs.  
+  - **Simplicity** → deployment is easier since everything is bundled into the container.  
+
+- How it works:  
+  - Applications are packaged into a container image (blueprint).  
+  - Docker uses the image to create running containers (instances of the app).  
+  - Containers can be deployed on local servers, colleagues’ machines, or the cloud → same behavior everywhere.  
+
+
+## Docker on an OS
+
+- How Docker runs on an OS:  
+  - Docker Engine (container runtime) is installed on a server (EC2, local machine, etc.).  
+  - Instead of installing apps directly on the host OS, apps are packaged into **containers**.  
+
+- Containers on the OS:  
+  - Each container runs an isolated application (e.g., Java, Nginx, MySQL).  
+  - Containers share the **host OS kernel** but keep processes, memory, and files separate.  
+  - Multiple versions of the same software can run without conflicts (e.g., two different Java versions).  
+
+- Why containers are lightweight:  
+  - They don’t include a full OS → share host kernel.  
+  - Faster startup and lower resource usage compared to VMs.  
+
+- Benefits:  
+  - Isolation between applications → avoids version/dependency conflicts.  
+  - Consistency across environments (dev, staging, production).  
+  - Run multiple applications side by side without interference.  
+
+
+### Where are docker images stored?
+
+- Docker images are stored in Docker repositories.
+- Docker Hub
+  - Public repository
+  - Find the base images for amny technologies or OS (e.g. Ubuntu, MYSQL)
+- Amazon ECR (Amazon Elastic Container Registry)
+    - Private repository
+    - Public repository (Amazon ECR Public Gallery)
+
+### Docker vs Virtual Machines  
+
+<img width="816" height="455" alt="image" src="https://github.com/user-attachments/assets/3310fa6a-0975-4a0a-b9a0-fb2b15b24842" />
+
+
+| Feature              | Virtual Machines (VMs)                          | Docker (Containers)                                  |
+|----------------------|-------------------------------------------------|-----------------------------------------------------|
+| **Isolation**        | Full system virtualization with its own OS      | OS-level isolation, apps share host OS kernel       |
+| **Guest OS**         | Each VM has its own OS (Ubuntu, Windows, etc.)  | No separate OS, only app + dependencies             |
+| **Resource Usage**   | Heavy, high CPU & memory usage                  | Lightweight, low overhead                           |
+| **Boot Time**        | Slow to start/stop                              | Very fast to start/stop                             |
+| **Manager**          | Managed by a **Hypervisor**                     | Managed by the **Docker Daemon**                    |
+| **Portability**      | Limited, tied to VM image and OS                | Highly portable, runs anywhere Docker is installed  |
+| **Scalability**      | Fewer VMs per host (due to resource overhead)   | Many containers per host (lightweight)              |
+| **Virtualization**   | Virtualizes **hardware**                        | Virtualizes the **OS**                              |
+| **Use Case**         | When full OS isolation is required              | When speed, efficiency, and portability are needed  |
+
+**Key Difference:**  
+- VMs **virtualize hardware** (full operating systems on one machine).  
+- Docker **virtualizes the operating system** (isolated apps running on the same kernel).  
+
+
+### Getting Started With Docker:
+
+<img width="816" height="455" alt="image" src="https://github.com/user-attachments/assets/f36a5222-771d-49a7-8a5d-0afb6f8997c4" />
+
+The diagram above shows the basic flow of working with Docker:  
+
+1. **Dockerfile (Blueprint)**  
+   - A text file with instructions on how to build a Docker image.  
+   - Example steps:  
+     - `FROM ubuntu:18.04` → choose a base image.  
+     - `COPY . /app` → copy app files into the image.  
+     - `RUN make /app` → run commands to set up dependencies.  
+     - `CMD python3 /app/app.py` → default command when the container runs.  
+
+2. **Build the Image**  
+   - Run `docker build` to create an image from the Dockerfile.  
+   - This packages your app, its dependencies, and environment into one portable unit.  
+
+3. **Run the Container**  
+   - Start the container with `docker run <image-name>`.  
+   - The application (e.g., a Python app) runs inside the container.  
+
+4. **Push & Pull from Registries**  
+   - Images can be **pushed** to registries like **Docker Hub** or **Amazon ECR**.  
+   - Later, they can be **pulled** to run on any system with Docker installed.  
+
+**Summary**:  
+- The **Dockerfile** is the recipe.  
+- **Build** creates an image.  
+- **Run** launches a container from that image.  
+- **Push/Pull** share or deploy the image via a registry.  
+
+This flow ensures your app runs consistently across local, staging, and production environments.  
+
+### Container Related Service on AWS
+
+- Amazon Elastic Container Service (Amazon ECS) - Amazon own cpontainer platform.
+- Amazon Elastic Kubernetes Service (Amazon EKS) - Amazon managed Kubernetes (open source)
+- Amazon Fargate - Amazons own serverless container platform, works with ECS and EKS
+- Amazon ECR - Store container images
+
+
+## Amazon ECS 
+
+### EC2 Launch type
+
+<img width="361" height="381" alt="image" src="https://github.com/user-attachments/assets/a6497e1d-9fc2-4217-83d6-ae3b28a45d45" />
+
+
+- ECS = Elatic Container Service
+- Launch Docker containers on AWS = Launch ECS Tasks on ECS Clusters
+- EC2 Launch type: you must provision & maintain the infrastructure (the EC2 instances)
+- Each EC2 instance must run the ECS agent to register in the ECS cluster
+- AWS takes care of starting/stopping containers
+
+### Fargate Launch Type
+
+<img width="322" height="312" alt="image" src="https://github.com/user-attachments/assets/84dce803-8947-42fd-978f-404d876c32c2" />
+
+- Launch Docker Containers on AWS
+- You do not provision the infrastructure (no EC2
+instances to manage)
+- Its all Serverless!
+- You just create task definitions
+- AWS just runs ECS tasks for you based on the CPU / RAM you need.
+- To scale, just increase the number of tasks. Simple - no more EC2 instances.
+
+### IAM Roles for ECS
+
+- EC2 instance Profile (EC2 Launch Type only):
+  - Used by the ECS agent
+  - Makes API calls to ECS service
+  - Send container logs to CloudWatch Logs
+  - Pull Docker image from ECR
+  - Reference sensitive data in Secrets
+  - Manager or SSM Parameter Store
+- ECS Task Role:
+  - Allows each task to have a specific role.
+  - Use different roles for the different ECS services you run
+  - Task role is defined in the task definition
+
+### Load Balancer Integrations
+
+- Application Load Balancer supported and works for most use cases.
+- Network Load Balancer recommended only for high throughput/high performance use cases, or to pair it with AWS Private Link.
+- Classic Load Balancer supported but not recommended (no advanced features - no Fargate)
+
+### ECS Service Auto Scaling
+
+- Automatically increase/decrease the desired number of ECS tasks
+- Amazon ECS Auto Scaling uses AWS Application Auto Scaling to make keys decisions based on metrics like: 
+  - ECS Service Average CPU Utilization
+  - ECS Service Average Memory Utilization - Scale on RAM
+  - ALB Request Count Per Target - metric coming from the ALB
+
+Scaling strategies:
+
+- Target tracking - Scale based on target value for a specific CloudWatch metric.
+- Step Scaling - Scale based on a specified CloudWatch Alarm
+- Scheduled Scaling - Scale based on a specified date/time (predictable changes)
+
+- ECS Service Auto Scaling (Task Level) - EC2 Auto Scaloing (EC2 instance level)
+- Fargate Auto Scaling is much easier to setup because serverless
+
+## Amazon ECR
+
+ Amazon ECR is a fully managed container image registry on AWS. Works like a cloud-based Docker Hub for storing and managing images.  
+
+- Repository Types:  
+  - Private Repositories → for internal, sensitive images.  
+  - Public Repositories → for open-source or shared images (Amazon ECR Public Gallery).  
+
+- Seamlessly integrated with Amazon ECS (ECS tasks can pull images directly from ECR). Images are stored securely in Amazon S3 behind the scenes.  
+- Access is controlled by IAM policies (only authorized users/services can access private images).  
+
+- Additional Features:  
+  - Versioning → tag and manage multiple image versions.  
+  - Lifecycle policies → automatically clean up old/unneeded images.  
+  - Supports vulnerability scanning for security checks.  
+
+## Amazon EKS 
+
+Amazon EKS = Amazon Elastic Kubernetes Service. It is a way to launch managed Kubernetes clusters on AWS
+
+- Kubernetes is an open-source system for automatic deployment, scaling and management of containerized (usually Docker) application. Its an alternative to ECS, Similar goal but different API.
+- EKS supports EC2 if you want to deploy worker nodes or Fargate to deploy serverless containers.
+- Use case: If your company is already using Kubernetes on- premises or in another cloud and wants to migrate to AWS using Kubernetes.
+- Kubernetes is cloud-agnostic (can be used in any cloud - Azure, GCP...)
+- For multiple regions, deploy one EKS cluster per region.
+- Collect logs and metrics using CloudWatch Container Insights.
+
+
+### Amazon EKS Diagram
+
+<img width="792" height="408" alt="image" src="https://github.com/user-attachments/assets/41e2a770-f62d-4416-875f-5f71a8af4297" />
+
+The diagram above shows the key components of an Amazon EKS (Elastic Kubernetes Service) setup.  
+
+- EKS Worker Nodes  
+  - EC2 instances running Kubernetes worker processes.  
+  - Managed in an **Auto Scaling Group (ASG)** → scale in/out automatically with traffic.  
+
+- EKS Pods
+  - Smallest unit in Kubernetes, running inside worker nodes.  
+  - Each pod = one or more containers grouped to handle tasks.  
+
+- VPC (Virtual Private Cloud  
+  - Provides a private, isolated network for EKS resources.  
+  - Ensures secure communication between components.  
+
+- Availability Zones (AZs  
+  - Setup spans multiple AZs for high availability.  
+  - If one AZ fails, workloads continue in others.  
+
+- Private Subnets  
+  - Worker nodes run inside private subnets → not exposed directly to the internet.  
+
+- Elastic Load Balancer (ELB  
+  - Distributes incoming user traffic across EKS nodes.  
+  - Routes requests only to healthy nodes for reliability.  
+
+- NAT Gateway (NGW  
+  - Allows nodes in private subnets to access the internet securely.  
+  - Used for pulling Docker images, updates, and patches.  
+  - Prevents direct public exposure of nodes.  
+
+Summary:  
+Amazon EKS provides a scalable, secure, and fault-tolerant Kubernetes environment on AWS.  
+- **Load Balancers** handle incoming traffic.  
+- **NAT Gateways** enable safe outbound internet access.  
+- **Worker Nodes + Pods** run your workloads.  
+- **Multi-AZ architecture** ensures resilience and high availability.  
+
+
+### Amazon EKS - Node Types
+
+-Managed Node Groups
+  - Creates and manages nodes 9EC2 instances) for you
+  - Nodes are part of an ASG Managed by EKS
+  - Supports On-Demand or Spot instances
+- Self-Managed Nodes
+  - Nodes created by you and registered to the EKS cluster and managed by an ASG
+  - You can use prebuilt AMI - Amazon EKS optimized AMI
+  - Supports On-Demand or Spot Instances
+- AWS Fargate
+  - No maintenance required; no nodes managed
+
+---
+
+Chapter 8: Serverless
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
