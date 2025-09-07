@@ -1200,7 +1200,217 @@ The diagram shows a real-world serverless workflow using **S3, Lambda, and Dynam
 
 # Chapter 9: AWS Networking
 
-## Amazon Networking
+## Understanding CIDR – IPv4  
+
+CIDR stands for Classless Inter-Domain Routing. It’s a method for allocating and representing IP address ranges.  
+
+- Format:  
+  - Written as an IP address + slash + number (e.g., `192.168.0.0/26`).  
+  - The number after the slash (`/`) is called the subnet mask.  
+
+- How it works:  
+  - Base IP → starting point of the range (e.g., `192.168.0.0`).  
+  - Subnet Mask → determines how many bits can vary → defines the size of the range.  
+
+- Examples:  
+  - `0.0.0.0/0` → all IPs (everything, everywhere).  
+  - `192.168.0.1/32` → a single IP address.  
+  - `192.168.0.0/26` → a block of 64 IP addresses.  
+  - `/8`, `/16`, `/24`, `/32` → common CIDR notations.  
+
+- Subnet mask:  
+  - The smaller the number after the slash → the larger the IP range.  
+  - The bigger the number after the slash → the smaller/more specific the range.  
+
+Use Cases in AWS:  
+- Defining VPC IP ranges.  
+- Configuring security groups and network ACLs.  
+- Restricting access to specific IPs or IP ranges.  
+
+## Understanding CIDR - Subnet Mask
+
+<img width="813" height="455" alt="image" src="https://github.com/user-attachments/assets/20ce6b40-9035-4fea-a42c-87edbf7df3e9" />
+
+## Public Vs Private IP (IPv4)
+
+- The Internet Assigned Numbers Authority (IANA) established certain blocks of IPv4 addresses for the use of private (LAN) and public (Internet) addresses
+- Private IP can only allow certain values:
+  - 10.0.0.0 - 10.255.255.255 (10.0.0.0/8) < in big networks
+  - 172.16.0.0 - 172.31.255.255 (172.16.0.0/12) < AWS default VPC in that range
+  - 192.168.0.0 - 192.168.255.255 (192.168.0.0/16) < e.g., home networks
+• All the rest of the IP addresses on the Internet are Public
+
+## Default VPC Walkthrough
+
+- All new AWS aacounts have a default VPC
+- New EC2 instances arae launched into the default VPC if no subnet is specified
+- Default VPC has internet connectivity and all EC2 instancess inside it have public IPv4 addresses
+- We also get a public and a private IPv4 DNS names 
+
+## VPC - Subnet (IPv4)
+
+AWS reserves 5 IP addresses (first 4 & last 1) in each subnet. These 5 IP addresses are not available for use and can't be assigned to an EC2 instance
+- Example: if CIDR block 10.0.0.0/24, then reserved IP addresses are:
+  - 10.0.0.0 - Network Address
+  - 10.0.0.1 - reserved by AWS for the VPC router
+  - 10.0.0.2 - reserved by AWS for mapping to Amazon-provided DNS (IP address of DNS server)
+  - 10.0.0.3 - reserved by AWS for future use
+  - 10.0.0.255 - Network Broadcast Address. AWS does not support broadcast in a VPC, therefore the address is reserved
+- For example, if you need 29 IP addresses for EC2 instances:
+  - You can't choose a subnet of size /27 (32 IP addresses, 32 - 5 = 27 < 29)
+  - You need to choose a subnet of size /26 (64 IP addresses, 64 - 5 - 59 > 29)
+
+## Internet Gateway (IGW)
+
+- IGW allows resources (e.g. EC2 instances) in a VPC to connect to the internet
+- It scales horizontally and is highly available and redundant.
+- Must be created separately from a VPC - One VPC ccan only be attached to One IGW and vice versa
+- Internet Gateways on their own do not allow internet access
+- Route tables must also be updated - To enable traffic to go where it should
+
+## Bastion Hosts
+
+- We can use a Bastion Host to SSH into our private EC2 instances
+- The bastion is in the public subnet which is then connected to all other private subnets
+- Bastion Host security group must allow inbound from the internet on port 22 from restricted CIDR, for example
+the public CIDR of your corporation
+- Security Group of the EC2 Instances must allow the Security Group of the Bastion Host, or the private IP of the
+Bastion host
+
+<img width="310" height="386" alt="image" src="https://github.com/user-attachments/assets/d90687df-0323-49da-bc68-80e1b62c9baa" />
+
+## NAT Gateway
+
+### NAT Gateway in AWS Networking  
+
+- NAT = Network Address Translation.  
+- A NAT Gateway lets instances in a **private subnet** connect to the internet, while blocking any **inbound traffic** from the internet.  
+- Common use: private EC2 instances downloading updates or accessing external APIs without being exposed publicly.  
+
+Key details:  
+- Managed service → AWS handles scaling, availability, and maintenance.  
+- Billing → charged per hour + bandwidth used.  
+- AZ-specific → tied to a single Availability Zone.  
+  - For redundancy, create a NAT Gateway in each AZ.  
+- Requires an **Internet Gateway** in the VPC to connect out. (Private Subnet => NATGW => IGW)  
+- Cannot be used by EC2 instances in the same subnet → must be in another subnet.  
+- Provides 5 Gbps bandwidth by default, scales up to 100 Gbps automatically.  
+- Uses an Elastic IP for external connectivity.  
+- No security groups required → simpler than NAT instances.  
+
+Summary:  
+A NAT Gateway enables **outbound internet access** for private subnets without exposing those instances directly to the internet. It’s secure, scalable, and low maintenance — ideal for production environments where you need tight control over inbound traffic.  
+
+
+### NAT Gateway with High Availability  
+
+A NAT Gateway is highly available, but only within a single Availability Zone (AZ). 
+
+- Risk:  
+  - If the AZ hosting your NAT Gateway goes down, all resources depending on it lose internet access.  
+  - Even if EC2 instances in other AZs are healthy, they cannot reach the internet if they rely on that single NAT Gateway.  
+
+- Solution:  
+  - Create one NAT Gateway per AZ.  
+  - Ensure that subnets in each AZ use the NAT Gateway in their own AZ.  
+  - This prevents a single point of failure and keeps internet access available if one AZ fails.  
+
+This would ultimately increases fault tolerance and ensures high availability and supports disaster recovery strategies.  
+
+<img width="500" height="560" alt="image" src="https://github.com/user-attachments/assets/cc393dc1-9d63-4636-b744-ca5911cd86d0" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
