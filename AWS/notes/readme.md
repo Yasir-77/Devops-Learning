@@ -1319,6 +1319,261 @@ This would ultimately increases fault tolerance and ensures high availability an
 
 <img width="500" height="560" alt="image" src="https://github.com/user-attachments/assets/cc393dc1-9d63-4636-b744-ca5911cd86d0" />
 
+### NAT Gateway vs NAT Instance  
+
+| Feature              | NAT Gateway (Managed Service)                     | NAT Instance (EC2-based)                       |
+|----------------------|---------------------------------------------------|------------------------------------------------|
+| Availability         | Highly available within an AZ; add one per AZ for full redundancy | Use a script to manage failover between instances|
+| Bandwidth            | Scales automatically, up to 100 Gbps              | Limited by EC2 instance type                   |
+| Maintenance          | Fully managed by AWS (no patches or updates needed) | User-managed (OS updates, patches, software)   |
+| Cost                 | Simple: per hour + data processed                 | Based on EC2 instance pricing + data charges   |
+| Public IPv4          | Supported                                         | Supported                                      |
+| Security Groups      | Not required (AWS manages security)               | Can attach security groups like any EC2        |
+| Bastion Host Usage   | Not possible                                      | Can also serve as a bastion (jump box)         |
+| Best For             | Hands-off, scalable, high-bandwidth setups        | Flexible, lower-cost, more manual control      |
+
+## Networking Access Control List (NACL)
+
+NACL are like firewall which control traffic from and to subnets - One NACL per subnet, new subnets are assigned to the Default NACL
+- You define NACL rules:
+  - Rules have a number (1-32766), higher precedence with a lower number
+  - First rule match will drive the decision
+  - Example: if you define a #100 ALLOW 10.0.0.10/32 and #200 DENY 10.0.0.10/32, the IP address will be allowed because 100 has a higher precedence over 200.
+  - The last rule is an (*) and denies a request in case of no rule match
+  - AWS recommends adding rules by increment of 100
+- Newly created NACLs will deny everything
+- NACL are a great way of blocking a specific IP address at a subnet level
+
+
+## Security Groups & NACLs
+<img width="814" height="401" alt="image" src="https://github.com/user-attachments/assets/efeaff00-f3d6-486e-a9f8-0b874701b743" />
+
+Security Groups → work at the instance level (control traffic to/from EC2 instances).  
+
+NACLs → work at the subnet level (control traffic at subnet boundaries, affecting all resources).  
+
+- Statefulness: 
+  - Security Groups are stateful:  
+    - If inbound traffic is allowed, the response outbound traffic is automatically allowed.  
+    - No need to create separate outbound rules for responses.  
+  - NACLs are stateless:  
+    - You must explicitly allow inbound and outbound traffic.  
+    - Allowing one direction does not automatically allow the reverse.  
+
+- **Incoming Request (from outside to EC2)**  
+  1. Traffic hits **NACL inbound rules** (subnet level). Blocked if not allowed.  
+  2. If allowed, traffic moves to **Security Group inbound rules** (instance level).  
+  3. If SG allows it, EC2 processes the request. Outbound reply is automatically allowed (stateful).  
+  4. Response must still pass through **NACL outbound rules**, or it will be blocked.  
+
+- **Outgoing Request (from EC2 to outside)**  
+  1. Traffic first checked by **SG outbound rules**.  
+  2. If allowed, it moves to **NACL outbound rules**. Must be explicitly permitted.  
+  3. When return traffic comes back, it passes **NACL inbound rules** first.  
+  4. Finally, it reaches the **SG inbound rules** before the EC2 instance.  
+
+## VPC Peering
+ <img width="351" height="389" alt="image" src="https://github.com/user-attachments/assets/710c256b-d20c-4425-975a-46da7895455c" />
+
+VPC peering is a way to privately connect two VPCs using AWS’s internal network. Once peered, the VPCs can communicate as if they were part of the same network, without using the public internet.  
+
+Key features:  
+- Private connection → all traffic stays on AWS’s internal, secure network.  
+- No overlapping CIDRs allowed → VPCs must have unique IP ranges.  
+- Non-transitive → if A is peered with B, and B with C, A cannot talk to C unless you explicitly peer them.  
+- Route tables must be updated in each VPC’s subnets to enable communication.  
+
+Use cases:  
+- Connecting different departments’ VPCs (e.g., sales VPC and marketing VPC) to share resources securely.  
+- Linking VPCs across different AWS accounts (e.g., dev and prod environments).  
+- Keeping communication secure and internal without exposing data over the internet.  
+
+Good to know::
+- You can create VPC Peering connection between VPCs in different AWS accounts/regions
+- You can reference a security group in a peered VPC (works cross accounts - same region)
+
+### VPC Endpoints (ASWS PrivateLink)
+
+By default, AWS services are accessed through public endpoints over the internet. VPC Endpoints (powered by AWS PrivateLink) let you connect to AWS services privately through the AWS network.  
+
+Key benefits:  
+- Security → traffic stays within AWS, no need to expose your VPC to the internet.  
+- No need for an Internet Gateway or NAT Gateway to access AWS services.  
+- Scalable and redundant → handles growing loads automatically.  
+
+How it works:  
+- Without VPC Endpoint → a private instance uses a NAT Gateway to reach AWS services via the internet.  
+- With VPC Endpoint → the instance connects directly to the AWS service within AWS’s private network.  
+
+Troubleshooting tips:  
+- Check DNS resolution settings in the VPC.  
+- Update route tables to direct traffic through the endpoint.
+
+### Types of Endpoints
+
+1- Interface Endpoints (Powered by PrivateLink)
+- provisions an ENI(Private IP address) as an entry point (must attach a security group)
+- Supports most AWS services
+- $ per hour + $ per GB of data processed
+
+2- Gateway Endpoints
+- provisions a gateway and must be used as a target in a route table (does not use SG)
+- Supports noth S3 and DynamicDB
+- Free
+
+## What is IPv6
+
+IPv4 designed to provide 4.3 Billion addresses (they'll be exhausted soon)
+
+IPv6 is the successor of IPv4 - IPV6 is designed to provide 3.4 × 10^38 unique IP addresses
+
+Every IPv6 address in AWS is public and Internet-routable (no private range)
+
+Format x.x.x.x.x.x.x.x (x is hexadecimal, range can be from 0000 to ffff)
+
+- Examples:
+  - 2001:db8:3333:4444:5555:6666:7777:8888
+  - 2001:db8:3333:4444:cccc:dddd:eeee:ffff
+  - :: all 8 segments are zero
+  - 2001:db8:: -> the last 6 segments are zero
+  - ::1234:5678 → the first 6 segments are zero
+  - 2001:db8::1234:5678- the middle 4 segments are zero
+
+
+### IPv6 in VPC
+
+- IPv4 cannot be disabled for your VPC and subnets
+- You can enable IPv6 (they're public IP addresses) to operate in dual-stack mode
+- Your EC2 instacnes will get at least a private internal IPv4 and a public IPv6
+- They can communicate using either IPv4 or IPv6 to the internet through an internet gateway
+
+### IPv4 troubleshooting
+
+IPv4 cannot be disabled for your VPC and subnets
+
+So if you cannot launch an EC2 instance in your subnet:
+- It is not because it cannot acquire an IPv6 (the space is very large)
+- Its because there are no available IPv4 in your subnet
+
+Solution: Create a new IPv4 CIDR in your subnet
+
+### Egress-only Internet Gateway
+
+- Works like a NAT Gateway but specifically for IPv6 traffic.  
+- Purpose: allows outbound-only communication from your VPC to the internet over IPv6.  
+- Blocks any inbound IPv6 connections from the internet.  
+
+Key points:  
+- Only for IPv6(does not apply to IPv4).  
+- Ensures private subnets can make outbound connections securely.  
+- Prevents external IPv6 hosts from initiating inbound connections.  
+- Requires updating the route tables so traffic is directed through the Egress-Only Internet Gateway.  
+
+Summary:  
+Use an Egress-Only Internet Gateway when you need your instances to **access the internet over IPv6** but want to block any unsolicited inbound traffic.  
+
+### IPv6 Routing
+
+<img width="809" height="452" alt="image" src="https://github.com/user-attachments/assets/f81f33f9-1e4c-4624-ae03-4f109d47e358" />
+
+This setup shows how IPv4 and IPv6 routing works in a dual-stack VPC (both protocols enabled).  
+
+- VPC  
+  - Configured with both IPv4 (`10.0.0.0/16`) and IPv6 (`2001:db8:1234:1a00::/56`) CIDR blocks.  
+  - Subnets inside the VPC also have **dual CIDR blocks** (IPv4 + IPv6).  
+
+- Public Subnet  
+  - Instance has:  
+    - Private IPv4 address.  
+    - Public Elastic IPv4 address.  
+    - Public IPv6 address.  
+  - Can communicate with the internet using both IPv4 and IPv6.  
+  - IPv4 internet traffic routes through the **Internet Gateway** (via Elastic IP).  
+  - IPv6 traffic also routes directly through the **Internet Gateway**.  
+
+- Private Subnet  
+  - Instance has a private IPv4 and an IPv6 address.  
+  - IPv4 traffic → routed through a **NAT Gateway** in the public subnet for outbound internet.  
+  - IPv6 traffic → routed directly through the **Internet Gateway** (no NAT required).  
+
+- NAT Gateway  
+  - Needed only for **IPv4 private subnets**.  
+  - Not used for IPv6 traffic — IPv6 can go straight out via the Internet Gateway.  
+
+- Route Tables  
+  - Public Subnet:  
+    - Routes local traffic (`10.0.0.0/16` and `2001:db8:1234:1a00::/56`) within the VPC.  
+    - Routes all other IPv4 (`0.0.0.0/0`) and IPv6 (`::/0`) to the Internet Gateway.  
+  - Private Subnet:  
+    - Routes IPv4 internet traffic (`0.0.0.0/0`) to the NAT Gateway.  
+    - Routes IPv6 internet traffic (`::/0`) directly to the Internet Gateway.  
+
+Summary:  
+- In IPv4, private subnets require a NAT Gateway for outbound internet.  
+- In IPv6, both public and private subnets can use the Internet Gateway directly.  
+
+## VPC Summary
+
+
+- CIDRs (Classless Inter-Domain Routing)  . Defines the IP range for your VPC (IPv4 and IPv6). Sets the boundaries for IP allocation.  
+
+- VPC (Virtual Private Cloud) - An isolated virtual network within AWS using CIDRs.  
+
+- Subnets - Divide the VPC into smaller segments. Each subnet is tied to a specific Availability Zone.  
+
+- Internet Gateway - Provides internet access for IPv4 and IPv6. Created at the VPC level.  
+
+- Route Tables - Define how traffic flows within the VPC and to external networks. Used for routing to internet gateways, VPC peering, and VPC endpoints.  
+
+- Bastion Host - A public EC2 instance that acts as a secure bridge to access private EC2 instances.  
+
+- NAT Instance - Legacy way of giving internet access to private EC2 instances. Requires manual setup and maintenance.  
+
+- NAT Gateway - Managed, scalable replacement for NAT instances. Provides outbound IPv4 internet access for private subnets.  
+
+- NACLs (Network Access Control Lists)  
+  - Operate at the subnet level.  
+  - Stateless (rules must be defined for both inbound and outbound).  
+
+- Security Groups  
+  - Operate at the instance level.  
+  - Stateful (responses automatically allowed once traffic is permitted).  
+
+- VPC Peering  
+  - Private connection between two VPCs using AWS’s internal network.  
+  - Non-transitive: each connection must be created explicitly.  
+
+- VPC Endpoints  
+  - Allow private access to AWS services (e.g., S3, DynamoDB) without using the public internet.  
+
+- VPC Endpoint Services (PrivateLink)  
+  - Connect privately from one VPC to another (e.g., provider to customer).  
+  - Requires a Network Load Balancer or ENIs.  
+
+- Egress-Only Internet Gateway  
+  - Outbound-only internet access for IPv6 traffic.  
+  - Blocks all inbound IPv6 connections.  
+
+- Transit Gateway  
+  - Provides transitive connectivity between multiple VPCs, VPNs, and Direct Connect links.  
+  - Acts as a central hub for network communication.  
+
+
+# DNS (Route53)
+
+## Amazon Route 53
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
