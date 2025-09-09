@@ -1708,8 +1708,6 @@ TTL (Time To Live) is how long a DNS record is cached before its refreshed
 
 Except for Alias records, TTL is mandatory for each DNS record
 
-### CNAME vs Alias
-
 ### CNAME vs ALIAS  
 
 - CNAME (Canonical Name Record)  
@@ -1730,45 +1728,227 @@ Except for Alias records, TTL is mandatory for each DNS record
 - Use **ALIAS** in AWS when you need flexibility, root domain support, and direct integration with AWS resources.  
 
 
+### Route 53 - Alias Records
+
+- Alias records maps hostname to an AWS resouce 
+- Automaticaly makes changes in the resources IP addresses
+- Unlike CNAME, it can be used for the top node of a DNS namespace (Zone apex), e.g. Example.com
+- Alias record is allways of type A/AAAA for AWS resources (IPv4/IPv6)
+- You cant set the TTL
 
 
+### Route 53 - Alias Records Targets
+
+Alias records in Route 53 are designed to work with specific AWS resources. They let you map custom domain names to AWS services without needing to manage changing IPs.  
 
 
+- ELB Elastic Load Balancers) - Map friendly domain names to load balancers.
+- CloudFront Distributions - Serve content with a custom domain
+- API Gateway - Map custom domains to your APIs.
+- ELastic Beanstalk environments - Easily connect your domain to Beanstalk apps.  
+- S3 Websites - Point your domain directly to static sites hosted in S3.
+- VPC Interface Endpoints - Access private services in your VPC with a clean domain name.
+- Global Accelerator accelerator - Improve global performance with custom domains. 
+- Route 53 record in the same hosted zone - Alias records can point to records within the same hosted zone. 
+
+You cannot set an ALIAS record for an EC2 DNS name For that, use CNAME** or A/AAAA records instead.  
+
+## Route 53 – Routing Policies  
+
+In Route 53, routing policies define how DNS responds to queries. Route 53 doesn’t route traffic itself—it just tells clients which IP or resource to connect to.  
+
+**Types of Routing Policies:**  
+
+- Simple Routing - Always returns the same IP address. Best for a single server or resource.  
+- Weighted Routing - Distributes traffic based on weights (e.g., 70% to Server A, 30% to Server B). Useful for testing new versions or gradual rollouts.  
+- Failover Routing - Routes traffic to a primary resource unless it fails. If the primary is unhealthy, traffic goes to a secondary (backup).  
+- Latency-Based Routing - Sends users to the server that responds the fastest. Great for multi-region setups.  
+- Geolocation Routing - Routes traffic based on the user’s location. Example: EU users served from Europe, US users from US.  
+- Multi-Value Answer Routing - Returns multiple IP addresses in response. Provides simple load distribution without a dedicated load balancer.  
+- Geoproximity Routing (with Traffic Flow) - Routes traffic based on proximity of users and resources. Allows customization and biasing traffic toward specific regions. 
+
+### Simple Routing
+
+The most basic routing option in Route 53. Routes traffic to a single resource (e.g., one server, one load balancer). Every DNS query gets the same response.  
+
+- **Multiple Values**  
+  - Can return multiple IP addresses in a response.  
+  - The client (browser or app) randomly selects one.  
+  - Provides basic traffic distribution, but not true load balancing.  
+
+- **Limitations**  
+  - Alias records can only point to a single AWS resource.  
+  - No health checks—Route 53 does not know if the resource is down.  
+  - Traffic may still be sent to failed resources.  
+
+- **Best Use Case**  
+  - Simple setups with one server or resource.  
+  - When advanced routing (failover, latency, weighted) is not required.  
+
+### Weighted Routing
+ 
+Weighted Routing distributes traffic across multiple resources based on assigned weights. Useful when you don’t want traffic split evenly.  
+
+- **How it works**  
+  - Each record is assigned a weight (e.g., 70, 20, 10).  
+  - Route 53 calculates the percentage of traffic for each resource as:  
+    - `Weight for a specific record ÷ Sum of all the weights for all records`.  
+  - Weights don’t need to add up to 100—only relative values matter.  
+  - Example: Weights 7, 2, 1 = 70%, 20%, 10%.  
+
+- **Features**  
+  - Can associate health checks with weighted records.  
+  - If a resource fails, Route 53 stops sending traffic to it.  
+  - Setting a weight of 0 removes a resource from traffic flow without deleting the record.  
+
+- **Use Cases**  
+  - Gradually testing a new application version with a subset of users.  
+  - Balancing load between regions/resources in a controlled manner.  
+  - Slowly phasing out or introducing infrastructure.  
 
 
+### Latency Based Routing:
+
+Latency-Based Routing routes users to the AWS resource (e.g., EC2, Load Balancer) with the lowest latency. Optimizes performance by reducing delays for global applications.  
+
+- **How it works**  
+  - Route 53 measures latency between AWS regions and users.  
+  - Directs queries to the region that responds the fastest.  
+  - Sometimes, due to network conditions, the lowest latency server might not be the geographically closest.  
+
+- **Features**  
+  - Can integrate with health checks.  
+  - If the lowest latency server becomes unavailable, traffic is routed to the next best option.  
+
+- **Use Cases**  
+  - Global applications where user experience and speed are top priority.  
+  - Websites, APIs, or services with users spread across multiple regions. 
 
 
+### Geolocation Routing 
+
+Geolocation Routing - Routes traffic based on the user’s physical location. Supports continents, countries, and even US states.  
+
+- **How it works**  
+  - Example: Users from France can be routed to a server in Paris.  
+  - If multiple rules overlap, the **most precise location** takes priority (e.g., country over continent).  
+  - Requires a **default record** as a fallback for users without a matching location rule.  
+
+- **Features**  
+  - Can integrate with health checks to ensure users are sent to healthy endpoints.  
+
+- **Use Cases**  
+  - **Website localization** → Serve region-specific languages and content.  
+  - **Content distribution** → Direct or restrict access based on geography (compliance, regulations).  
+  - **Load balancing** → Distribute traffic geographically across servers.  
 
 
+### Geoproximity Routing
+  
+Routes traffic based on the **geographic location** of users and resources.  Similar to Geolocation, but with **extra control using bias values**.  
+
+- **How it works**  
+  - Bias values adjust how much traffic a resource receives:  
+    - Positive bias (+1 to +99) → Expands the region → Attracts more traffic.  
+    - Negative bias (−1 to −99) → Shrinks the region → Sends less traffic.  
+  - Can route traffic to AWS regions or even non-AWS resources (by specifying latitude/longitude).  
+  - Requires Route 53 Traffic Flow to configure.  
+
+- **Example**  
+  - Resources in **US East 1** and **US West 2**.  
+  - With **bias = 0**: Users are routed purely by proximity (East → US East 1, West → US West 2).  
+  - With **bias = +50 on US East 1**: Route 53 expands US East 1’s region, sending more traffic there, even from users closer to US West 2.  
+
+- **Use Cases**  
+  - Shift more traffic toward a preferred region (e.g., cheaper or higher-capacity infrastructure).  
+  - Balance load across regions while maintaining location awareness.  
+  - Prioritize performance or failover needs globally.  
 
 
+### IP-based Routing
+
+Routes traffic based on the client’s IP address.  Uses CIDR blocks (IP ranges) to map users to specific resources.  
+
+- **How it works**  
+  - Example:  
+    - User A’s IP is in CIDR Block 1 → Routed to Resource A.  
+    - User B’s IP is in CIDR Block 2 → Routed to Resource B.  
+
+- **Why use it**  
+  - Provides granular control over where traffic goes.  
+  - Optimize performance by directing certain IP ranges to closer or faster endpoints.  
+  - Reduce network costs by routing specific ISPs or regions to cheaper infrastructure.  
+
+- **Use Cases**  
+  - Directing traffic from a specific ISP to a preferred endpoint.  
+  - Routing certain customer ranges to dedicated servers.  
+  - Fine-tuning network performance at the IP range level.  
 
 
+### Multi-Value Routing
+ 
+Multi-Value routing returns multiple IP addresses or resources in response to a single DNS query. Can attach **health checks** to ensure only healthy resources are returned.  
+
+- **How it works**  
+  - Route 53 can return up to 8 healthy records per query.  
+  - Example: `www.example.com` has 3 records.  
+    - If all 3 are healthy → all 3 IPs returned.  
+    - If only 1 is healthy → only that one is returned.  
+  - Client chooses which IP to use.  
+
+- **Important Notes**  
+  - Provides basic redundancy and traffic spreading.  
+  - Not a replacement for a true load balancer (e.g., ALB or NLB).  
+  - Less dynamic and feature-rich compared to load balancers.  
+
+- **Use Cases**  
+  - Simple load distribution without deploying a load balancer.  
+  - Adding redundancy by returning multiple healthy endpoints.  
 
 
+### Route 53 - Health Checks
 
+HTTP Health Checks are only for public resources
+- Health Check => Automated DNS Failover:
+  - 1. Health checks that monitor an endpoint (application, server, other AWS resource)
+  - 2. Health checks that monitor other health checks (Calculated Health Checks)
+  - 3. Health checks that monitor Cloud Watch Alarms (full control !!) - e.g., throttles of DynamoDB, alarms on RDS, custom metrics,... (helpful for private resources)
+- Health Checks are integrated with CW metrics
 
+## Domain Registar vs DNS Service
 
+- You buy or register your domain name with a Domain Registrar typically by paying annual charges (e.g., GoDaddy, Amazon Registrar Inc., ...)
+- The Domain Registrar usually provides you with a DNS service to manage your DNS records
+- But you can use another DNS service to manage your DNS records
+- Example: purchase the domain from GoDaddy and use Route 53 to manage your DNS records
 
+### GoDaddy as Register & Route 53 as DNS Service
 
+<img width="815" height="455" alt="image" src="https://github.com/user-attachments/assets/5de0e599-365d-4b7e-8095-de40a581f9ff" />
 
+- **Domain Registration (GoDaddy)**  
+  - You purchase and register your domain name (e.g., `codercolabs.com`) with GoDaddy.  
+  - GoDaddy is your registrar but doesn’t have to manage your DNS records.  
 
+- **DNS Management (Route 53)**  
+  - You choose Amazon Route 53 to manage DNS for your domain.  
+  - Route 53 provides a set of nameservers (e.g., `ns-252.awsdns-31.com`, `ns-184.awsdns-50.org`, etc.).  
 
+- **Connecting the Two**  
+  - In GoDaddy, you update the domain’s custom nameservers to point to Route 53’s nameservers.  
+  - This effectively delegates DNS control from GoDaddy to Route 53.  
 
+- **Result**  
+  - GoDaddy continues as the registrar (domain ownership).  
+  - Route 53 becomes the DNS service, where you configure records like A, CNAME, MX, TXT, etc.  
+  - All DNS queries for your domain are now resolved through Route 53.  
 
+### 3rd Party Register with Amazon Route 53
 
-
-
-
-
-
-
-
-
-
-
-
-
+- If you buy byour domain on a 3rd party registrar, you can still use Route 53 as the DNS Service provider by:
+   - 1- Creating a public Hoted Zone in Route 53
+   -  2- Updating NS Records on a 3rd party website to use route 53 Name servers
+- Note: Domain registrar and DNS Service are seperte - But every Domain Redisrar usually comes with some DNS features
 
 
 
