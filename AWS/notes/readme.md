@@ -1563,38 +1563,171 @@ Summary:
 
 ## Amazon Route 53
 
+- A highly available, scalable, fully managed and authoritative DNS
+- Authoritative = The customer can update the DNS records
+- Route 53 is also a Domain Registrar
+- Ability to check the health of your resources
+- The only AWS service which provides 100% availability SLA - designed to never go down
+- Why route 53? 53 is a reference to the traditional DNS port
+
+
+### Route 53 - Hosted Zones
+
+Hosted zones are a container for records nthat define how ro route traggiv to a domain and its subdomains.
+
+- Public hosted zones - contains records that specify how to route traffic on the interner (public domain names) application1.mypublicdomain.com
+- Private hosted domains - contain records that specify how you aroute trafffic within one or more VPCs iprivate domain names) application1.company.internal
+- You pay $0.50 per month per hosted zone
 
 
 
+### Route 53 - Public vs Private Hosted Zones
+
+<img width="815" height="459" alt="image" src="https://github.com/user-attachments/assets/9e400e42-a597-4965-a612-e67a7efd36ed" />
+
+- **Public Hosted Zone**  
+  - Used for domains accessible over the **public internet**.  
+  - Example: `example.com` resolves to a public IP.  
+  - Common targets include:  
+    - EC2 instances with public IPs  
+    - Application Load Balancers  
+    - Amazon CloudFront distributions  
+    - Public S3 buckets  
+  - Clients anywhere on the internet can resolve and connect to these resources.  
+
+- **Private Hosted Zone**  
+  - Used for internal DNS resolution within a VPC.  
+  - Example: `api.example.internal` or `db.example.internal` resolve only inside the VPC.  
+  - Targets include:  
+    - EC2 instances with private IPs  
+    - Internal databases  
+    - Microservices communicating securely within the VPC  
+  - Keeps internal infrastructure hidden from the public internet.  
+
+ 
+Public hosted zones let users reach your applications from anywhere on the internet.
+
+Private hosted zones enable secure communication between internal resources without exposing them externally.  
 
 
+## What is DNS?
+
+Domain Name System which translates the human friendly hostnames into the machine IP addresses
+- fOR EXAMPLES: www.google.com => 172.217.18.36
+- DNS is the backbone of the Internet
+- DNS uses hierarchical naming structure: Starts at the top level domain so .com -> example.com -> www.example.com -> api.example .com
+
+### DNS Terminologies  
+
+- Domain Registrar: Service where you register domain names. Examples: Route 53, Cloudflare, GoDaddy.  
+
+- DNS Records Instructions for your domain (e.g., A, AAAA, CNAME, NS). Map names to IP addresses or other domains.  
+
+- Zone File: Directory that contains all DNS records for a domain. Defines how queries should be resolved.  
+
+- Nameserver: Hosts DNS records for a domain. Resolves queries and provides authoritative answers.  
+
+- TLD (Top Level Domain): The highest level in DNS hierarchy. Examples: `.com`, `.org`, `.gov`.  
+
+- SLD (Second Level Domain): The main part of the domain you register. Example: `amazon` in `amazon.com`.  
+
+- Subdomains: Extend your main domain to create sections or services. Examples: `api.example.com`, `www.example.com`.  
+
+**Example Breakdown:**  
+`http://api.www.example.com`  
+- `http://` → Protocol.  
+- `api` and `www` → Subdomains.  
+- `example` → Second Level Domain (SLD).  
+- `.com` → Top Level Domain (TLD).  
+
+### How DNS works
+
+<img width="814" height="457" alt="image" src="https://github.com/user-attachments/assets/f5db3cde-af19-485e-9518-90143d23415b" />
+
+DNS (Domain Name System) translates human-friendly domain names into IP addresses that computers use to communicate.  
+
+Step-by-step process:  
+
+1. User Request  
+   - You type `example.com` in your web browser.  
+   - The browser needs the IP address to connect.  
+
+2. Local DNS Server 
+   - The request first goes to your local DNS server (usually managed by your ISP or company).  
+   - If the address is cached, it returns the IP immediately. If not, it asks higher-level DNS servers.  
+
+3. Root DNS Server 
+   - If the local server doesn’t know, it queries a **Root DNS server** (managed by ICANN).  
+   - Root server doesn’t have the exact IP but points to the correct **TLD DNS server**.  
+   - Example: For `example.com`, it points to the `.com` DNS servers.  
+
+4. TLD DNS Server  
+   - The **Top Level Domain (TLD) DNS server** (e.g., `.com`, `.org`) is queried.  
+   - This server directs the request to the correct **SLD DNS server** (Second Level Domain).  
+
+5. SLD DNS Server 
+   - The **SLD DNS server** (managed by your registrar, e.g., Route 53, GoDaddy) knows the actual IP for `example.com`.  
+   - It returns the IP address, e.g., `9.10.11.12`.  
+
+6. Response to Browser  
+   - The local DNS server stores the result (caches it) and sends the IP address back to your browser.  
+   - The browser now knows the IP and connects directly to the **web server** hosting `example.com`.  
+
+### Route 53 - Records
+
+How you want to route traffic for a domain
+
+- Each record contains:Domain/subdomain name - e.g., example.com
+  - Record type - e.g., A or AAAA
+  - Value - e.g., 12.34.56.78
+  - Routing Policy - how Route 53 responds to queries
+  - TTL - amount of time the record cached at DNS Resolvers
+- Route 53 supports the following DNS record types:
+  - (basic) A / AAAA / CNAME / NS
+  - (advanced) CAA / DS / MX / NAPTR / PTR / SOA / TXT / SPF / SRV
 
 
+### Route 53- Record Types
+
+- A- maps a hostname to IPv4
+- AAAA - maps a hostname to IPv6
+- CNAME- maps a hiostname to another hostname
+  - The target is a domain name which must have an A or AAAA record
+  - Cant create a CNAME record for the top node of a DNS namespace (Zone Apex)
+  - Example: You cant create for example.com, but you can create for www.example.com
+- NS - Name servers for the Hosted Zone
+    - Control how traffic is routed for a domain 
 
 
+### Route 53 - TTL 
 
+TTL (Time To Live) is how long a DNS record is cached before its refreshed 
 
+- High TTL - e.g. 24hrs: Less traffic on route 53, possibility of outdated records
+- Low TTL - e.g. 60 seconds: More traffic on Route 53, records are outdated for less time, Esy to change records. (Cost more money)
 
+Except for Alias records, TTL is mandatory for each DNS record
 
+### CNAME vs Alias
 
+### CNAME vs ALIAS  
 
+- CNAME (Canonical Name Record)  
+  - Points one hostname to another hostname.  
+  - Example: `app.mydomain.com` → `lb1234.us-east-1.elb.amazonaws.com`.  
+  - Can only be used on non-root domains (e.g., `www.mydomain.com`).  
+  - Cannot be used directly on the root domain (`mydomain.com`).  
 
+- Alias  
+  - Special record type in Route 53.  
+  - Can point to AWS resources such as: Load Balancers, CloudFront distributions, S3 static websites  
+  - Works at all domain levels, including the root domain (`mydomain.com`).  
+  - Free of charge in Route 53.  
+  - Supports built-in AWS health checks.  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+**Key Takeaway:**  
+- Use **CNAME** when mapping subdomains to another hostname (non-root only).  
+- Use **ALIAS** in AWS when you need flexibility, root domain support, and direct integration with AWS resources.  
 
 
 
