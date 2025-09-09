@@ -1558,6 +1558,7 @@ Summary:
   - Provides transitive connectivity between multiple VPCs, VPNs, and Direct Connect links.  
   - Acts as a central hub for network communication.  
 
+---
 
 # DNS (Route53)
 
@@ -1927,7 +1928,7 @@ HTTP Health Checks are only for public resources
 <img width="815" height="455" alt="image" src="https://github.com/user-attachments/assets/5de0e599-365d-4b7e-8095-de40a581f9ff" />
 
 - **Domain Registration (GoDaddy)**  
-  - You purchase and register your domain name (e.g., `codercolabs.com`) with GoDaddy.  
+  - You purchase and register your domain name with GoDaddy.  
   - GoDaddy is your registrar but doesn’t have to manage your DNS records.  
 
 - **DNS Management (Route 53)**  
@@ -1950,18 +1951,93 @@ HTTP Health Checks are only for public resources
    -  2- Updating NS Records on a 3rd party website to use route 53 Name servers
 - Note: Domain registrar and DNS Service are seperte - But every Domain Redisrar usually comes with some DNS features
 
+---
+
+# Chapter 11: CDN (CloudFront)
+
+Amazon’s Content Delivery Network (CDN). Designed to deliver content faster by caching it at **edge locations** close to users.  
+
+- **How it works**  
+  - Instead of every request going back to the origin (S3, EC2, Load Balancer, etc.), CloudFront caches content at global edge locations.  
+  - Users fetch data from the nearest edge, reducing latency and improving performance.  
+
+- **Benefits**  
+  - Performance: Faster load times, reduced latency.  
+  - Efficiency: Reduces load on origin servers by serving cached content.  
+  - Security: Integrates with AWS Shield & WAF for DDoS protection and threat mitigation.  
+  - Global Reach: 216 Points of Presence (PoPs) worldwide, ensuring content availability across the globe.  
+
+Improves user experience with quicker page loads. Provides global distribution with built-in security. Helps optimize resource usage and cost by offloading requests from origin servers.  
+
+## CloudFront Origins
+
+- S3 bucket:
+  - For distributing files and caching them at the edge.
+  - Enhanced security with CloudFront Origin Access Control (OAC)
+  - OAC is replacing Origin Access Identity (OAI)
+  - CloudFront can be used as an Ingress (to upload files to S3)
+
+- Custom Origin (HTTP)
+  - Application Load Balancer
+  - EC2 nstance
+  - S3 Websire
+  - Any HTTP backend you want
+
+## CloudFront at a High Level  
+
+- A client (e.g., a web browser) requests content such as an image. The request is routed to the nearest **CloudFront Edge location** (global Points of Presence).  
+- If the content is already cached at the Edge location → it is served immediately (fast response).
+- If the content is not cached → CloudFront fetches it from the origin*(e.g., S3 bucket, EC2, or any HTTP server).  
+  - Once retrieved, CloudFront caches the content at that Edge location for future requests.  
+
+This ultimately reduces latency by serving users from the nearest Edge location. Minimizes repeated calls to the origin, saving bandwidth and lowering costs helping provide a smoother, faster user experience.  
+
+## CloudFront - S3 as an Origin 
+
+<img width="807" height="454" alt="image" src="https://github.com/user-attachments/assets/e7c455b0-3907-4800-89b6-e92a5bf4dade" />
+ 
+- An S3 bucket stores static files (images, videos, etc.) and acts as the origin.  
+- CloudFront uses edge locations (POPs) worldwide (e.g., Los Angeles, Mumbai, São Paulo, Melbourne).  
+
+- **How it works**  
+  - When a user requests a file: CloudFront first checks the **nearest edge location** for a cached copy.
+  - If cached → it’s delivered instantly.
+  - If not cached → CloudFront fetches the file from the **S3 origin**, delivers it, and caches it locally for future requests.  
+
+- With Origin Access Control (OAC) and bucket policies, you can restrict direct S3 access. This ensures that only CloudFront can fetch files from your S3 bucket.  
+
+This gives fast content delivery by caching files near users. Reduces repeated requests to the S3 bucket (saves bandwidth and cost) amdAdds security by limiting direct access to S3.  
+
+## CloudFront - ALB or EC2 as an origin
+
+<img width="818" height="456" alt="image" src="https://github.com/user-attachments/assets/f3e2c40f-3284-482a-b02f-e03bcda5ef00" />
 
 
+CloudFront can use either an **Application Load Balancer (ALB)** or **EC2 instances** directly as its origin. Here’s how it works:  
 
+Users send requests → CloudFront Edge Location (nearest POP). Edge Location forwards requests → Origin (ALB or EC2). Response is cached at the Edge for future requests.  
 
+- **Using ALB as Origin (Top Diagram)**  
+  - The ALB must be public.  
+  - ALB security group must allow traffic from CloudFront edge location IP ranges.  
+  - ALB then routes traffic to private EC2 instances behind it.  
+  - Benefit: EC2s stay private, protected from direct exposure.  
 
+- **Using EC2 as Origin (Bottom Diagram)**  
+  - EC2 instances must be publicly accessible.  
+  - Security groups on the EC2 must allow only CloudFront’s edge location IPs.  
+  - Direct setup, but less secure compared to using ALB with private instances.  
 
+- **Security Considerations**  
+  - Always configure security groups to allow only CloudFront edge IP ranges.  
+  - This prevents exposing ALB/EC2 to the entire internet.  
+  - AWS provides the official list of CloudFront IPs:  
+    [CloudFront Edge Location IP List](http://d7uri8nf7uskq.cloudfront.net/tools/list-cloudfront-ips)  
 
-
-
-
-
-
+- **Summary**  
+  - ALB + Private EC2 = more secure, flexible architecture.  
+  - Public EC2 = simpler but less secure, must be locked down carefully.  
+  - Both approaches let you leverage CloudFront for faster delivery and scalability.  
 
 
 
