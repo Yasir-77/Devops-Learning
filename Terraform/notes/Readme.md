@@ -269,6 +269,81 @@ resource "aws_instance" "test" {
 Resource blocks are the foundation of Terraform configs they define what infrastructure should exist and how it should be configured. The Attributes control details like OS image, size, and metadata tags.
 
 
+# Creating an EC2 Instance with Terraform (DEMO)
+
+## Step 1: Create a new Terraform file
+- Create a file named `ec2.tf` (all Terraform configs should end with `.tf`).
+- This file will contain the resource block for an EC2 instance.
+
+## Step 2: Find the EC2 resource in Terraform Registry
+- Go to the [Terraform AWS Provider Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs).  
+- Use the search bar to look for **EC2 instance**.  
+- The correct resource block is `aws_instance`.  
+- Review the Argument Reference section to identify required arguments:
+  - `ami` (Amazon Machine Image ID)  
+  - `instance_type`
+
+## Step 3: Obtain the AMI ID
+- Go to the AWS Console → EC2 → Launch Instance.  
+- Choose an AMI (e.g., Ubuntu).  
+- Copy the **AMI ID** from the console.  
+- This will be used in your Terraform resource block.
+
+### Step 4: Write the EC2 resource block
+Example `ec2.tf`:
+
+```
+resource "aws_instance" "this" {
+  ami           = "ami-xxxxxxxx"   # Replace with your AMI ID
+  instance_type = "t2.micro"       # Free tier eligible
+  tags = {
+    Name = "Terraform-EC2-Demo"
+  }
+}
+```
+## Step 5: Configure AWS Provider
+Make sure you have a provider block defined (in `provider.tf` or a separate file):
+
+```
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "6.13.0"
+    }
+  }
+}
+
+provider "aws" {
+  # Configuration options
+}
+```
+## Step 6: Authenticate with AWS
+Create an IAM user with programmatic access and attach the required permissions (e.g., EC2 Full Access for testing).  
+Export your credentials as environment variables in your terminal:
+
+```
+export AWS_ACCESS_KEY_ID="your_access_key"
+export AWS_SECRET_ACCESS_KEY="your_secret_key"
+export AWS_DEFAULT_REGION="eu-west-1"
+```
+## Step 7: Run Terraform Commands
+
+1- Initialize the project (downloads provider plugins): `terraform init`
+
+2- Preview changes:`terraform plan`
+
+Output should show 1 to add.
+
+3- Apply the configuration: `terraform apply`
+
+Confirm with yes.
+
+## Step 8: Verify in AWS Console
+
+- Open the EC2 Dashboard in the AWS Console.
+- You should see a running instance of type t2.micro with the Ubuntu AMI you selected.
+- The tag (e.g., Terraform-Test) will be visible in the instance details.
 
 
 
