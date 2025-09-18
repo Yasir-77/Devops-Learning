@@ -464,6 +464,167 @@ Import it with its own ID:
 
 Run terraform plan and reconcile attributes.
 
+--- 
+
+# Statefiles
+
+Terraform uses a **state file** to track infrastructure.
+
+## Local Statefiles 
+
+By default, the state file is stored locally in the project directory.
+
+### Characteristics of Local State
+- Default behavior — no extra setup required.
+- Easy to configure — automatically created in your working directory.
+- Best for single-user projects — simple environments where only one person manages the infrastructure.
+- Contained and isolated — avoids complications of shared access or external inputs.
+
+Local Statefiles should be used when learning or experimenting with Terraform, creating Small personal projects and testing deployments like creating an EC2 instance.
+
+
+## Remote Statefiles
+
+- Remote statefiles store Terraform state in a central, secure location. They are designed for team collaboration and larger projects
+  
+### Benefits of Remote State
+- Collaboration  
+  - Multiple team members share the same state.  
+  - Reduces risk of conflicts or inconsistencies.  
+
+- State locking  
+  - Prevents simultaneous changes.  
+  - Supported by backends like AWS S3 and Terraform Cloud.  
+  - Protects against state corruption during concurrent updates.  
+
+- Backups & security  
+  - Remote backends can automatically back up state.  
+  - Encryption ensures state data is protected.  
+  - Enhances recoverability and compliance.  
+
+Remote Statefiles are used in team-based projects, production environments and workflows that involve CI/CD pipelines.  
+
+## 33 - Configure Backend with Statefile
+
+### Key Concept
+- A backend defines where and how Terraform state is stored.  
+- By default -> local file (`terraform.tfstate`) in your project folder.  
+- You can configure a remote backend (e.g., AWS S3) for team use and added security.
+
+
+### Example: Configure S3 Backend, add the following to provider.tf file.
+```
+terraform {
+  backend "s3" {
+    bucket = "terraform-state-demo"   # must be globally unique
+    key    = "terraform.tfstate"      # path inside the bucket
+    region = "eu-west-1"              # match your deployment region
+  }
+}
+```
+### Workflow
+1- Set up an S3 bucket in AWS (e.g., terraform-state-demo).
+
+2- Add the backend "s3" block to your configuration.
+
+3- Run: `terraform init`
+- Initializes the backend.
+- Migrates local state to the S3 bucket.
+- Prompts: “Do you want to copy the existing state to the new backend?” -> choose Yes.
+
+From then on, Terraform stores state in S3, not locally.
+
+## Terraform Workflow
+
+<img width="812" height="452" alt="image" src="https://github.com/user-attachments/assets/8df644d0-2fa4-494f-98d9-c86ffdd8cf4f" />
+
+---
+
+# Variables
+
+## Why are Variables used?
+
+- Enable dynamic configuation changes without altering code
+- Manage different environments with the same configuration files.
+- Makes modules reusable across multiple projects
+- Define values once and reference them multiple times
+- Reduce redundancy and potential for errors
+- Standardise variable names for better collaboration
+
+## Types of Variables
+
+## 1. Input Variable:
+
+- Input variables make Terraform configurations dynamic and reusable.  
+- Values can come from:
+  - User prompts
+  - CLI arguments
+  - Variable definition files (`.tfvars`)
+
+### Declaring Variables
+Example `variables.tf`:
+
+```
+variable "instance_type" {
+  type        = string
+  default     = "t2.micro"
+}
+```
+
+### Using Variables
+Reference variables with the var. prefix:
+
+```
+resource "aws_instance" "example" {
+  ami           = "ami-1234567890abcdef0"
+  instance_type = var.instance_type
+}
+```
+
+### Without Default Value
+
+If no default is provided, Terraform will prompt for input during plan or apply:
+
+```
+variable "instance_type" {
+  description = "EC2 instance type"
+  type        = string
+}
+```
+Prompt example:
+
+var.instance_type
+  Enter a value: t2.micro
+
+## Input Variable - terraform.tfvars 
+
+### What is `terraform.tfvars`?
+- A special file Terraform automatically loads to assign values to input variables.  
+- Keeps variable values separate from code, making configurations cleaner and easier to manage.  
+- If present in the project directory, Terraform reads it by default without extra flags.  
+
+### Example
+
+**variables.tf**
+```
+variable "instance_type" {
+  type = string
+}
+
+variable "region" {
+  type = string
+}
+```
+
+**terraform.tfvars**
+
+Best practice: store variable values in a dedicated file → terraform.tfvars. File automatically loaded by Terraform.
+```
+instance_type = "t2.micro"
+region        = "eu-west-1"
+```
+
+Then you would type in the terminal `terraform plan` followed by `terraform apply`. Terraform automatically uses the values from terraform.tfvars, no need to pass them on the command line.
 
 
 
@@ -472,6 +633,15 @@ Run terraform plan and reconcile attributes.
 
 
 
+
+
+
+
+
+
+
+
+ 
 
 
 
