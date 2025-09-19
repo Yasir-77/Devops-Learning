@@ -626,6 +626,50 @@ region        = "eu-west-1"
 
 Then you would type in the terminal `terraform plan` followed by `terraform apply`. Terraform automatically uses the values from terraform.tfvars, no need to pass them on the command line.
 
+## Local Variables
+
+### What are Local Variables?
+- Local variables are internal values within Terraform configurations.  
+- Unlike input variables (provided by users), locals are defined inside the configuration only.  
+- Used to reduce redundancy and keep code DRY (Don’t Repeat Yourself).  
+
+### Defining Locals
+- Defined in a `locals { }` block.  
+- Can store one or multiple related values.  
+- Example usage: AMI IDs, naming conventions, tags, or any value reused multiple times.
+
+Example `variables.tf`:
+```
+variable "instance_type" {
+  type = string
+  default = "t3.micro"
+}
+
+locals {
+  instance_ami = "ami-046c2381f11878233"
+}
+```
+### Referencing Locals
+- Accessed with the `local.` prefix.  
+- Works similarly to input variables (`var.`), but strictly for **internal use**.
+```
+   resource "aws_instance" "this" {
+  ami                     = local.instance_ami
+  instance_type           = var.instance_type
+}
+
+resource "aws_instance" "import" {
+  ami                     = local.instance_ami
+  instance_type           = var.instance_type
+  tags = {
+      Name        = "Terraform-import"
+    }
+user_data_replace_on_change = false    
+```
+### Benefits
+- Centralizes repeated values(e.g., AMI ID used across resources).  
+- Improves readabilityand maintainability of configurations.  
+- Makes it easier to update values — change once in locals, applied everywhere.  
 
 
 
