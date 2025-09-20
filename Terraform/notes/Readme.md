@@ -667,14 +667,104 @@ resource "aws_instance" "import" {
 user_data_replace_on_change = false    
 ```
 ### Benefits
-- Centralizes repeated values(e.g., AMI ID used across resources).  
+- Centralises repeated values(e.g., AMI ID used across resources).  
 - Improves readabilityand maintainability of configurations.  
 - Makes it easier to update values — change once in locals, applied everywhere.  
 
 
 
 
+## Output Variables
 
+Output variables are used to display values after terraform apply.  
+
+- They are useful for:
+  - Retrieving IDs, IP addresses, or other resource attributes.  
+  - Passing information to other configurations or automation tools.  
+  - Making infrastructure details easily accessible.  
+
+
+### Defining an Output Variable
+- Use an `output` block with:
+  - **name** → identifier of the output.  
+  - **description** (optional, but good practice).  
+  - **value** → what to output.  
+
+Example:
+```
+    output "instance_id" {
+      description = "The ID of the EC2 instance"
+      value = aws_instance.this.id
+    }
+```    
+
+### Using Outputs
+- After `terraform apply`, the defined values are displayed:  
+```
+    Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+    Outputs:
+
+    instance_id = "i-0abcd1234efgh5678"
+```
+The outputs can be printed to the terminal and consumed by other Terraform configurations or scripts.  
+
+
+### Best Practices
+- **Use descriptive names**: e.g., `instance_id`, `db_endpoint`.  
+- **Document outputs**: always include a description.  
+- **Expose only critical information**: → outputs should be useful for automation or troubleshooting.  
+- **Secure sensitive outputs**: use `sensitive = true` for secrets/passwords.  
+
+Example with sensitive output:
+```
+    output "db_password" {
+      description = "Database admin password"
+      value       = random_password.db.result
+      sensitive   = true
+    }
+```
+## Variable Hierarchy
+
+Terraform allows variables to be defined in multiple ways. When multiple definitions exist, Terraform uses a precedence order to decide which value is applied.  
+
+### Precedence (Lowest → Highest)
+
+1. **Default values**  
+   - Defined inside the variable block.  
+   - Used if no other value is provided.  
+```
+   Example: variables.tf file
+  
+       variable "instance_type" {
+         type    = string
+         default = "t2.micro"
+       }
+```
+2. **TFVAR files**  
+   - Terraform automatically loads `terraform.tfvars` or any file ending in `.tfvars`.  
+   - Can also be passed explicitly with `-var-file`.  
+```
+   Example: terraform.tfvars 
+       instance_type = "t3.micro"
+```
+   Usage:  
+       terraform apply -var-file="filename.tfvars"
+
+3. **TFVAR environment variables**  
+   - Take precedence over both TFVAR files and defaults.  
+   - Format: `TF_VAR_<variable_name>`  
+```
+   Example:  
+       export TF_VAR_instance_type=t3.small
+```
+
+4. **Command line flags (Highest precedence)**  
+   - Values provided directly in CLI override all others.  
+```
+   Example:  
+       terraform apply -var="instance_type=t3.large"
+```
 
 
 
