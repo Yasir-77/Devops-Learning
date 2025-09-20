@@ -766,6 +766,102 @@ Terraform allows variables to be defined in multiple ways. When multiple definit
        terraform apply -var="instance_type=t3.large"
 ```
 
+## Types of Variables
+
+Variables make Terraform code dynamic and reusable.  
+
+- Two main categories:  
+  - **Primitive types** - simple values (string, number, bool).  
+  - **Complex types** - groupings of values (list, map, object).  
+- Analogy:  
+  - Primitive types = single ingredients (flour, sugar, eggs).  
+  - Complex types = full recipes (multiple ingredients + instructions).  
+
+
+
+### Primitive Types
+
+- String: Simple text value.
+```
+    variable "example_string" {
+      type    = string
+      default = "hello world"
+    }
+```
+- Number: Whole numbers or decimals.  
+```
+  variable "example_number" {
+      type    = number
+      default = 42
+    }
+```
+- Bool: True or false values (yes/no logic).  
+```
+  variable "example_bool" {
+      type    = bool
+      default = true
+    }
+```
+
+### Complex Types
+
+- List: Ordered sequence of values, all the same type (like a shopping list).
+```
+    variable "example_list" {
+      type    = list(string)
+      default = ["flour", "sugar", "eggs"]
+    }
+```
+- Map: Key-value pairs (like a cookbook index).
+```  
+    variable "example_map" {
+      type = map(string)
+      default = {
+        flour = "500g"
+        eggs  = "2"
+      }
+    }
+```
+- Object: Collection of attributes that can each have different types (like a recipe card).  
+```
+  variable "example_object" {
+      type = object({
+        name   = string
+        age    = number
+        active = bool
+      })
+      default = {
+        name   = "John"
+        age    = 30
+        active = true
+      }
+    }
+```
+---
+# Modules
+
+### What is a Module?
+
+A module is a collection of Terraform configuration files grouped together to serve a specific purpose. Think of a module as a blueprint for building infrastructure (e.g., an EC2 instance, networking setup, or full environment). By default, any Terraform configuration in a folder is treated as a root module.  
+
+
+### Why Use Modules?
+
+1. **Reusability**  
+   - Write infrastructure code once -> reuse it across multiple projects or accounts.  
+   - Example: the same EC2 module can be used in dev, staging, and prod.  
+
+2. **Organization**  
+   - Helps structure Terraform code as complexity grows.  
+   - Keeps infrastructure manageable at scale.  
+
+3. **Consistency**  
+   - Enforce the same patterns, security rules, and naming conventions across all environments.  
+   - Reduces drift between dev, staging, and production.  
+
+4. **Collaboration**  
+   - Teams can share modules instead of writing everything from scratch.  
+   - Makes Terraform accessible to teams (like data engineers) who aren’t experts but need infrastructure.  
 
 
 
