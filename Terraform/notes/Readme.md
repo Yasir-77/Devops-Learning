@@ -840,12 +840,12 @@ Variables make Terraform code dynamic and reusable.
 ---
 # Modules
 
-### What is a Module?
+## What is a Module?
 
 A module is a collection of Terraform configuration files grouped together to serve a specific purpose. Think of a module as a blueprint for building infrastructure (e.g., an EC2 instance, networking setup, or full environment). By default, any Terraform configuration in a folder is treated as a root module.  
 
 
-### Why Use Modules?
+## Why Use Modules?
 
 1. **Reusability**  
    - Write infrastructure code once -> reuse it across multiple projects or accounts.  
@@ -863,10 +863,45 @@ A module is a collection of Terraform configuration files grouped together to se
    - Teams can share modules instead of writing everything from scratch.  
    - Makes Terraform accessible to teams (like data engineers) who aren’t experts but need infrastructure.  
 
+## What makes a good module?
+
+### 1. Simplicity
+- Keep the module **focused on a single responsibility**.  
+- Example: An **EC2 module** should only launch EC2 instances, not mix in unrelated resources like RDS or load balancers.  
+- This makes the module **clean, reusable, and easy to maintain**.
 
 
+### 2. Documentation
+- Always provide a **README.md** or inline comments.  
+- Document:  
+  - **Inputs (variables)**  
+  - **Outputs**  
+  - **Usage examples**  
+- Well-documented modules are easier to **use, share, and collaborate on**.
 
 
+### 3. Reusability
+- Avoid **hardcoding values** (e.g., AMI IDs, regions, instance types).  
+- Use **variables** to allow the module to adapt to different environments (dev, staging, prod).  
+- Ensures the module can be applied in **multiple projects and accounts**.
+
+
+### 4. Output Values
+- Modules should expose **useful outputs** for other parts of your configuration.  
+- Example: An EC2 module could output:  
+  - Instance ID  
+  - Public IP address  
+- Outputs make modules more **valuable and easier to integrate**.
+
+### Additional Best Practices
+- **Testing**: Regularly test modules across environments and use cases.  
+- **Versioning**: Tag versions to provide upgrade paths and rollbacks.  
+- **Collaboration**: Modules allow cross-team reuse and consistency across environments.  
+
+### Interview Tip
+- When asked **“What makes a good module?”** remember these four keywords **Simplicity, Documentation, Reusability, Output Values**  
+- **Modules & state** are two of the **most common Terraform interview topics**.  
+- Being able to explain **why modules are useful** (reusability, consistency, collaboration) will set you apart from other candidates. 
 
 
 
