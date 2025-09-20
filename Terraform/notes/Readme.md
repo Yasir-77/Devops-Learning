@@ -903,7 +903,61 @@ A module is a collection of Terraform configuration files grouped together to se
 - **Modules & state** are two of the **most common Terraform interview topics**.  
 - Being able to explain **why modules are useful** (reusability, consistency, collaboration) will set you apart from other candidates. 
 
+## Terraform Module DEMO
 
+In this demo, we modularize our EC2 configuration and learn how to deploy Terraform modules.
+
+### File Structure
+```
+repo/
+├── main.tf
+├── provider.tf
+├── variables.tf
+├── terraform.tfvars
+└── modules/
+ └── ec2/
+  ├── ec2.tf
+  └── variables.tf
+```
+- provider.tf → contains the provider block and remote backend (e.g., S3 for state).
+- terraform.tfvars → holds variable values.
+- modules/ec2/ → contains the EC2 module code.
+- main.tf → root configuration where the module is called.
+
+### Why We Modularize
+- Keeps Terraform code organized and reusable.
+- Separates repeatable infrastructure (modules) from environment-specific configs (root).
+- Ensures simplicity and scalability.
+
+### Calling a Module
+
+In your main.tf at the repo root:
+```
+module "ec2" {
+ source = "./modules/ec2"
+}
+```
+- module → keyword to call a module.
+- "ec2" → name of the module.
+- source → path to the module (can be relative, absolute, or even a Git/registry source).
+
+### Workflow
+
+1- `terraform init` - Initializes the backend, providers, and now modules.
+
+2- `terraform plan` - Shows resources to add/update/destroy.
+
+Important: When moving existing resources into a module, Terraform may show “to destroy” and “to create” because the resource addresses change.
+
+3- `terraform apply` - Deploys infrastructure using the module, Confirms outputs.
+
+### State Considerations
+
+- By default, Terraform sees the move into a module as a change in resource address.
+- This can cause Terraform to destroy and recreate resources.
+- In production, avoid this by using:
+  - `terraform state mv aws_instance.this module.ec2.aws_instance.this`
+  - This moves the state reference to the new module address, preventing unnecessary destruction.
 
 
  
