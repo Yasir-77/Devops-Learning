@@ -959,7 +959,98 @@ Important: When moving existing resources into a module, Terraform may show “t
   - `terraform state mv aws_instance.this module.ec2.aws_instance.this`
   - This moves the state reference to the new module address, preventing unnecessary destruction.
 
+# Terraform interview questions
 
+
+ ## Common Junior-Level Questions
+
+## 1. What is Terraform? How does it work?
+
+- Open-source Infrastructure as Code (IaC) tool by HashiCorp
+- Cloud-agnostic – works across AWS, Azure, GCP, Kubernetes, and more
+- Uses providers (plugins) to communicate with APIs
+- Supports idempotency → repeated runs produce the same results
+
+2. What are the benefits of using Infrastructure as Code (IaC)?
+- Automation – reduces manual effort
+- Consistency – environments are predictable and standardized
+- Repeatability – same config can be reused across environments
+- Version control – track changes in Git
+- Faster and safer deployments
+
+3. Difference between terraform plan and terraform apply
+- Plan → Compares desired state (config) vs. current state (real infra)
+  - Outputs preview of what will be added, changed, or destroyed
+  - Like a dry run
+- Apply → Executes the plan and updates infra + state file
+
+4. What is a Terraform Provider?
+- Plugin that allows Terraform to manage resources via APIs
+- Example: hashicorp/aws for AWS resources
+- Providers are declared in required_providers and configured with credentials/region
+
+5. Explain the role of State in Terraform
+- State file is Terraform’s blueprint of infrastructure
+- Tracks resources Terraform manages
+- Ensures idempotency and accurate plans
+- Without state, Terraform wouldn’t know what to add, update, or delete
+
+## Intermediate-Level Questions
+
+## 6. Purpose of a Backend in Terraform
+
+- Defines where and how state is stored
+- Local backend → stores state in project directory
+- Remote backend → S3, Terraform Cloud, etc.
+- Enables collaboration, locking, security, and backups
+
+## 7. Difference between terraform import and terraform init
+- Import: Brings existing infrastructure (not created by Terraform) under management
+  - Example: Import manually created EC2 instances
+- Init: Initializes working directory
+  - Downloads providers
+  - Sets up backends
+  - Initializes modules
+
+## 8. How do you manage sensitive data in Terraform?
+- Use environment variables (e.g., TF_VAR_db_password)
+- Store secrets in secret managers (AWS Secrets Manager, Vault)
+- Avoid committing state files (they may contain secrets)
+- Use sensitive = true in variables to hide output in CLI
+
+## 9. Purpose of terraform refresh
+- Updates state file to match real-world infrastructure
+- Queries live infra → ensures state file is accurate
+= Helps avoid drift between desired and current state
+
+## Behavioral/Scenario Questions
+
+## 10. Describe a challenging problem you solved with Terraform
+- Example: Debugging provider errors, state drift, IAM permission issues
+- Show problem-solving: how you read errors, tested fixes, and documented solutions
+- Emphasize ability to explain code clearly
+
+## 11. How do you ensure Terraform code is maintainable and scalable?
+- Use modules → keep code DRY and modular
+- Leverage variables + tfvars files for flexibility
+- Maintain documentation (README, comments)
+- Version control (Git) for collaboration + tracking changes
+- Testing and code reviews
+
+## 12. Have you worked with Remote State Management?
+- Yes → critical in team environments
+- Enables collaboration, prevents conflicts with state locking
+- Ensures security (encryption, access controls)
+- Example: Store state in S3 + DynamoDB lock table
+
+## Key Words & Concepts for Interviews
+- Idempotency
+- Cloud agnostic
+- Consistency, automation, repeatability
+- Desired state vs. current state
+- Modules, DRY principle
+- State file as blueprint
+- Remote backend for collaboration
  
 
 
