@@ -475,10 +475,10 @@ Terraform uses a **state file** to track infrastructure.
 By default, the state file is stored locally in the project directory.
 
 ### Characteristics of Local State
-- Default behavior — no extra setup required.
-- Easy to configure — automatically created in your working directory.
-- Best for single-user projects — simple environments where only one person manages the infrastructure.
-- Contained and isolated — avoids complications of shared access or external inputs.
+- Default behavior - no extra setup required.
+- Easy to configure - automatically created in your working directory.
+- Best for single-user projects - simple environments where only one person manages the infrastructure.
+- Contained and isolated - avoids complications of shared access or external inputs.
 
 Local Statefiles should be used when learning or experimenting with Terraform, creating Small personal projects and testing deployments like creating an EC2 instance.
 
