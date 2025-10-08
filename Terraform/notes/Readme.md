@@ -504,7 +504,7 @@ Local Statefiles should be used when learning or experimenting with Terraform, c
 
 Remote Statefiles are used in team-based projects, production environments and workflows that involve CI/CD pipelines.  
 
-## 33 - Configure Backend with Statefile
+## Configure Backend with Statefile
 
 ### Key Concept
 - A backend defines where and how Terraform state is stored.  
