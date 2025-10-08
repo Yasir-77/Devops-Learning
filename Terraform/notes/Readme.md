@@ -646,7 +646,7 @@ variable "instance_type" {
 }
 
 locals {
-  instance_ami = "ami-046c2381f11878233"
+  instance_ami = "ami-123456789"
 }
 ```
 ### Referencing Locals
