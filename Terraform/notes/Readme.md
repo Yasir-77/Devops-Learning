@@ -1,4 +1,4 @@
-# Introduction to Terraform
+# Chapter 1: Introduction to Terraform
 
 ## Infrastructure as code (IaC)
 
@@ -88,7 +88,7 @@ Both are essential practices in DevOps, but serve different purposes.  They ofte
 
 ---
 
-# Terrafrom State file
+# Chapter 2: Terrafrom State file
 
 The Terraform state file is the blueprint of your infrastructure. It is an up-to-date record of what resources actually exist. Critical for ensuring Terraform knows the difference between what’s deployed and what’s defined in code.  
 
@@ -111,7 +111,7 @@ Terraform compares desired state and current state to decide what actions to tak
 
 ---
 
-# Deploying Infrastructure
+# Chapter 3: Deploying Infrastructure
 
 ## Terraform Providers
 
@@ -152,7 +152,7 @@ provider "aws" {
 
 ---
 
-# Basic Terraform Commands
+# Chapter 4: Basic Terraform Commands
 
 ## Terraform init
 
@@ -199,6 +199,7 @@ In this example Terraform will perform the follwoing actions:
 - An S3 bucket will be destroyed
 
 ## Terraform apply
+
 ### Key Concept
 - `terraform apply` = executes the plan  
 - Takes the proposed execution plan and applies it to real infrastructure  
@@ -210,7 +211,6 @@ In this example Terraform will perform the follwoing actions:
 2. **Prompts for confirmation** Asks: *Do you want to perform these actions?*, Enter `yes` to proceed  
 3. **Applies the changes**: Creates new resources, updates existing resources and destroys removed resources  
 4. **Updates the state file**: State file reflects the new current state, ensures idempotency (running code again won’t duplicate resources)  
-
 
 
 ## Terraform destroy
@@ -233,7 +233,7 @@ Terraform destroy command is a convenient way to destroy all remote objects mana
 
 ---
 
-# Resource Block
+# Chapter 5: Resource Block
 
 A **resource block** defines a piece of infrastructure Terraform manages, Each resource block maps to a resource type provided by the provider it is used to create, update, or delete resources.  
 
@@ -269,7 +269,7 @@ resource "aws_instance" "test" {
 Resource blocks are the foundation of Terraform configs they define what infrastructure should exist and how it should be configured. The Attributes control details like OS image, size, and metadata tags.
 
 
-# Creating an EC2 Instance with Terraform (DEMO)
+# Chapter 6: Creating an EC2 Instance with Terraform (DEMO)
 
 ## Step 1: Create a new Terraform file
 - Create a file named `ec2.tf` (all Terraform configs should end with `.tf`).
@@ -347,7 +347,7 @@ Confirm with yes.
 
 ---
 
-# Terraform importing
+# Chapter 7: Terraform importing
 
 ## Terraform Importing Introduction
 
@@ -383,7 +383,7 @@ Import {
 }
 ```
 
-##  Terraform Importing - Terraform Registry
+## Terraform Importing - Terraform Registry
 
 Terraform documentation (Terraform Registry) explains how to import resources. Each resource has an Import section showing the syntax and required identifiers.  
 
@@ -394,7 +394,7 @@ Example: Importing an AWS Instance
 terraform import aws_instance.web i-1234567890abcdef0
 ```
 
-# Terraform Importing - Demo
+# Chapter 8: Terraform Importing - Demo
 
 ### Overview
 - `terraform import` brings **existing** cloud resources (created outside Terraform) under Terraform management.
@@ -466,7 +466,7 @@ Run terraform plan and reconcile attributes.
 
 --- 
 
-# Statefiles
+# Chapter 9: Statefiles
 
 Terraform uses a **state file** to track infrastructure.
 
@@ -540,7 +540,7 @@ From then on, Terraform stores state in S3, not locally.
 
 ---
 
-# Variables
+# Chapter 10: Variables
 
 ## Why are Variables used?
 
@@ -671,9 +671,6 @@ user_data_replace_on_change = false
 - Improves readabilityand maintainability of configurations.  
 - Makes it easier to update values — change once in locals, applied everywhere.  
 
-
-
-
 ## Output Variables
 
 Output variables are used to display values after terraform apply.  
@@ -778,7 +775,6 @@ Variables make Terraform code dynamic and reusable.
   - Complex types = full recipes (multiple ingredients + instructions).  
 
 
-
 ### Primitive Types
 
 - String: Simple text value.
@@ -838,7 +834,8 @@ Variables make Terraform code dynamic and reusable.
     }
 ```
 ---
-# Modules
+
+# Chapter 11: Modules
 
 ## What is a Module?
 
@@ -959,8 +956,7 @@ Important: When moving existing resources into a module, Terraform may show “t
   - `terraform state mv aws_instance.this module.ec2.aws_instance.this`
   - This moves the state reference to the new module address, preventing unnecessary destruction.
 
-# Terraform interview questions
-
+# Chapter 12: Terraform interview questions
 
 ## Common Junior-Level Questions
 
