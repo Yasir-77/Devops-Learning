@@ -522,7 +522,7 @@ terraform {
   }
 }
 ```
-### Workflow
+### Remote Statefile Workflow
 1- Set up an S3 bucket in AWS (e.g., terraform-state-demo).
 
 2- Add the backend "s3" block to your configuration.
