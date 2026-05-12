@@ -134,6 +134,95 @@ Cloud platforms also provide their own CI/CD services:
 
 These tools integrate closely with their respective cloud environments.
 
+## Role of CI/CD in Devops
+
+CI/CD is a core part of DevOps and enables continuous development, testing, and deployment of applications. The process is often represented as an infinity loop because it is continuous.
+
+<img width="713" height="356" alt="image" src="https://github.com/user-attachments/assets/74e2d7f9-ca3c-42a6-a97d-18fec771eef4" />
+
+- CI (left side of the loop):
+  - Code → Build → Test  
+
+- CD (right side of the loop):
+  - Release → Deploy → Monitor  
+
+
+### How CI/CD Works in DevOps
+
+#### Continuous Integration (CI)
+- Code:
+  - Developers write and commit code frequently to version control systems (GitHub, GitLab, Bitbucket)  
+
+- Build:
+  - Code is automatically compiled and dependencies are installed  
+
+- Test:
+  - Automated tests verify that changes do not introduce bugs  
+
+#### Continuous Delivery/Deployment (CD)
+- Release:
+  - Tested code is prepared for staging or production  
+
+- Deploy:
+  - Application is deployed to production and made available to users  
+
+- Monitor:
+  - System is monitored to ensure performance and stability
+  - 
+
+## Benefits of CI/CD in DevOps
+
+- Collaboration: Encourages frequent integration and shared responsibility among teams  
+
+- Automation: Reduces manual work and minimizes human error, ensures consistent and reliable processes  
+
+- Continuous Feedback: Provides quick feedback on code changes, helps identify and fix issues early  
+
+- Consistency: Ensures code works across different environments, reduces "it works on my machine" issues  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
