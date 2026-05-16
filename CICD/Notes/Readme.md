@@ -229,10 +229,88 @@ Monitoring and logging help track performance, detect issues, and collect logs f
 
 The DevOps process is continuous. Monitoring may identify issues that require developers to return to the code or CI/CD pipeline to make improvements and redeploy changes.
 
+--- 
 
+# Chapter 2: GitHub Actions and CI/CD Workflow
 
+## Overview of CI/CD with GitHub Actions
 
+GitHub Actions is used to automate CI/CD workflows directly from a GitHub repository. It allows code to be automatically built, tested, packaged, deployed, and monitored after changes are committed.
 
+The workflow is usually defined in a YAML file, which tells GitHub Actions what steps to run when certain events happen, such as a code commit or push.
+
+### GitHub Actions Workflow
+
+The process starts when developers write code, make changes, and commit those changes to a GitHub repository.
+
+- GitHub Actions workflow:
+  - Developer writes or updates code
+  - Code is committed and pushed to GitHub
+  - GitHub Actions workflow is triggered
+  - Workflow enters the CI/CD pipeline
+  - Code is built
+  - Automated tests are run
+  - Test results are checked
+  - Code is packaged
+  - Application is deployed
+  - Application is monitored after deployment
+
+### CI Pipeline Steps
+
+#### Build
+The build stage compiles the code and installs or resolves any required dependencies. This ensures the application is set up correctly before testing.
+
+#### Automated Tests
+Automated tests are run to check that the new code does not break existing functionality and that new features work as expected. If the tests pass, the workflow continues to the next stage. If the tests fail, the pipeline stops and developers are notified so the issue can be fixed.
+
+### Packaging and Deployment
+
+If the build and tests are successful, the code is packaged into a deployable version. Examples include: Docker image, Compiled binary and Application build artifact
+
+The packaged application can then be deployed to a staging, testing, or production environment depending on the workflow configuration.
+
+### Monitoring
+
+After deployment, the application should be continuously monitored to ensure it is running smoothly. Monitoring helps identify issues quickly so they can be fixed before they affect users.
+
+## Use Cases for GitHub Actions
+
+GitHub Actions can automate different parts of the development workflow, helping teams improve efficiency, reduce manual work, and maintain code quality.
+
+## Common Use Cases
+
+### Continuous Integration (CI)
+
+GitHub Actions can automatically build and test code whenever changes are pushed to a repository.
+
+- Common tasks:
+  - Run unit tests on pull requests  
+  - Validate code before merging  
+  - Detect issues early  
+
+This helps maintain code quality and ensures new changes do not break existing functionality.
+
+### Continuous Deployment (CD)
+
+After code successfully passes all tests, GitHub Actions can automatically deploy applications to different environments.
+
+- Deployment targets:
+  - AWS  
+  - Azure  
+  - GCP  
+
+This allows faster and more reliable software releases with less manual intervention.
+
+### Workflow Automation
+
+GitHub Actions can automate repetitive tasks within a project workflow.
+
+- Examples:
+  - Updating project boards  
+  - Moving tasks between columns  
+  - Managing issues and pull requests  
+
+Automation helps keep projects organized and reduces manual effort.
 
 
 
