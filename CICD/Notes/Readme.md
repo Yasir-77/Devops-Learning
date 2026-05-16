@@ -170,7 +170,7 @@ CI/CD is a core part of DevOps and enables continuous development, testing, and 
   - System is monitored to ensure performance and stability
   - 
 
-## Benefits of CI/CD in DevOps
+### Benefits of CI/CD in DevOps
 
 - Collaboration: Encourages frequent integration and shared responsibility among teams  
 
@@ -181,7 +181,53 @@ CI/CD is a core part of DevOps and enables continuous development, testing, and 
 - Consistency: Ensures code works across different environments, reduces "it works on my machine" issues  
 
 
+## CI/CD in DevOps Architecture
 
+### Overview of CI/CD in DevOps
+
+CI/CD plays a central role in the DevOps lifecycle by automating the integration, testing, deployment, and monitoring of applications.
+
+The DevOps pipeline is commonly divided into three main stages:
+
+- Source Control  
+- CI/CD  
+- Monitoring and Logging  
+
+### Source Control
+
+Source control is where developers store and manage code using version control systems.
+
+- Common tools:
+  - GitHub  
+  - GitLab  
+  - Bitbucket  
+
+Source control allows multiple developers to collaborate, track changes, and manage project history efficiently.
+
+### CI/CD Stage
+
+Once code is pushed to source control, the CI/CD pipeline automates the process of:
+
+- Building the application  
+- Running automated tests  
+- Deploying the application  
+
+This ensures code changes are continuously integrated, tested, and delivered reliably.
+
+### Monitoring and Logging
+
+After deployment, applications must be monitored to ensure they are running correctly.
+
+- Common tools:
+  - Prometheus  
+  - Grafana  
+  - ELK Stack  
+
+Monitoring and logging help track performance, detect issues, and collect logs for troubleshooting and improvements.
+
+### Continuous Feedback Loop
+
+The DevOps process is continuous. Monitoring may identify issues that require developers to return to the code or CI/CD pipeline to make improvements and redeploy changes.
 
 
 
