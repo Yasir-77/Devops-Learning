@@ -277,7 +277,7 @@ After deployment, the application should be continuously monitored to ensure it 
 
 GitHub Actions can automate different parts of the development workflow, helping teams improve efficiency, reduce manual work, and maintain code quality.
 
-## Common Use Cases
+### Common Use Cases
 
 ### Continuous Integration (CI)
 
