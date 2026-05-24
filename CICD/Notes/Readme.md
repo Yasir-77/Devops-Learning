@@ -263,13 +263,13 @@ The build stage compiles the code and installs or resolves any required dependen
 #### Automated Tests
 Automated tests are run to check that the new code does not break existing functionality and that new features work as expected. If the tests pass, the workflow continues to the next stage. If the tests fail, the pipeline stops and developers are notified so the issue can be fixed.
 
-### Packaging and Deployment
+#### Packaging and Deployment
 
 If the build and tests are successful, the code is packaged into a deployable version. Examples include: Docker image, Compiled binary and Application build artifact
 
 The packaged application can then be deployed to a staging, testing, or production environment depending on the workflow configuration.
 
-### Monitoring
+#### Monitoring
 
 After deployment, the application should be continuously monitored to ensure it is running smoothly. Monitoring helps identify issues quickly so they can be fixed before they affect users.
 
@@ -310,7 +310,7 @@ GitHub Actions can automate repetitive tasks within a project workflow.
   - Moving tasks between columns  
   - Managing issues and pull requests  
 
-Automation helps keep projects organized and reduces manual effort.
+Automation helps keep projects organized and reduces manual effort. 
 
 
 
